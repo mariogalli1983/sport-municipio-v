@@ -571,6 +571,29 @@
     grid-template-columns: 1fr;
   }
 }
+    .location-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+#locationPickerMap {
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--bordo);
+  overflow: hidden;
+}
+
+.position-message {
+  font-size: 13px;
+  color: var(--grigio);
+}
+
+.position-message.selected {
+  color: var(--verde);
+  font-weight: 700;
+}
     /* MOBILE */
 
     @media (max-width: 900px) {
@@ -907,7 +930,26 @@
           placeholder="Via, numero civico, Roma"
         >
       </label>
+<div class="location-picker">
 
+  <label>
+    Posizione sulla mappa *
+  </label>
+
+  <p class="form-note">
+    Clicca sulla mappa nel punto in cui si trova la sede o l'impianto sportivo.
+  </p>
+
+  <div id="locationPickerMap"></div>
+
+  <div id="positionMessage" class="position-message">
+    Nessuna posizione selezionata.
+  </div>
+
+  <input type="hidden" id="asdLatitudine">
+  <input type="hidden" id="asdLongitudine">
+
+</div>
       <label>
         Descrizione
         <textarea
