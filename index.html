@@ -1106,6 +1106,8 @@ const db = window.supabase.createClient(
 let asdData = [];
   let selectedSport = "Tutti";
   let markers = [];
+  let pickerMap = null;
+let pickerMarker = null;
   async function loadAsd() {
 
   const info = document.getElementById("resultsInfo");
