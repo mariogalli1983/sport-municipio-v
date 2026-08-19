@@ -2284,7 +2284,10 @@ async function uploadEventPoster(file) {
 
     events.forEach(
       evento => {
-
+const posterUrl =
+  safeHttpUrl(
+    evento.locandina_url
+  );
         const card =
           document.createElement(
             "article"
