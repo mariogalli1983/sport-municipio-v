@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Sport V | Lo sport vicino a te</title>
-
-  <meta name="description"
-        content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V.">
+  <meta name="description" content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V.">
 
   <link rel="preconnect" href="https://unpkg.com">
-
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -50,9 +47,19 @@
       line-height: 1.5;
     }
 
+    body.modal-open {
+      overflow: hidden;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
     }
 
     .container {
@@ -108,6 +115,12 @@
       transform: translateY(-1px);
     }
 
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
     .btn-primary {
       background: var(--arancio);
       color: white;
@@ -121,8 +134,7 @@
     /* HERO */
 
     .hero {
-      background:
-        linear-gradient(135deg, #123c69 0%, #176b87 100%);
+      background: linear-gradient(135deg, #123c69 0%, #176b87 100%);
       color: white;
       padding: 58px 0 64px;
     }
@@ -150,7 +162,7 @@
     .hero p {
       max-width: 700px;
       font-size: 19px;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255, 255, 255, 0.9);
       margin: 20px 0 28px;
     }
 
@@ -174,12 +186,10 @@
       color: var(--testo);
     }
 
-    /* DEMO */
-
-    .demo-alert {
-      background: #fff4d7;
-      color: #70520a;
-      border-bottom: 1px solid #eed492;
+    .beta-alert {
+      background: #eef7ff;
+      color: #234b6d;
+      border-bottom: 1px solid #d5e6f3;
       padding: 11px 16px;
       font-size: 14px;
       text-align: center;
@@ -241,15 +251,16 @@
       overflow: hidden;
       box-shadow: var(--ombra);
       border: 1px solid var(--bordo);
+      background: #e9eef2;
     }
-
-    /* RISULTATI */
 
     .results-info {
       margin-top: 16px;
       color: var(--grigio);
       font-size: 14px;
     }
+
+    /* CARD */
 
     .asd-grid,
     .event-grid {
@@ -283,12 +294,6 @@
       text-transform: uppercase;
     }
 
-    .demo-tag {
-      background: #fff1ca;
-      color: #795700;
-      margin-left: 5px;
-    }
-
     .card h3 {
       margin: 0 0 8px;
       font-size: 20px;
@@ -311,6 +316,7 @@
       margin-top: 14px;
       font-weight: 800;
       color: var(--blu);
+      cursor: pointer;
     }
 
     /* EVENTI */
@@ -321,8 +327,7 @@
 
     .event-image {
       height: 190px;
-      background:
-        linear-gradient(135deg, #e4edf5, #c8dae8);
+      background: linear-gradient(135deg, #e4edf5, #c8dae8);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -355,7 +360,7 @@
     }
 
     .join-box p {
-      color: rgba(255,255,255,0.85);
+      color: rgba(255, 255, 255, 0.85);
       max-width: 650px;
     }
 
@@ -402,11 +407,172 @@
       color: var(--grigio);
     }
 
+    /* MODALE ASD */
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(8, 25, 42, 0.72);
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .modal-box {
+      position: relative;
+      width: min(720px, 100%);
+      margin: 30px auto;
+      background: white;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-box h2 {
+      margin: 0 45px 8px 0;
+      font-size: 30px;
+    }
+
+    .modal-intro {
+      color: var(--grigio);
+      margin: 0 0 26px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      background: #eef2f5;
+      border-radius: 50%;
+      font-size: 27px;
+      cursor: pointer;
+    }
+
+    #asdForm {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    #asdForm label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    #asdForm input,
+    #asdForm textarea {
+      width: 100%;
+      border: 1px solid var(--bordo);
+      border-radius: 9px;
+      padding: 12px 13px;
+      font: inherit;
+      color: var(--testo);
+      background: white;
+    }
+
+    #asdForm input:focus,
+    #asdForm textarea:focus {
+      outline: 2px solid #88bce5;
+      border-color: var(--blu);
+    }
+
+    .form-two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-divider {
+      border: 0;
+      border-top: 1px solid var(--bordo);
+      width: 100%;
+      margin: 5px 0;
+    }
+
+    .form-note {
+      margin: -8px 0 0;
+      color: var(--grigio);
+      font-size: 14px;
+    }
+
+    .privacy-check {
+      flex-direction: row !important;
+      align-items: flex-start;
+      font-weight: 400 !important;
+    }
+
+    .privacy-check input {
+      width: auto !important;
+      margin-top: 3px;
+    }
+
+    .form-submit {
+      margin-top: 5px;
+      min-height: 48px;
+    }
+
+    .form-message {
+      display: none;
+      border-radius: 9px;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    .form-message.success {
+      display: block;
+      background: #e5f6ee;
+      color: #176044;
+    }
+
+    .form-message.error {
+      display: block;
+      background: #fdeaea;
+      color: #912d2d;
+    }
+
+    .location-picker {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    #locationPickerMap {
+      height: 300px;
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--bordo);
+      overflow: hidden;
+      background: #e9eef2;
+    }
+
+    .position-message {
+      font-size: 13px;
+      color: var(--grigio);
+    }
+
+    .position-message.selected {
+      color: var(--verde);
+      font-weight: 700;
+    }
+
     /* FOOTER */
 
     footer {
       background: #091d31;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.75);
       padding: 34px 0;
       margin-top: 20px;
     }
@@ -421,179 +587,7 @@
     footer strong {
       color: white;
     }
-/* MODULO ASD */
 
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(8, 25, 42, 0.72);
-  padding: 24px;
-  overflow-y: auto;
-}
-
-.modal-overlay.open {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-
-.modal-box {
-  position: relative;
-  width: min(720px, 100%);
-  margin: 30px auto;
-  background: white;
-  border-radius: 18px;
-  padding: 32px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-}
-
-.modal-box h2 {
-  margin: 0 45px 8px 0;
-  font-size: 30px;
-}
-
-.modal-intro {
-  color: var(--grigio);
-  margin: 0 0 26px;
-}
-
-.modal-close {
-  position: absolute;
-  top: 15px;
-  right: 18px;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  background: #eef2f5;
-  border-radius: 50%;
-  font-size: 27px;
-  cursor: pointer;
-}
-
-#asdForm {
-  display: flex;
-  flex-direction: column;
-  gap: 17px;
-}
-
-#asdForm label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-#asdForm input,
-#asdForm textarea {
-  width: 100%;
-  border: 1px solid var(--bordo);
-  border-radius: 9px;
-  padding: 12px 13px;
-  font: inherit;
-  color: var(--testo);
-  background: white;
-}
-
-#asdForm input:focus,
-#asdForm textarea:focus {
-  outline: 2px solid #88bce5;
-  border-color: var(--blu);
-}
-
-.form-two-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.form-divider {
-  border: 0;
-  border-top: 1px solid var(--bordo);
-  width: 100%;
-  margin: 5px 0;
-}
-
-.form-note {
-  margin: -8px 0 0;
-  color: var(--grigio);
-  font-size: 14px;
-}
-
-.privacy-check {
-  flex-direction: row !important;
-  align-items: flex-start;
-  font-weight: 400 !important;
-}
-
-.privacy-check input {
-  width: auto !important;
-  margin-top: 3px;
-}
-
-.form-submit {
-  margin-top: 5px;
-  min-height: 48px;
-}
-
-.form-message {
-  display: none;
-  border-radius: 9px;
-  padding: 12px;
-  font-size: 14px;
-}
-
-.form-message.success {
-  display: block;
-  background: #e5f6ee;
-  color: #176044;
-}
-
-.form-message.error {
-  display: block;
-  background: #fdeaea;
-  color: #912d2d;
-}
-
-@media (max-width: 650px) {
-  .modal-overlay {
-    padding: 10px;
-  }
-
-  .modal-box {
-    padding: 25px 18px;
-    margin: 10px auto;
-  }
-
-  .form-two-columns {
-    grid-template-columns: 1fr;
-  }
-}
-    .location-picker {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-#locationPickerMap {
-  height: 300px;
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid var(--bordo);
-  overflow: hidden;
-}
-
-.position-message {
-  font-size: 13px;
-  color: var(--grigio);
-}
-
-.position-message.selected {
-  color: var(--verde);
-  font-weight: 700;
-}
     /* MOBILE */
 
     @media (max-width: 900px) {
@@ -644,6 +638,19 @@
         padding: 28px 22px;
       }
 
+      .modal-overlay {
+        padding: 10px;
+      }
+
+      .modal-box {
+        padding: 25px 18px;
+        margin: 10px auto;
+      }
+
+      .form-two-columns {
+        grid-template-columns: 1fr;
+      }
+
       .footer-content {
         flex-direction: column;
         align-items: flex-start;
@@ -656,26 +663,21 @@
 
 <header>
   <div class="container topbar">
-
-    <div class="logo">
-      SPORT <span>V</span>
-    </div>
+    <div class="logo">SPORT <span>V</span></div>
 
     <div class="top-links">
       <a href="#eventi" class="btn btn-light">Eventi e corsi</a>
       <a href="#partecipa" class="btn btn-primary">Sei una ASD?</a>
     </div>
-
   </div>
 </header>
 
-<div class="demo-alert">
-  🛠️ Versione di prova: le ASD e gli eventi mostrati in questa fase sono dati dimostrativi.
+<div class="beta-alert">
+  🛠️ Versione beta: la piattaforma è in fase di costruzione e popolamento.
 </div>
 
 <section class="hero">
   <div class="container hero-content">
-
     <div class="eyebrow">Municipio Roma V</div>
 
     <h1>Lo sport<br>vicino a te.</h1>
@@ -692,157 +694,119 @@
         placeholder="Cerca sport, ASD o quartiere..."
       >
 
-      <button class="btn btn-primary" onclick="applyFilters()">
+      <button type="button" class="btn btn-primary" id="searchButton">
         Cerca
       </button>
     </div>
-
   </div>
 </section>
 
 <section id="mappa">
   <div class="container">
-
     <div class="section-title">
       <h2>Trova lo sport sulla mappa</h2>
-      <p>
-        Seleziona uno sport oppure cerca un'associazione o un quartiere.
-      </p>
+      <p>Seleziona uno sport oppure cerca un'associazione o un quartiere.</p>
     </div>
 
     <div class="filters" id="filters">
-      <button class="filter active" data-sport="Tutti">Tutti</button>
-      <button class="filter" data-sport="Calcio">⚽ Calcio</button>
-      <button class="filter" data-sport="Judo">🥋 Judo</button>
-      <button class="filter" data-sport="Basket">🏀 Basket</button>
-      <button class="filter" data-sport="Danza">💃 Danza</button>
-      <button class="filter" data-sport="Tennis">🎾 Tennis</button>
-      <button class="filter" data-sport="Altro">🏃 Altro</button>
+      <button type="button" class="filter active" data-sport="Tutti">Tutti</button>
+      <button type="button" class="filter" data-sport="Calcio">⚽ Calcio</button>
+      <button type="button" class="filter" data-sport="Judo">🥋 Judo</button>
+      <button type="button" class="filter" data-sport="Basket">🏀 Basket</button>
+      <button type="button" class="filter" data-sport="Danza">💃 Danza</button>
+      <button type="button" class="filter" data-sport="Tennis">🎾 Tennis</button>
+      <button type="button" class="filter" data-sport="Altro">🏃 Altro</button>
     </div>
 
     <div id="map"></div>
 
-    <div class="results-info" id="resultsInfo"></div>
-
+    <div class="results-info" id="resultsInfo">Caricamento associazioni...</div>
     <div class="asd-grid" id="asdGrid"></div>
-
   </div>
 </section>
 
 <section id="eventi" class="events-section">
   <div class="container">
-
     <div class="section-title">
       <h2>Cosa puoi fare in questi giorni</h2>
-      <p>
-        Corsi, open day, prove gratuite, eventi e iniziative delle ASD del territorio.
-      </p>
+      <p>Corsi, open day, prove gratuite, eventi e iniziative delle ASD del territorio.</p>
     </div>
 
     <div class="event-grid">
-
       <article class="card">
         <div class="event-image">⚽</div>
-
         <div class="card-body">
-          <div class="event-date">Evento dimostrativo</div>
+          <div class="event-date">Esempio</div>
           <h3>Open Day scuola calcio</h3>
-          <p>
-            Una giornata dedicata a bambini e famiglie per conoscere attività,
-            tecnici e impianto.
-          </p>
-          <p class="card-location">📍 Centocelle</p>
-          <span class="card-link">Scopri di più →</span>
+          <p>Qui compariranno gli eventi pubblicati dalle associazioni.</p>
+          <p class="card-location">📍 Municipio Roma V</p>
         </div>
       </article>
 
       <article class="card">
         <div class="event-image">🥋</div>
-
         <div class="card-body">
-          <div class="event-date">Offerta dimostrativa</div>
-          <h3>Prova gratuita di judo</h3>
-          <p>
-            Lezione di prova per chi vuole avvicinarsi alla disciplina
-            e conoscere l'associazione.
-          </p>
-          <p class="card-location">📍 Pigneto</p>
-          <span class="card-link">Scopri di più →</span>
+          <div class="event-date">Esempio</div>
+          <h3>Prova gratuita</h3>
+          <p>Le ASD potranno segnalare corsi, prove e promozioni.</p>
+          <p class="card-location">📍 Municipio Roma V</p>
         </div>
       </article>
 
       <article class="card">
         <div class="event-image">🏀</div>
-
         <div class="card-body">
-          <div class="event-date">Evento dimostrativo</div>
-          <h3>Giornata minibasket</h3>
-          <p>
-            Attività aperta ai più piccoli con presentazione dei corsi
-            della nuova stagione.
-          </p>
-          <p class="card-location">📍 Tor Pignattara</p>
-          <span class="card-link">Scopri di più →</span>
+          <div class="event-date">Esempio</div>
+          <h3>Tornei ed eventi</h3>
+          <p>Le iniziative approvate saranno raccolte in questa bacheca.</p>
+          <p class="card-location">📍 Municipio Roma V</p>
         </div>
       </article>
-
     </div>
-
   </div>
 </section>
 
 <section id="partecipa">
   <div class="container">
-
     <div class="join-box">
-
       <div>
         <div class="eyebrow">Per le associazioni sportive</div>
-
         <h2>Porta la tua ASD sulla mappa</h2>
 
         <p>
-          Le associazioni sportive del Municipio V potranno segnalare la propria
-          sede, raccontare le attività che svolgono e pubblicare corsi, open day,
-          tornei, locandine ed eventi.
+          Le associazioni sportive del Municipio V possono segnalare la propria
+          sede, raccontare le attività che svolgono e, prossimamente, pubblicare
+          corsi, open day, tornei, locandine ed eventi.
         </p>
 
-        <p>
-          Le segnalazioni saranno controllate prima della pubblicazione.
-        </p>
+        <p>Le segnalazioni saranno controllate prima della pubblicazione.</p>
       </div>
 
       <div class="join-actions">
-
-       <button class="btn btn-primary" onclick="openAsdModal()">
-  📍 Inserisci la tua ASD
-</button>
-
-        <button class="btn btn-light" onclick="showComingSoon('evento')">
-          📣 Pubblica corso o evento
+        <button type="button" class="btn btn-primary" id="openAsdModalButton">
+          📍 Inserisci la tua ASD
         </button>
 
+        <button type="button" class="btn btn-light" id="eventComingSoonButton">
+          📣 Pubblica corso o evento
+        </button>
       </div>
-
     </div>
-
   </div>
 </section>
 
 <section>
   <div class="container">
-
     <div class="section-title">
       <h2>Come funziona</h2>
     </div>
 
     <div class="steps">
-
       <div class="step">
         <div class="step-number">1</div>
         <h3>Le ASD si presentano</h3>
         <p>
-          Ogni associazione potrà inserire sede, sport praticati,
+          Ogni associazione può inserire sede, sport praticati,
           contatti e informazioni sulle proprie attività.
         </p>
       </div>
@@ -852,7 +816,7 @@
         <h3>Pubblicano opportunità</h3>
         <p>
           Corsi, prove gratuite, tornei, open day, eventi e
-          locandine vengono raccolti in una bacheca unica.
+          locandine saranno raccolti in una bacheca unica.
         </p>
       </div>
 
@@ -864,25 +828,24 @@
           un'associazione o un'attività vicino casa.
         </p>
       </div>
-
     </div>
-
   </div>
 </section>
-<div id="asdModal" class="modal-overlay" aria-hidden="true">
 
-  <div class="modal-box">
+<!-- MODALE INSERIMENTO ASD -->
+<div id="asdModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="asdModalTitle">
 
     <button
       type="button"
       class="modal-close"
-      onclick="closeAsdModal()"
+      id="closeAsdModalButton"
       aria-label="Chiudi"
     >
       ×
     </button>
 
-    <h2>Inserisci la tua ASD</h2>
+    <h2 id="asdModalTitle">Inserisci la tua ASD</h2>
 
     <p class="modal-intro">
       Segnala un'associazione sportiva del Municipio Roma V.
@@ -890,7 +853,6 @@
     </p>
 
     <form id="asdForm">
-
       <label>
         Nome dell'associazione *
         <input
@@ -930,26 +892,24 @@
           placeholder="Via, numero civico, Roma"
         >
       </label>
-<div class="location-picker">
 
-  <label>
-    Posizione sulla mappa *
-  </label>
+      <div class="location-picker">
+        <strong>Posizione sulla mappa *</strong>
 
-  <p class="form-note">
-    Clicca sulla mappa nel punto in cui si trova la sede o l'impianto sportivo.
-  </p>
+        <p class="form-note">
+          Clicca sulla mappa nel punto in cui si trova la sede o l'impianto sportivo.
+        </p>
 
-  <div id="locationPickerMap"></div>
+        <div id="locationPickerMap"></div>
 
-  <div id="positionMessage" class="position-message">
-    Nessuna posizione selezionata.
-  </div>
+        <div id="positionMessage" class="position-message">
+          Nessuna posizione selezionata.
+        </div>
 
-  <input type="hidden" id="asdLatitudine">
-  <input type="hidden" id="asdLongitudine">
+        <input type="hidden" id="asdLatitudine">
+        <input type="hidden" id="asdLongitudine">
+      </div>
 
-</div>
       <label>
         Descrizione
         <textarea
@@ -960,7 +920,6 @@
       </label>
 
       <div class="form-two-columns">
-
         <label>
           Telefono pubblico
           <input
@@ -978,7 +937,6 @@
             placeholder="Email visibile sul sito"
           >
         </label>
-
       </div>
 
       <label>
@@ -991,7 +949,6 @@
       </label>
 
       <div class="form-two-columns">
-
         <label>
           Facebook
           <input
@@ -1009,7 +966,6 @@
             placeholder="Link o profilo"
           >
         </label>
-
       </div>
 
       <hr class="form-divider">
@@ -1022,25 +978,15 @@
       </p>
 
       <div class="form-two-columns">
-
         <label>
           Nome referente *
-          <input
-            type="text"
-            id="asdReferente"
-            required
-          >
+          <input type="text" id="asdReferente" required>
         </label>
 
         <label>
           Email referente *
-          <input
-            type="email"
-            id="asdEmailReferente"
-            required
-          >
+          <input type="email" id="asdEmailReferente" required>
         </label>
-
       </div>
 
       <label class="privacy-check">
@@ -1051,7 +997,7 @@
         </span>
       </label>
 
-      <div id="asdFormMessage" class="form-message"></div>
+      <div id="asdFormMessage" class="form-message" aria-live="polite"></div>
 
       <button
         type="submit"
@@ -1060,15 +1006,12 @@
       >
         Invia la segnalazione
       </button>
-
     </form>
-
   </div>
-
 </div>
+
 <footer>
   <div class="container footer-content">
-
     <div>
       <strong>SPORT V</strong><br>
       Lo sport dilettantistico del Municipio Roma V
@@ -1077,7 +1020,6 @@
     <div>
       Un progetto per mettere in rete sport e territorio.
     </div>
-
   </div>
 </footer>
 
@@ -1086,65 +1028,22 @@
   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
   crossorigin="">
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-  /*
-    DATI DIMOSTRATIVI
-    Verranno sostituiti dal database Supabase.
-  */
-
   const SUPABASE_URL = "https://yordjsaevwflqakzhfdf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
+  const SUPABASE_KEY = "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let asdData = [];
+  let asdData = [];
   let selectedSport = "Tutti";
   let markers = [];
   let pickerMap = null;
-let pickerMarker = null;
-  async function loadAsd() {
+  let pickerMarker = null;
 
-  const info = document.getElementById("resultsInfo");
-
-  info.textContent = "Caricamento associazioni...";
-
-  const { data, error } = await db
-    .from("asd_pubbliche")
-    .select("*")
-    .order("nome");
-
-  if (error) {
-
-    console.error("Errore Supabase:", error);
-
-    info.textContent =
-      "Impossibile caricare le associazioni in questo momento.";
-
-    return;
-  }
-
-  asdData = (data || []).map(asd => ({
-    id: asd.id,
-    name: asd.nome,
-    sport: asd.discipline || "Altro",
-    quartier: asd.quartiere || "",
-    lat: Number(asd.latitudine),
-    lng: Number(asd.longitudine),
-    description: asd.descrizione || "",
-    indirizzo: asd.indirizzo || "",
-    telefono: asd.telefono_pubblico || "",
-    email: asd.email_pubblica || "",
-    sito: asd.sito_web || ""
-  }));
-
-  applyFilters();
-}
+  /* MAPPA PRINCIPALE */
 
   const map = L.map("map").setView([41.879, 12.557], 13);
 
@@ -1156,41 +1055,82 @@ let pickerMarker = null;
     }
   ).addTo(map);
 
-  function renderMarkers(data) {
+  function validCoordinates(asd) {
+    return Number.isFinite(asd.lat) &&
+           Number.isFinite(asd.lng) &&
+           asd.lat >= -90 &&
+           asd.lat <= 90 &&
+           asd.lng >= -180 &&
+           asd.lng <= 180;
+  }
 
+  async function loadAsd() {
+    const info = document.getElementById("resultsInfo");
+
+    info.textContent = "Caricamento associazioni...";
+
+    const { data, error } = await db
+      .from("asd_pubbliche")
+      .select("*")
+      .order("nome");
+
+    if (error) {
+      console.error("Errore Supabase:", error);
+      info.textContent = "Impossibile caricare le associazioni in questo momento.";
+      return;
+    }
+
+    asdData = (data || []).map(asd => ({
+      id: asd.id,
+      name: asd.nome || "",
+      sport: asd.discipline || "Altro",
+      quartier: asd.quartiere || "",
+      lat: Number(asd.latitudine),
+      lng: Number(asd.longitudine),
+      description: asd.descrizione || "",
+      indirizzo: asd.indirizzo || "",
+      telefono: asd.telefono_pubblico || "",
+      email: asd.email_pubblica || "",
+      sito: asd.sito_web || ""
+    }));
+
+    applyFilters();
+  }
+
+  function renderMarkers(data) {
     markers.forEach(marker => map.removeLayer(marker));
     markers = [];
 
-    data.forEach(asd => {
+    data
+      .filter(validCoordinates)
+      .forEach(asd => {
+        const marker = L.marker([asd.lat, asd.lng]).addTo(map);
 
-      const marker = L.marker([asd.lat, asd.lng]).addTo(map);
+        marker.bindPopup(`
+          <div style="min-width:200px">
+            <strong style="font-size:16px">${escapeHtml(asd.name)}</strong><br>
+            <span>${escapeHtml(asd.sport)}</span><br><br>
+            <span>📍 ${escapeHtml(asd.quartier)}</span>
+            ${asd.indirizzo ? `<br><span>${escapeHtml(asd.indirizzo)}</span>` : ""}
+            ${asd.description ? `<p>${escapeHtml(asd.description)}</p>` : ""}
+          </div>
+        `);
 
-      marker.bindPopup(`
-        <div style="min-width:200px">
-          <strong style="font-size:16px">${asd.name}</strong><br>
-          <span>${asd.sport}</span><br><br>
-          <span>📍 ${asd.quartier}</span><br>
-          <p>${asd.description}</p>
-          <small><strong>DATO DIMOSTRATIVO</strong></small>
-        </div>
-      `);
-
-      markers.push(marker);
-    });
+        marker.__asdId = asd.id;
+        markers.push(marker);
+      });
   }
 
   function renderCards(data) {
-
     const grid = document.getElementById("asdGrid");
     const info = document.getElementById("resultsInfo");
 
     grid.innerHTML = "";
 
     info.textContent =
-      `${data.length} associazion${data.length === 1 ? "e" : "i"} trovata${data.length === 1 ? "" : "e"}.`;
+      `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.`;
 
     if (data.length === 0) {
-
       grid.innerHTML = `
         <div class="card">
           <div class="card-body">
@@ -1199,65 +1139,62 @@ let pickerMarker = null;
           </div>
         </div>
       `;
-
       return;
     }
 
     data.forEach(asd => {
-
       const card = document.createElement("article");
       card.className = "card";
 
+      const mapLink = validCoordinates(asd)
+        ? `<button type="button" class="card-link" data-asd-id="${asd.id}" style="border:0;background:none;padding:0;">
+             Vedi sulla mappa →
+           </button>`
+        : `<span class="card-link" style="color:#7a858f;">Posizione non disponibile</span>`;
+
       card.innerHTML = `
         <div class="card-body">
-
-          <span class="tag">${asd.sport}</span>
-          <span class="tag demo-tag">DEMO</span>
-
-          <h3>${asd.name}</h3>
-
-          <p>${asd.description}</p>
-
-          <p class="card-location">
-            📍 ${asd.quartier}
-          </p>
-
-          <a
-            class="card-link"
-            href="#mappa"
-            onclick="focusAsd('${asd.name.replace(/'/g, "\\'")}')"
-          >
-            Vedi sulla mappa →
-          </a>
-
+          <span class="tag">${escapeHtml(asd.sport)}</span>
+          <h3>${escapeHtml(asd.name)}</h3>
+          ${asd.description ? `<p>${escapeHtml(asd.description)}</p>` : ""}
+          <p class="card-location">📍 ${escapeHtml(asd.quartier || asd.indirizzo || "Municipio Roma V")}</p>
+          ${mapLink}
         </div>
       `;
 
       grid.appendChild(card);
     });
+
+    grid.querySelectorAll("[data-asd-id]").forEach(button => {
+      button.addEventListener("click", () => {
+        focusAsd(Number(button.dataset.asdId));
+      });
+    });
   }
 
   function applyFilters() {
-
-    const search =
-      document.getElementById("searchInput")
+    const search = document
+      .getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
     const filtered = asdData.filter(asd => {
+      const sportText = asd.sport.toLowerCase();
 
       const sportMatch =
         selectedSport === "Tutti" ||
-        asd.sport === selectedSport ||
-        (selectedSport === "Altro" &&
-          !["Calcio", "Judo", "Basket", "Danza", "Tennis"].includes(asd.sport));
+        (selectedSport === "Altro"
+          ? !["calcio", "judo", "basket", "danza", "tennis"].some(s => sportText.includes(s))
+          : sportText.includes(selectedSport.toLowerCase()));
 
       const searchMatch =
+        !search ||
         asd.name.toLowerCase().includes(search) ||
         asd.sport.toLowerCase().includes(search) ||
         asd.quartier.toLowerCase().includes(search) ||
-        asd.description.toLowerCase().includes(search);
+        asd.description.toLowerCase().includes(search) ||
+        asd.indirizzo.toLowerCase().includes(search);
 
       return sportMatch && searchMatch;
     });
@@ -1266,236 +1203,224 @@ let pickerMarker = null;
     renderCards(filtered);
   }
 
+  function focusAsd(id) {
+    const asd = asdData.find(item => item.id === id);
+
+    if (!asd || !validCoordinates(asd)) {
+      return;
+    }
+
+    map.setView([asd.lat, asd.lng], 16);
+
+    const marker = markers.find(item => item.__asdId === id);
+
+    if (marker) {
+      marker.openPopup();
+    }
+
+    document.getElementById("mappa").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  /* FILTRI E RICERCA */
+
   document.querySelectorAll(".filter").forEach(button => {
-
     button.addEventListener("click", () => {
-
       document
         .querySelectorAll(".filter")
         .forEach(btn => btn.classList.remove("active"));
 
       button.classList.add("active");
-
       selectedSport = button.dataset.sport;
-
       applyFilters();
     });
-
   });
+
+  document
+    .getElementById("searchButton")
+    .addEventListener("click", applyFilters);
 
   document
     .getElementById("searchInput")
     .addEventListener("keyup", event => {
-
       if (event.key === "Enter") {
         applyFilters();
       }
-
     });
 
-  function focusAsd(name) {
+  /* MODALE ASD */
 
-    const asd = asdData.find(item => item.name === name);
+  function openAsdModal() {
+    const modal = document.getElementById("asdModal");
 
-    if (!asd) return;
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
 
-    map.setView([asd.lat, asd.lng], 16);
+    if (!pickerMap) {
+      pickerMap = L.map("locationPickerMap").setView([41.879, 12.557], 13);
 
-    const marker = markers.find(marker => {
-      const position = marker.getLatLng();
-      return position.lat === asd.lat && position.lng === asd.lng;
-    });
+      L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap'
+        }
+      ).addTo(pickerMap);
 
-    if (marker) {
-      marker.openPopup();
+      pickerMap.on("click", event => {
+        const lat = event.latlng.lat;
+        const lng = event.latlng.lng;
+
+        document.getElementById("asdLatitudine").value = String(lat);
+        document.getElementById("asdLongitudine").value = String(lng);
+
+        if (pickerMarker) {
+          pickerMarker.setLatLng(event.latlng);
+        } else {
+          pickerMarker = L.marker(event.latlng).addTo(pickerMap);
+        }
+
+        const message = document.getElementById("positionMessage");
+        message.textContent = "✓ Posizione selezionata sulla mappa";
+        message.classList.add("selected");
+      });
     }
+
+    window.setTimeout(() => {
+      pickerMap.invalidateSize();
+    }, 200);
   }
 
-  function showComingSoon(type) {
+  function closeAsdModal() {
+    const modal = document.getElementById("asdModal");
 
-    if (type === "asd") {
-      alert(
-        "Nel prossimo passaggio attiveremo il modulo per inserire una ASD."
-      );
-    }
-
-    if (type === "evento") {
-      alert(
-        "Nel prossimo passaggio attiveremo il modulo per pubblicare corsi, offerte ed eventi."
-      );
-    }
-
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
   }
-function openAsdModal() {
 
-  const modal = document.getElementById("asdModal");
+  document
+    .getElementById("openAsdModalButton")
+    .addEventListener("click", openAsdModal);
 
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
+  document
+    .getElementById("closeAsdModalButton")
+    .addEventListener("click", closeAsdModal);
 
-  if (!pickerMap) {
-
-    pickerMap = L.map("locationPickerMap")
-      .setView([41.879, 12.557], 13);
-
-    L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap'
+  document
+    .getElementById("asdModal")
+    .addEventListener("click", event => {
+      if (event.target.id === "asdModal") {
+        closeAsdModal();
       }
-    ).addTo(pickerMap);
+    });
 
-    pickerMap.on("click", function(e) {
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" &&
+        document.getElementById("asdModal").classList.contains("open")) {
+      closeAsdModal();
+    }
+  });
 
-      const lat = e.latlng.lat;
-      const lng = e.latlng.lng;
+  document
+    .getElementById("eventComingSoonButton")
+    .addEventListener("click", () => {
+      alert("Nel prossimo passaggio attiveremo il modulo per pubblicare corsi, offerte ed eventi.");
+    });
 
-      document.getElementById("asdLatitudine").value = lat;
-      document.getElementById("asdLongitudine").value = lng;
+  /* INVIO ASD */
+
+  document
+    .getElementById("asdForm")
+    .addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const submitButton = document.getElementById("asdSubmit");
+      const message = document.getElementById("asdFormMessage");
+
+      message.className = "form-message";
+      message.textContent = "";
+
+      const latitudine = document.getElementById("asdLatitudine").value;
+      const longitudine = document.getElementById("asdLongitudine").value;
+
+      if (!latitudine || !longitudine) {
+        message.className = "form-message error";
+        message.textContent =
+          "Seleziona sulla mappa la posizione della sede o dell'impianto.";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Invio in corso...";
+
+      const nuovaAsd = {
+        nome: document.getElementById("asdNome").value.trim(),
+        discipline: document.getElementById("asdDiscipline").value.trim(),
+        quartiere: document.getElementById("asdQuartiere").value.trim(),
+        indirizzo: document.getElementById("asdIndirizzo").value.trim(),
+        latitudine: Number(latitudine),
+        longitudine: Number(longitudine),
+        descrizione: document.getElementById("asdDescrizione").value.trim(),
+        telefono_pubblico: document.getElementById("asdTelefono").value.trim() || null,
+        email_pubblica: document.getElementById("asdEmailPubblica").value.trim() || null,
+        sito_web: document.getElementById("asdSito").value.trim() || null,
+        facebook: document.getElementById("asdFacebook").value.trim() || null,
+        instagram: document.getElementById("asdInstagram").value.trim() || null,
+        nome_referente: document.getElementById("asdReferente").value.trim(),
+        email_referente: document.getElementById("asdEmailReferente").value.trim()
+      };
+
+      const { error } = await db
+        .from("asd")
+        .insert([nuovaAsd]);
+
+      if (error) {
+        console.error("Errore inserimento ASD:", error);
+
+        message.className = "form-message error";
+        message.textContent =
+          "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Invia la segnalazione";
+        return;
+      }
+
+      message.className = "form-message success";
+      message.textContent =
+        "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
+
+      document.getElementById("asdForm").reset();
 
       if (pickerMarker) {
-        pickerMarker.setLatLng(e.latlng);
-      } else {
-        pickerMarker = L.marker(e.latlng).addTo(pickerMap);
+        pickerMap.removeLayer(pickerMarker);
+        pickerMarker = null;
       }
 
-      const message =
-        document.getElementById("positionMessage");
-
-      message.textContent =
-        "✓ Posizione selezionata sulla mappa";
-
-      message.classList.add("selected");
-
-    });
-
-  }
-
-  setTimeout(() => {
-    pickerMap.invalidateSize();
-  }, 150);
-
-}
-  const modal = document.getElementById("asdModal");
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-}
-
-function closeAsdModal() {
-  const modal = document.getElementById("asdModal");
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-}
-
-document
-  .getElementById("asdForm")
-  .addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const submitButton = document.getElementById("asdSubmit");
-    const message = document.getElementById("asdFormMessage");
-
-    submitButton.disabled = true;
-    submitButton.textContent = "Invio in corso...";
-
-    message.className = "form-message";
-    message.textContent = "";
-const latitudine =
-  document.getElementById("asdLatitudine").value;
-
-const longitudine =
-  document.getElementById("asdLongitudine").value;
-
-if (!latitudine || !longitudine) {
-
-  message.className = "form-message error";
-
-  message.textContent =
-    "Seleziona sulla mappa la posizione della sede o dell'impianto.";
-
-  submitButton.disabled = false;
-  submitButton.textContent = "Invia la segnalazione";
-
-  return;
-}
-    const nuovaAsd = {
-
-      nome:
-        document.getElementById("asdNome").value.trim(),
-
-      discipline:
-        document.getElementById("asdDiscipline").value.trim(),
-
-      quartiere:
-        document.getElementById("asdQuartiere").value.trim(),
-
-      indirizzo:
-        document.getElementById("asdIndirizzo").value.trim(),
-      latitudine:
-  Number(document.getElementById("asdLatitudine").value),
-
-longitudine:
-  Number(document.getElementById("asdLongitudine").value),
-
-      descrizione:
-        document.getElementById("asdDescrizione").value.trim(),
-
-      telefono_pubblico:
-        document.getElementById("asdTelefono").value.trim() || null,
-
-      email_pubblica:
-        document.getElementById("asdEmailPubblica").value.trim() || null,
-
-      sito_web:
-        document.getElementById("asdSito").value.trim() || null,
-
-      facebook:
-        document.getElementById("asdFacebook").value.trim() || null,
-
-      instagram:
-        document.getElementById("asdInstagram").value.trim() || null,
-
-      nome_referente:
-        document.getElementById("asdReferente").value.trim(),
-
-      email_referente:
-        document.getElementById("asdEmailReferente").value.trim()
-
-    };
-
-    const { error } = await db
-      .from("asd")
-      .insert([nuovaAsd]);
-
-    if (error) {
-
-      console.error("Errore inserimento ASD:", error);
-
-      message.className = "form-message error";
-      message.textContent =
-        "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+      const positionMessage = document.getElementById("positionMessage");
+      positionMessage.textContent = "Nessuna posizione selezionata.";
+      positionMessage.classList.remove("selected");
 
       submitButton.disabled = false;
       submitButton.textContent = "Invia la segnalazione";
+    });
 
-      return;
-    }
+  /* AVVIO */
 
-    message.className = "form-message success";
-
-    message.textContent =
-      "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
-
-    document.getElementById("asdForm").reset();
-
-    submitButton.disabled = false;
-    submitButton.textContent = "Invia la segnalazione";
-
-  });
   loadAsd();
-
 </script>
 
 </body>
