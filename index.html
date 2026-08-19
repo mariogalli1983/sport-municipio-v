@@ -718,6 +718,7 @@
   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
   crossorigin="">
 </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
@@ -726,43 +727,55 @@
     Verranno sostituiti dal database Supabase.
   */
 
-  const asdData = [
-    {
-      name: "ASD Demo Centocelle",
-      sport: "Calcio",
-      quartier: "Centocelle",
-      lat: 41.8795,
-      lng: 12.5685,
-      description: "Scuola calcio e attività sportive per bambini e ragazzi."
-    },
-    {
-      name: "ASD Demo Pigneto",
-      sport: "Judo",
-      quartier: "Pigneto",
-      lat: 41.8893,
-      lng: 12.5310,
-      description: "Corsi dimostrativi di judo per diverse fasce di età."
-    },
-    {
-      name: "ASD Demo Tor Pignattara",
-      sport: "Basket",
-      quartier: "Tor Pignattara",
-      lat: 41.8738,
-      lng: 12.5435,
-      description: "Basket e minibasket per giovani e giovanissimi."
-    },
-    {
-      name: "ASD Demo Alessandrino",
-      sport: "Danza",
-      quartier: "Alessandrino",
-      lat: 41.8696,
-      lng: 12.5790,
-      description: "Danza e attività motorie per bambini e adulti."
-    }
-  ];
+  const SUPABASE_URL = "https://yordjsaevwflqakzhfdf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
 
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let asdData = [];
   let selectedSport = "Tutti";
   let markers = [];
+  async function loadAsd() {
+
+  const info = document.getElementById("resultsInfo");
+
+  info.textContent = "Caricamento associazioni...";
+
+  const { data, error } = await db
+    .from("asd_pubbliche")
+    .select("*")
+    .order("nome");
+
+  if (error) {
+
+    console.error("Errore Supabase:", error);
+
+    info.textContent =
+      "Impossibile caricare le associazioni in questo momento.";
+
+    return;
+  }
+
+  asdData = (data || []).map(asd => ({
+    id: asd.id,
+    name: asd.nome,
+    sport: asd.discipline || "Altro",
+    quartier: asd.quartiere || "",
+    lat: Number(asd.latitudine),
+    lng: Number(asd.longitudine),
+    description: asd.descrizione || "",
+    indirizzo: asd.indirizzo || "",
+    telefono: asd.telefono_pubblico || "",
+    email: asd.email_pubblica || "",
+    sito: asd.sito_web || ""
+  }));
+
+  loadAsd();
+</script>
+}
 
   const map = L.map("map").setView([41.879, 12.557], 13);
 
