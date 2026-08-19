@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Sport V | Lo sport vicino a te</title>
-  <meta name="description" content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V.">
+
+  <meta
+    name="description"
+    content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V."
+  >
 
   <link rel="preconnect" href="https://unpkg.com">
 
@@ -68,6 +72,8 @@
       margin: 0 auto;
     }
 
+    /* HEADER */
+
     header {
       background: var(--blu-scuro);
       color: white;
@@ -107,7 +113,7 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      transition: .2s ease;
+      transition: 0.2s ease;
     }
 
     .btn:hover {
@@ -115,7 +121,7 @@
     }
 
     .btn:disabled {
-      opacity: .65;
+      opacity: 0.65;
       cursor: wait;
       transform: none;
     }
@@ -138,6 +144,8 @@
       font-size: 14px;
       text-align: center;
     }
+
+    /* HERO */
 
     .hero {
       background: linear-gradient(135deg, #123c69 0%, #176b87 100%);
@@ -168,7 +176,7 @@
     .hero p {
       max-width: 700px;
       font-size: 19px;
-      color: rgba(255,255,255,.9);
+      color: rgba(255,255,255,0.9);
       margin: 20px 0 28px;
     }
 
@@ -192,6 +200,8 @@
       color: var(--testo);
     }
 
+    /* SEZIONI */
+
     section {
       padding: 50px 0;
     }
@@ -203,13 +213,15 @@
     .section-title h2 {
       margin: 0 0 6px;
       font-size: 30px;
-      letter-spacing: -.8px;
+      letter-spacing: -0.8px;
     }
 
     .section-title p {
       margin: 0;
       color: var(--grigio);
     }
+
+    /* FILTRI ASD */
 
     .filters {
       display: flex;
@@ -236,6 +248,8 @@
       border-color: var(--blu);
     }
 
+    /* MAPPA */
+
     #map {
       height: 490px;
       border-radius: 16px;
@@ -250,6 +264,8 @@
       color: var(--grigio);
       font-size: 14px;
     }
+
+    /* CARD */
 
     .asd-grid,
     .event-grid,
@@ -315,115 +331,106 @@
       cursor: pointer;
     }
 
+    /* EVENTI */
+
     .events-section {
       background: white;
     }
-.event-eyebrow {
-  color: var(--verde);
-}
 
-.event-filters {
-  margin: 28px 0 10px;
-  padding: 20px;
-  background: #f5f7f9;
-  border: 1px solid var(--bordo);
-  border-radius: 16px;
-}
+    .event-eyebrow {
+      color: var(--verde);
+    }
 
-.event-quick-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-bottom: 18px;
-}
+    .event-filters {
+      margin: 28px 0 10px;
+      padding: 20px;
+      background: #f5f7f9;
+      border: 1px solid var(--bordo);
+      border-radius: 16px;
+    }
 
-.event-filter-chip {
-  min-height: 44px;
-  border: 1px solid var(--bordo);
-  border-radius: 999px;
-  background: white;
-  padding: 9px 15px;
-  color: #46515c;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-}
+    .event-quick-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
 
-.event-filter-chip:hover {
-  border-color: var(--blu);
-}
+    .event-filter-chip {
+      min-height: 44px;
+      border: 1px solid var(--bordo);
+      border-radius: 999px;
+      background: white;
+      padding: 9px 15px;
+      color: #46515c;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
 
-.event-filter-chip.active {
-  background: var(--blu);
-  border-color: var(--blu);
-  color: white;
-}
+    .event-filter-chip:hover {
+      border-color: var(--blu);
+    }
 
-.event-select-filters {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 14px;
-  align-items: end;
-}
+    .event-filter-chip.active {
+      background: var(--blu);
+      border-color: var(--blu);
+      color: white;
+    }
 
-.event-select-filters label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+    .event-select-filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 14px;
+      align-items: end;
+    }
 
-.event-select-filters label span {
-  font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--grigio);
-}
+    .event-select-filters label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-.event-select-filters select {
-  min-height: 46px;
-  width: 100%;
-  border: 1px solid var(--bordo);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: white;
-  color: var(--testo);
-  font-size: 15px;
-}
+    .event-select-filters label span {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--grigio);
+    }
 
-.event-reset-button {
-  min-height: 46px;
-  border: 0;
-  background: transparent;
-  color: var(--blu);
-  font-weight: 800;
-  cursor: pointer;
-  padding: 0 10px;
-}
+    .event-select-filters select {
+      min-height: 46px;
+      width: 100%;
+      border: 1px solid var(--bordo);
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: white;
+      color: var(--testo);
+      font-size: 15px;
+    }
 
-.event-results-info {
-  min-height: 24px;
-  margin-top: 18px;
-  color: var(--grigio);
-  font-size: 14px;
-}
+    .event-reset-button {
+      min-height: 46px;
+      border: 0;
+      background: transparent;
+      color: var(--blu);
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0 10px;
+    }
 
-.event-filter-summary {
-  font-weight: 700;
-  color: var(--testo);
-}
+    .event-results-info {
+      min-height: 24px;
+      margin-top: 18px;
+      color: var(--grigio);
+      font-size: 14px;
+    }
 
-@media (max-width: 750px) {
+    .event-filter-summary {
+      font-weight: 700;
+      color: var(--testo);
+    }
 
-  .event-select-filters {
-    grid-template-columns: 1fr;
-  }
-
-  .event-reset-button {
-    justify-self: start;
-    padding: 4px 0;
-  }
-
-}
     .event-image {
       height: 190px;
       background: linear-gradient(135deg, #e4edf5, #c8dae8);
@@ -431,6 +438,22 @@
       align-items: center;
       justify-content: center;
       font-size: 50px;
+    }
+
+    .event-poster {
+      height: 270px;
+      background: #f1f3f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .event-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .event-date {
@@ -465,6 +488,21 @@
       color: var(--grigio);
     }
 
+    .event-more-button {
+      display: block;
+      margin-top: 16px;
+      border: 0;
+      background: none;
+      padding: 0;
+      color: var(--blu);
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 15px;
+      text-align: left;
+    }
+
+    /* CTA ASD */
+
     .join-box {
       background: var(--blu-scuro);
       color: white;
@@ -482,7 +520,7 @@
     }
 
     .join-box p {
-      color: rgba(255,255,255,.85);
+      color: rgba(255,255,255,0.85);
       max-width: 650px;
     }
 
@@ -491,6 +529,8 @@
       flex-direction: column;
       gap: 10px;
     }
+
+    /* COME FUNZIONA */
 
     .step-number {
       width: 38px;
@@ -514,12 +554,14 @@
       color: var(--grigio);
     }
 
+    /* MODALI */
+
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(8,25,42,.72);
+      background: rgba(8,25,42,0.72);
       padding: 24px;
       overflow-y: auto;
     }
@@ -537,7 +579,7 @@
       background: white;
       border-radius: 18px;
       padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
     }
 
     .modal-box h2 {
@@ -658,6 +700,8 @@
       color: #912d2d;
     }
 
+    /* MINI MAPPA ASD */
+
     .location-picker {
       display: flex;
       flex-direction: column;
@@ -682,145 +726,111 @@
       color: var(--verde);
       font-weight: 700;
     }
-.poster-preview {
-  width: 100%;
-  max-width: 360px;
-  border: 1px solid var(--bordo);
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f4f6f8;
-}
 
-.poster-preview img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+    /* ANTEPRIMA LOCANDINA */
 
-.event-poster {
-  height: 270px;
-  background: #f1f3f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+    .poster-preview {
+      width: 100%;
+      max-width: 360px;
+      border: 1px solid var(--bordo);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f4f6f8;
+    }
 
-.event-poster img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-    /* SCHEDA COMPLETA EVENTO */
+    .poster-preview img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
-.event-detail-box {
-  width: min(850px, 100%);
-}
+    /* DETTAGLIO EVENTO */
 
-.event-detail-layout {
-  display: grid;
-  grid-template-columns: minmax(240px, 320px) 1fr;
-  gap: 28px;
-  align-items: start;
-}
+    .event-detail-box {
+      width: min(850px, 100%);
+    }
 
-.event-detail-poster {
-  width: 100%;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #f1f3f5;
-  border: 1px solid var(--bordo);
-}
+    .event-detail-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, 320px) 1fr;
+      gap: 28px;
+      align-items: start;
+    }
 
-.event-detail-poster img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+    .event-detail-poster {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f1f3f5;
+      border: 1px solid var(--bordo);
+    }
 
-.event-detail-placeholder {
-  min-height: 320px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 75px;
-}
+    .event-detail-poster img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
-.event-detail-main h2 {
-  margin: 8px 45px 8px 0;
-  font-size: 30px;
-  line-height: 1.1;
-}
+    .event-detail-placeholder {
+      min-height: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 75px;
+    }
 
-.event-detail-asd {
-  color: var(--blu);
-  font-weight: 800;
-  margin-bottom: 20px;
-}
+    .event-detail-main h2 {
+      margin: 8px 45px 8px 0;
+      font-size: 30px;
+      line-height: 1.1;
+    }
 
-.event-detail-description {
-  margin: 20px 0;
-  color: var(--testo);
-  white-space: pre-line;
-}
+    .event-detail-asd {
+      color: var(--blu);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
 
-.event-detail-info {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 20px 0;
-}
+    .event-detail-description {
+      margin: 20px 0;
+      color: var(--testo);
+      white-space: pre-line;
+    }
 
-.event-detail-row {
-  background: #f5f7f9;
-  border-radius: 10px;
-  padding: 11px 13px;
-}
+    .event-detail-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 20px 0;
+    }
 
-.event-detail-row strong {
-  display: block;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: var(--grigio);
-  margin-bottom: 2px;
-}
+    .event-detail-row {
+      background: #f5f7f9;
+      border-radius: 10px;
+      padding: 11px 13px;
+    }
 
-.event-detail-actions {
-  margin-top: 22px;
-}
+    .event-detail-row strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--grigio);
+      margin-bottom: 2px;
+    }
 
-.event-detail-actions .btn {
-  width: 100%;
-}
+    .event-detail-actions {
+      margin-top: 22px;
+    }
 
-.event-more-button {
-  display: inline-block;
-  margin-top: 16px;
-  border: 0;
-  background: none;
-  padding: 0;
-  color: var(--blu);
-  font-weight: 800;
-  cursor: pointer;
-  font-size: 15px;
-}
+    .event-detail-actions .btn {
+      width: 100%;
+    }
 
-@media (max-width: 700px) {
+    /* FOOTER */
 
-  .event-detail-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .event-detail-poster {
-    max-width: 420px;
-    margin: 0 auto;
-  }
-
-}
     footer {
       background: #091d31;
-      color: rgba(255,255,255,.75);
+      color: rgba(255,255,255,0.75);
       padding: 34px 0;
       margin-top: 20px;
     }
@@ -836,6 +846,8 @@
       color: white;
     }
 
+    /* RESPONSIVE */
+
     @media (max-width: 900px) {
       .asd-grid,
       .event-grid,
@@ -845,6 +857,26 @@
 
       .join-box {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 750px) {
+      .event-select-filters {
+        grid-template-columns: 1fr;
+      }
+
+      .event-reset-button {
+        justify-self: start;
+        padding: 4px 0;
+      }
+
+      .event-detail-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .event-detail-poster {
+        max-width: 420px;
+        margin: 0 auto;
       }
     }
 
@@ -915,13 +947,15 @@
     </div>
 
     <div class="top-links">
+
       <a href="#eventi" class="btn btn-light">
-        Eventi e corsi
+        Trova cosa fare
       </a>
 
       <a href="#partecipa" class="btn btn-primary">
         Sei una ASD?
       </a>
+
     </div>
 
   </div>
@@ -930,6 +964,9 @@
 <div class="beta-alert">
   🛠️ Versione beta: la piattaforma è in fase di costruzione e popolamento.
 </div>
+
+
+<!-- HERO -->
 
 <section class="hero">
 
@@ -971,6 +1008,9 @@
 
 </section>
 
+
+<!-- MAPPA ASD -->
+
 <section id="mappa">
 
   <div class="container">
@@ -982,12 +1022,12 @@
       </h2>
 
       <p>
-        Seleziona uno sport oppure cerca un'associazione o un quartiere.
+        Cerca un'associazione, una disciplina o quello che c'è vicino al tuo quartiere.
       </p>
 
     </div>
 
-    <div class="filters" id="filters">
+    <div class="filters">
 
       <button type="button" class="filter active" data-sport="Tutti">
         Tutti
@@ -1021,27 +1061,20 @@
 
     <div id="map"></div>
 
-    <div
-      class="results-info"
-      id="resultsInfo"
-    >
+    <div class="results-info" id="resultsInfo">
       Caricamento associazioni...
     </div>
 
-    <div
-      class="asd-grid"
-      id="asdGrid"
-    ></div>
+    <div class="asd-grid" id="asdGrid"></div>
 
   </div>
 
 </section>
 
-<section
-  <section
-  id="eventi"
-  class="events-section"
->
+
+<!-- TROVA QUALCOSA DA FARE -->
+
+<section id="eventi" class="events-section">
 
   <div class="container">
 
@@ -1061,7 +1094,6 @@
       </p>
 
     </div>
-
 
     <div class="event-filters">
 
@@ -1096,7 +1128,6 @@
 
       </div>
 
-
       <div class="event-select-filters">
 
         <label>
@@ -1115,7 +1146,6 @@
 
         </label>
 
-
         <label>
 
           <span>
@@ -1132,7 +1162,6 @@
 
         </label>
 
-
         <button
           type="button"
           class="event-reset-button"
@@ -1145,14 +1174,12 @@
 
     </div>
 
-
     <div
       class="event-results-info"
       id="eventResultsInfo"
     >
       Caricamento eventi...
     </div>
-
 
     <div
       class="event-grid"
@@ -1169,7 +1196,8 @@
 
 </section>
 
-</section>
+
+<!-- PARTECIPA -->
 
 <section id="partecipa">
 
@@ -1188,8 +1216,8 @@
         </h2>
 
         <p>
-          Le associazioni sportive del Municipio V possono segnalare la propria sede,
-          raccontare le attività che svolgono e proporre corsi, open day,
+          Le associazioni sportive del Municipio V possono segnalare la propria
+          sede, raccontare le attività e proporre corsi, open day,
           tornei, offerte ed eventi.
         </p>
 
@@ -1225,6 +1253,9 @@
 
 </section>
 
+
+<!-- COME FUNZIONA -->
+
 <section>
 
   <div class="container">
@@ -1237,9 +1268,7 @@
 
       <div class="step">
 
-        <div class="step-number">
-          1
-        </div>
+        <div class="step-number">1</div>
 
         <h3>
           Le ASD si presentano
@@ -1254,9 +1283,7 @@
 
       <div class="step">
 
-        <div class="step-number">
-          2
-        </div>
+        <div class="step-number">2</div>
 
         <h3>
           Pubblicano opportunità
@@ -1264,16 +1291,14 @@
 
         <p>
           Corsi, prove gratuite, tornei, open day, eventi e
-          locandine saranno raccolti in una bacheca unica.
+          locandine vengono raccolti in una bacheca unica.
         </p>
 
       </div>
 
       <div class="step">
 
-        <div class="step-number">
-          3
-        </div>
+        <div class="step-number">3</div>
 
         <h3>
           I cittadini cercano
@@ -1329,7 +1354,6 @@
     <form id="asdForm">
 
       <label>
-
         Nome dell'associazione *
 
         <input
@@ -1338,11 +1362,9 @@
           required
           placeholder="Es. ASD Sport Centocelle"
         >
-
       </label>
 
       <label>
-
         Disciplina o discipline *
 
         <input
@@ -1351,11 +1373,9 @@
           required
           placeholder="Es. Calcio, calcio a 5"
         >
-
       </label>
 
       <label>
-
         Quartiere *
 
         <input
@@ -1364,11 +1384,9 @@
           required
           placeholder="Es. Centocelle"
         >
-
       </label>
 
       <label>
-
         Indirizzo della sede o impianto *
 
         <input
@@ -1377,7 +1395,6 @@
           required
           placeholder="Via, numero civico, Roma"
         >
-
       </label>
 
       <div class="location-picker">
@@ -1399,20 +1416,12 @@
           Nessuna posizione selezionata.
         </div>
 
-        <input
-          type="hidden"
-          id="asdLatitudine"
-        >
-
-        <input
-          type="hidden"
-          id="asdLongitudine"
-        >
+        <input type="hidden" id="asdLatitudine">
+        <input type="hidden" id="asdLongitudine">
 
       </div>
 
       <label>
-
         Descrizione
 
         <textarea
@@ -1420,13 +1429,11 @@
           rows="4"
           placeholder="Racconta brevemente le attività dell'associazione..."
         ></textarea>
-
       </label>
 
       <div class="form-two-columns">
 
         <label>
-
           Telefono pubblico
 
           <input
@@ -1434,11 +1441,9 @@
             id="asdTelefono"
             placeholder="Numero visibile sul sito"
           >
-
         </label>
 
         <label>
-
           Email pubblica
 
           <input
@@ -1446,13 +1451,11 @@
             id="asdEmailPubblica"
             placeholder="Email visibile sul sito"
           >
-
         </label>
 
       </div>
 
       <label>
-
         Sito web
 
         <input
@@ -1460,13 +1463,11 @@
           id="asdSito"
           placeholder="https://..."
         >
-
       </label>
 
       <div class="form-two-columns">
 
         <label>
-
           Facebook
 
           <input
@@ -1474,11 +1475,9 @@
             id="asdFacebook"
             placeholder="Link o nome pagina"
           >
-
         </label>
 
         <label>
-
           Instagram
 
           <input
@@ -1486,7 +1485,6 @@
             id="asdInstagram"
             placeholder="Link o profilo"
           >
-
         </label>
 
       </div>
@@ -1498,13 +1496,13 @@
       </h3>
 
       <p class="form-note">
-        Questi dati servono per verificare la richiesta e non saranno mostrati nella scheda pubblica.
+        Questi dati servono per verificare la richiesta e non saranno
+        mostrati nella scheda pubblica.
       </p>
 
       <div class="form-two-columns">
 
         <label>
-
           Nome referente *
 
           <input
@@ -1512,11 +1510,9 @@
             id="asdReferente"
             required
           >
-
         </label>
 
         <label>
-
           Email referente *
 
           <input
@@ -1524,7 +1520,6 @@
             id="asdEmailReferente"
             required
           >
-
         </label>
 
       </div>
@@ -1565,7 +1560,7 @@
 </div>
 
 
-<!-- MODALE INSERIMENTO EVENTO -->
+<!-- MODALE PUBBLICAZIONE EVENTO -->
 
 <div
   id="eventModal"
@@ -1594,39 +1589,30 @@
     </h2>
 
     <p class="modal-intro">
-      Proponi un corso, open day, torneo, prova gratuita, offerta o altro evento.
-      La pubblicazione avverrà dopo la verifica.
+      Proponi un corso, open day, torneo, prova gratuita, offerta
+      o altro evento. La pubblicazione avverrà dopo la verifica.
     </p>
 
     <form id="eventForm">
 
       <label>
-
         Associazione organizzatrice *
 
-        <select
-          id="eventAsdId"
-          required
-        >
+        <select id="eventAsdId" required>
 
           <option value="">
             Caricamento ASD...
           </option>
 
         </select>
-
       </label>
 
       <div class="form-two-columns">
 
         <label>
-
           Tipologia *
 
-          <select
-            id="eventTipologia"
-            required
-          >
+          <select id="eventTipologia" required>
 
             <option value="">
               Seleziona...
@@ -1661,11 +1647,9 @@
             </option>
 
           </select>
-
         </label>
 
         <label>
-
           Titolo *
 
           <input
@@ -1674,13 +1658,11 @@
             required
             placeholder="Es. Open Day minibasket"
           >
-
         </label>
 
       </div>
 
       <label>
-
         Descrizione
 
         <textarea
@@ -1688,13 +1670,11 @@
           rows="4"
           placeholder="Spiega cosa proponete, a chi è rivolto e come partecipare..."
         ></textarea>
-
       </label>
 
       <div class="form-two-columns">
 
         <label>
-
           Data e ora di inizio *
 
           <input
@@ -1702,18 +1682,15 @@
             id="eventDataInizio"
             required
           >
-
         </label>
 
         <label>
-
           Data e ora di fine
 
           <input
             type="datetime-local"
             id="eventDataFine"
           >
-
         </label>
 
       </div>
@@ -1721,7 +1698,6 @@
       <div class="form-two-columns">
 
         <label>
-
           Luogo
 
           <input
@@ -1729,11 +1705,9 @@
             id="eventLuogo"
             placeholder="Es. Palestra comunale"
           >
-
         </label>
 
         <label>
-
           Indirizzo
 
           <input
@@ -1741,7 +1715,6 @@
             id="eventIndirizzo"
             placeholder="Via, numero civico, Roma"
           >
-
         </label>
 
       </div>
@@ -1749,7 +1722,6 @@
       <div class="form-two-columns">
 
         <label>
-
           A chi è rivolto
 
           <select id="eventPubblico">
@@ -1779,11 +1751,9 @@
             </option>
 
           </select>
-
         </label>
 
         <label>
-
           Prezzo / offerta
 
           <input
@@ -1791,13 +1761,11 @@
             id="eventPrezzo"
             placeholder="Es. Gratuito oppure 10 €"
           >
-
         </label>
 
       </div>
 
       <label>
-
         Link per informazioni o iscrizioni
 
         <input
@@ -1805,34 +1773,33 @@
           id="eventLinkInfo"
           placeholder="https://..."
         >
-
       </label>
-<label>
 
-  Locandina dell'evento
+      <label>
+        Locandina dell'evento
 
-  <input
-    type="file"
-    id="eventLocandina"
-    accept="image/jpeg,image/png,image/webp"
-  >
+        <input
+          type="file"
+          id="eventLocandina"
+          accept="image/jpeg,image/png,image/webp"
+        >
+      </label>
 
-</label>
+      <p class="form-note">
+        Facoltativa. JPG, PNG o WebP, massimo 5 MB.
+      </p>
 
-<p class="form-note">
-  Facoltativa. JPG, PNG o WebP, massimo 5 MB.
-</p>
+      <div
+        id="eventPosterPreview"
+        class="poster-preview"
+        style="display:none;"
+      >
+        <img
+          id="eventPosterPreviewImage"
+          alt="Anteprima della locandina"
+        >
+      </div>
 
-<div
-  id="eventPosterPreview"
-  class="poster-preview"
-  style="display:none;"
->
-  <img
-    id="eventPosterPreviewImage"
-    alt="Anteprima della locandina"
-  >
-</div>
       <hr class="form-divider">
 
       <h3>
@@ -1846,7 +1813,6 @@
       <div class="form-two-columns">
 
         <label>
-
           Nome referente *
 
           <input
@@ -1854,11 +1820,9 @@
             id="eventReferente"
             required
           >
-
         </label>
 
         <label>
-
           Email referente *
 
           <input
@@ -1866,7 +1830,6 @@
             id="eventEmailReferente"
             required
           >
-
         </label>
 
       </div>
@@ -1906,13 +1869,15 @@
 
 </div>
 
-<!-- SCHEDA COMPLETA EVENTO -->
+
+<!-- DETTAGLIO EVENTO -->
 
 <div
   id="eventDetailModal"
   class="modal-overlay"
   aria-hidden="true"
 >
+
   <div
     class="modal-box event-detail-box"
     role="dialog"
@@ -1932,7 +1897,12 @@
     <div id="eventDetailContent"></div>
 
   </div>
+
 </div>
+
+
+<!-- FOOTER -->
+
 <footer>
 
   <div class="container footer-content">
@@ -1961,13 +1931,15 @@
 
 
 <script>
+  /* =========================================================
+     SUPABASE
+     ========================================================= */
 
   const SUPABASE_URL =
     "https://yordjsaevwflqakzhfdf.supabase.co";
 
   const SUPABASE_KEY =
     "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
-
 
   const db =
     window.supabase.createClient(
@@ -1976,30 +1948,34 @@
     );
 
 
+  /* =========================================================
+     STATO
+     ========================================================= */
+
   let asdData = [];
-let eventData = [];
-  const eventFilters = {
+  let eventData = [];
 
-  weekend: false,
-
-  children: false,
-
-  free: false,
-
-  discipline: "",
-
-  quartier: ""
-
-};
-  let selectedSport =
-    "Tutti";
+  let selectedSport = "Tutti";
 
   let markers = [];
 
   let pickerMap = null;
-
   let pickerMarker = null;
 
+  let eventPosterPreviewUrl = null;
+
+  const eventFilters = {
+    weekend: false,
+    children: false,
+    free: false,
+    discipline: "",
+    quartier: ""
+  };
+
+
+  /* =========================================================
+     MAPPA PRINCIPALE
+     ========================================================= */
 
   const map =
     L.map("map")
@@ -2007,7 +1983,6 @@ let eventData = [];
         [41.879, 12.557],
         13
       );
-
 
   L.tileLayer(
     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -2018,15 +1993,57 @@ let eventData = [];
   ).addTo(map);
 
 
-  function escapeHtml(value) {
+  /* =========================================================
+     UTILITÀ
+     ========================================================= */
 
+  function escapeHtml(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
 
+
+  function safeHttpUrl(value) {
+
+    if (!value) {
+      return "";
+    }
+
+    try {
+
+      const url =
+        new URL(value);
+
+      if (
+        url.protocol === "https:" ||
+        url.protocol === "http:"
+      ) {
+        return url.href;
+      }
+
+    }
+    catch (_) {}
+
+    return "";
+  }
+
+
+  function normalizeFilterText(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase();
+  }
+
+
+  function splitDisciplines(value) {
+    return String(value || "")
+      .split(/[,;]+/)
+      .map(item => item.trim())
+      .filter(Boolean);
   }
 
 
@@ -2044,6 +2061,72 @@ let eventData = [];
   }
 
 
+  function formatEventDate(value) {
+
+    if (!value) {
+      return "Data da definire";
+    }
+
+    const date =
+      new Date(value);
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return "Data da definire";
+    }
+
+    return new Intl.DateTimeFormat(
+      "it-IT",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    ).format(date);
+
+  }
+
+
+  function eventIcon(tipologia) {
+
+    const type =
+      String(tipologia || "")
+        .toLowerCase();
+
+    if (type.includes("torneo")) {
+      return "🏆";
+    }
+
+    if (type.includes("prova")) {
+      return "🎟️";
+    }
+
+    if (type.includes("corso")) {
+      return "🏃";
+    }
+
+    if (type.includes("open")) {
+      return "📣";
+    }
+
+    if (type.includes("offerta")) {
+      return "💡";
+    }
+
+    return "📅";
+
+  }
+
+
+  /* =========================================================
+     CARICAMENTO ASD
+     ========================================================= */
+
   async function loadAsd() {
 
     const info =
@@ -2054,7 +2137,6 @@ let eventData = [];
     info.textContent =
       "Caricamento associazioni...";
 
-
     const {
       data,
       error
@@ -2063,7 +2145,6 @@ let eventData = [];
         .from("asd_pubbliche")
         .select("*")
         .order("nome");
-
 
     if (error) {
 
@@ -2076,50 +2157,50 @@ let eventData = [];
         "Impossibile caricare le associazioni in questo momento.";
 
       return;
-
     }
 
-
     asdData =
-      (data || []).map(
-        asd => ({
+      (data || []).map(asd => ({
 
-          id:
-            asd.id,
+        id: asd.id,
 
-          name:
-            asd.nome || "",
+        name:
+          asd.nome || "",
 
-          sport:
-            asd.discipline || "Altro",
+        sport:
+          asd.discipline || "Altro",
 
-          quartier:
-            asd.quartiere || "",
+        quartier:
+          asd.quartiere || "",
 
-          lat:
-            Number(asd.latitudine),
+        lat:
+          asd.latitudine === null ||
+          asd.latitudine === undefined
+            ? NaN
+            : Number(asd.latitudine),
 
-          lng:
-            Number(asd.longitudine),
+        lng:
+          asd.longitudine === null ||
+          asd.longitudine === undefined
+            ? NaN
+            : Number(asd.longitudine),
 
-          description:
-            asd.descrizione || "",
+        description:
+          asd.descrizione || "",
 
-          indirizzo:
-            asd.indirizzo || "",
+        indirizzo:
+          asd.indirizzo || "",
 
-          telefono:
-            asd.telefono_pubblico || "",
+        telefono:
+          asd.telefono_pubblico || "",
 
-          email:
-            asd.email_pubblica || "",
+        email:
+          asd.email_pubblica || "",
 
-          sito:
-            asd.sito_web || ""
+        sito:
+          asd.sito_web || ""
 
-        })
-      );
-
+      }));
 
     applyFilters();
 
@@ -2128,869 +2209,84 @@ let eventData = [];
   }
 
 
- async function loadEvents() {
-
-  const grid =
-    document.getElementById(
-      "eventGrid"
-    );
-
-
-  const info =
-    document.getElementById(
-      "eventResultsInfo"
-    );
-
-
-  info.textContent =
-    "Caricamento eventi...";
-
-
-  const {
-    data,
-    error
-  } =
-    await db
-      .from("eventi_pubblici")
-      .select("*")
-      .order(
-        "data_inizio",
-        {
-          ascending: true
-        }
-      );
-
-
-  if (error) {
-
-    console.error(
-      "Errore caricamento eventi:",
-      error
-    );
-
-
-    grid.innerHTML =
-      '<div class="event-empty">Impossibile caricare gli eventi in questo momento.</div>';
-
-
-    info.textContent = "";
-
-    return;
-
-  }
-
-
-  eventData =
-    data || [];
-
-
-  populateEventFilters();
-
-  applyEventFilters();
-
-}
-
-    if (error) {
-
-      console.error(
-        "Errore caricamento eventi:",
-        error
-      );
-
-      grid.innerHTML =
-        '<div class="event-empty">Impossibile caricare gli eventi in questo momento.</div>';
-
-      return;
-
-    }
-
-
-    eventData =
-  data || [];
-
-renderEvents(
-  eventData
-);
-
-  }
-
-
-  function populateEventAsdSelect() {
-
-    const select =
-      document.getElementById(
-        "eventAsdId"
-      );
-
-
-    select.innerHTML =
-      '<option value="">Seleziona la tua ASD...</option>';
-
-
-    asdData
-      .slice()
-      .sort(
-        (a, b) =>
-          a.name.localeCompare(
-            b.name,
-            "it"
-          )
-      )
-      .forEach(
-        asd => {
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value =
-            String(asd.id);
-
-
-          option.textContent =
-            asd.quartier
-              ? `${asd.name} — ${asd.quartier}`
-              : asd.name;
-
-
-          select.appendChild(
-            option
-          );
-
-        }
-      );
-
-  }
-
-
-  function eventIcon(tipologia) {
-
-    const type =
-      String(
-        tipologia || ""
-      ).toLowerCase();
-
-
-    if (
-      type.includes("torneo")
-    ) {
-      return "🏆";
-    }
-
-
-    if (
-      type.includes("prova")
-    ) {
-      return "🎟️";
-    }
-
-
-    if (
-      type.includes("corso")
-    ) {
-      return "🏃";
-    }
-
-
-    if (
-      type.includes("open")
-    ) {
-      return "📣";
-    }
-
-
-    if (
-      type.includes("offerta")
-    ) {
-      return "💡";
-    }
-
-
-    return "📅";
-
-  }
-
-
-  function formatEventDate(value) {
-
-    if (!value) {
-      return "Data da definire";
-    }
-
-
-    const date =
-      new Date(value);
-
-
-    if (
-      Number.isNaN(
-        date.getTime()
-      )
-    ) {
-      return "Data da definire";
-    }
-
-
-    return new Intl.DateTimeFormat(
-      "it-IT",
-      {
-
-        day:
-          "2-digit",
-
-        month:
-          "short",
-
-        year:
-          "numeric",
-
-        hour:
-          "2-digit",
-
-        minute:
-          "2-digit"
-
-      }
-    ).format(date);
-
-  }
-
-let eventPosterPreviewUrl = null;
-
-
-function safeHttpUrl(value) {
-
-  if (!value) {
-    return "";
-  }
-
-  try {
-
-    const url = new URL(value);
-
-    if (
-      url.protocol === "https:" ||
-      url.protocol === "http:"
-    ) {
-      return url.href;
-    }
-
-  }
-  catch (_) {}
-
-  return "";
-
-}
-
-
-function resetPosterPreview() {
-
-  if (eventPosterPreviewUrl) {
-
-    URL.revokeObjectURL(
-      eventPosterPreviewUrl
-    );
-
-    eventPosterPreviewUrl = null;
-
-  }
-
-  document
-    .getElementById(
-      "eventPosterPreview"
-    )
-    .style.display =
-      "none";
-
-  document
-    .getElementById(
-      "eventPosterPreviewImage"
-    )
-    .removeAttribute(
-      "src"
-    );
-
-}
-
-
-document
-  .getElementById(
-    "eventLocandina"
-  )
-  .addEventListener(
-    "change",
-    event => {
-
-      const file =
-        event.target.files[0];
-
-
-      const message =
-        document.getElementById(
-          "eventFormMessage"
-        );
-
-
-      message.className =
-        "form-message";
-
-      message.textContent =
-        "";
-
-
-      resetPosterPreview();
-
-
-      if (!file) {
-        return;
-      }
-
-
-      const tipiConsentiti = [
-        "image/jpeg",
-        "image/png",
-        "image/webp"
-      ];
-
-
-      if (
-        !tipiConsentiti.includes(
-          file.type
-        )
-      ) {
-
-        event.target.value =
-          "";
-
-        message.className =
-          "form-message error";
-
-        message.textContent =
-          "La locandina deve essere in formato JPG, PNG o WebP.";
-
-        return;
-
-      }
-
-
-      const maxSize =
-        5 * 1024 * 1024;
-
-
-      if (
-        file.size > maxSize
-      ) {
-
-        event.target.value =
-          "";
-
-        message.className =
-          "form-message error";
-
-        message.textContent =
-          "La locandina non può superare 5 MB.";
-
-        return;
-
-      }
-
-
-      eventPosterPreviewUrl =
-        URL.createObjectURL(
-          file
-        );
-
-
-      document
-        .getElementById(
-          "eventPosterPreviewImage"
-        )
-        .src =
-          eventPosterPreviewUrl;
-
-
-      document
-        .getElementById(
-          "eventPosterPreview"
-        )
-        .style.display =
-          "block";
-
-    }
-  );
-
-
-async function uploadEventPoster(file) {
-
-  if (!file) {
-    return null;
-  }
-
-
-  const extensions = {
-
-    "image/jpeg":
-      "jpg",
-
-    "image/png":
-      "png",
-
-    "image/webp":
-      "webp"
-
-  };
-
-
-  const extension =
-    extensions[file.type];
-
-
-  if (!extension) {
-
-    throw new Error(
-      "Formato locandina non valido."
-    );
-
-  }
-
-
-  if (
-    file.size >
-    5 * 1024 * 1024
-  ) {
-
-    throw new Error(
-      "La locandina supera 5 MB."
-    );
-
-  }
-
-
-  const randomPart =
-    (
-      typeof crypto !== "undefined" &&
-      crypto.randomUUID
-    )
-      ?
-      crypto.randomUUID()
-      :
-      Math.random()
-        .toString(36)
-        .slice(2);
-
-
-  const filePath =
-    `eventi/${Date.now()}-${randomPart}.${extension}`;
-
-
-  const {
-    error
-  } =
-    await db
-      .storage
-      .from(
-        "locandine-eventi"
-      )
-      .upload(
-        filePath,
-        file,
-        {
-
-          cacheControl:
-            "3600",
-
-          upsert:
-            false,
-
-          contentType:
-            file.type
-
-        }
-      );
-
-
-  if (error) {
-
-    console.error(
-      "Errore upload locandina:",
-      error
-    );
-
-    throw error;
-
-  }
-
-
-  const {
-    data
-  } =
-    db
-      .storage
-      .from(
-        "locandine-eventi"
-      )
-      .getPublicUrl(
-        filePath
-      );
-
-
-  if (
-    !data ||
-    !data.publicUrl
-  ) {
-
-    throw new Error(
-      "URL pubblico della locandina non disponibile."
-    );
-
-  }
-
-
-  return data.publicUrl;
-
-}
-  function renderEvents(events) {
-
-  const grid =
-    document.getElementById(
-      "eventGrid"
-    );
-
-  grid.innerHTML = "";
-
-
-  if (events.length === 0) {
-
-    grid.innerHTML =
-      '<div class="event-empty">Non ci sono ancora eventi approvati. Le ASD possono proporne uno dal pulsante “Pubblica corso o evento”.</div>';
-
-    return;
-  }
-
-
-  events.forEach(evento => {
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-    card.className = "card";
-
-
-    const posterUrl =
-      safeHttpUrl(
-        evento.locandina_url
-      );
-
-
-    const meta = [];
-
-
-    if (evento.pubblico) {
-
-      meta.push(
-        `<span>👥 ${escapeHtml(evento.pubblico)}</span>`
-      );
-
-    }
-
-
-    if (evento.prezzo) {
-
-      meta.push(
-        `<span>💶 ${escapeHtml(evento.prezzo)}</span>`
-      );
-
-    }
-
-
-    let safeLink = "";
-
-
-    if (evento.link_info) {
-
-      try {
-
-        const url =
-          new URL(
-            evento.link_info
-          );
-
-
-        if (
-          url.protocol === "http:" ||
-          url.protocol === "https:"
-        ) {
-
-          safeLink =
-            `
-              <a
-                class="card-link"
-                href="${escapeHtml(url.href)}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Informazioni / iscrizioni →
-              </a>
-            `;
-
-        }
-
-      }
-      catch (_) {}
-
-    }
-
-
-    card.innerHTML =
-      `
-
-        ${
-          posterUrl
-            ?
-            `
-              <div class="event-poster">
-
-                <img
-                  src="${escapeHtml(posterUrl)}"
-                  alt="Locandina: ${escapeHtml(evento.titolo)}"
-                  loading="lazy"
-                >
-
-              </div>
-            `
-            :
-            `
-              <div class="event-image">
-                ${eventIcon(evento.tipologia)}
-              </div>
-            `
-        }
-
-
-        <div class="card-body">
-
-          <div class="event-date">
-            ${escapeHtml(
-              formatEventDate(
-                evento.data_inizio
-              )
-            )}
-          </div>
-
-
-          <span class="tag">
-            ${escapeHtml(
-              evento.tipologia ||
-              "Evento"
-            )}
-          </span>
-
-
-          <h3>
-            ${escapeHtml(
-              evento.titolo
-            )}
-          </h3>
-
-
-          <p>
-            <strong>
-              ${escapeHtml(
-                evento.asd_nome ||
-                "ASD"
-              )}
-            </strong>
-          </p>
-
-
-          ${
-            evento.descrizione
-              ?
-              `
-                <p>
-                  ${escapeHtml(
-                    evento.descrizione
-                  )}
-                </p>
-              `
-              :
-              ""
-          }
-
-
-          ${
-            evento.luogo ||
-            evento.indirizzo
-              ?
-              `
-                <p class="card-location">
-
-                  📍 ${escapeHtml(
-                    [
-                      evento.luogo,
-                      evento.indirizzo
-                    ]
-                    .filter(Boolean)
-                    .join(" — ")
-                  )}
-
-                </p>
-              `
-              :
-              ""
-          }
-
-
-          ${
-            meta.length
-              ?
-              `
-                <div class="event-meta">
-                  ${meta.join("")}
-                </div>
-              `
-              :
-              ""
-          }
-
-
-          ${safeLink}
-
-
-          <button
-            type="button"
-            class="event-more-button"
-            data-event-id="${evento.id}"
-          >
-            Scopri tutti i dettagli →
-          </button>
-
-        </div>
-      `;
-
-
-    grid.appendChild(
-      card
-    );
-
-  });
-
-
-  /* QUI siamo dopo events.forEach,
-     ma ancora dentro renderEvents */
-
-  grid
-    .querySelectorAll(
-      "[data-event-id]"
-    )
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          openEventDetail(
-            Number(
-              button.dataset.eventId
-            )
-          );
-
-        }
-      );
-
-    });
-
-}
+  /* =========================================================
+     MAPPA E CARD ASD
+     ========================================================= */
 
   function renderMarkers(data) {
 
     markers.forEach(
       marker =>
-        map.removeLayer(
-          marker
-        )
+        map.removeLayer(marker)
     );
-
 
     markers = [];
 
-
     data
-      .filter(
-        validCoordinates
-      )
-      .forEach(
-        asd => {
+      .filter(validCoordinates)
+      .forEach(asd => {
 
-          const marker =
-            L.marker(
-              [
-                asd.lat,
-                asd.lng
-              ]
-            )
-            .addTo(map);
+        const marker =
+          L.marker(
+            [asd.lat, asd.lng]
+          )
+          .addTo(map);
 
+        marker.bindPopup(
+          `
+            <div style="min-width:200px">
 
-          marker.bindPopup(
-            `
-              <div style="min-width:200px">
+              <strong style="font-size:16px">
+                ${escapeHtml(asd.name)}
+              </strong>
 
-                <strong style="font-size:16px">
-                  ${escapeHtml(asd.name)}
-                </strong>
+              <br>
 
-                <br>
+              <span>
+                ${escapeHtml(asd.sport)}
+              </span>
 
-                <span>
-                  ${escapeHtml(asd.sport)}
-                </span>
+              <br><br>
 
-                <br><br>
+              <span>
+                📍 ${escapeHtml(asd.quartier)}
+              </span>
 
-                <span>
-                  📍 ${escapeHtml(asd.quartier)}
-                </span>
+              ${
+                asd.indirizzo
+                  ?
+                  `
+                    <br>
+                    <span>
+                      ${escapeHtml(asd.indirizzo)}
+                    </span>
+                  `
+                  :
+                  ""
+              }
 
-                ${
-                  asd.indirizzo
-                    ?
-                    `<br>
-                     <span>
-                       ${escapeHtml(asd.indirizzo)}
-                     </span>`
-                    :
-                    ""
-                }
+              ${
+                asd.description
+                  ?
+                  `
+                    <p>
+                      ${escapeHtml(asd.description)}
+                    </p>
+                  `
+                  :
+                  ""
+              }
 
-                ${
-                  asd.description
-                    ?
-                    `<p>
-                       ${escapeHtml(asd.description)}
-                     </p>`
-                    :
-                    ""
-                }
+            </div>
+          `
+        );
 
-              </div>
-            `
-          );
+        marker.__asdId =
+          asd.id;
 
+        markers.push(marker);
 
-          marker.__asdId =
-            asd.id;
-
-
-          markers.push(
-            marker
-          );
-
-        }
-      );
+      });
 
   }
 
@@ -3002,24 +2298,17 @@ async function uploadEventPoster(file) {
         "asdGrid"
       );
 
-
     const info =
       document.getElementById(
         "resultsInfo"
       );
 
-
-    grid.innerHTML =
-      "";
-
+    grid.innerHTML = "";
 
     info.textContent =
       `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.`;
 
-
-    if (
-      data.length === 0
-    ) {
+    if (data.length === 0) {
 
       grid.innerHTML =
         `
@@ -3042,113 +2331,96 @@ async function uploadEventPoster(file) {
         `;
 
       return;
-
     }
 
+    data.forEach(asd => {
 
-    data.forEach(
-      asd => {
-
-        const card =
-          document.createElement(
-            "article"
-          );
-
-
-        card.className =
-          "card";
-
-
-        const mapLink =
-          validCoordinates(asd)
-            ?
-            `
-              <button
-                type="button"
-                class="card-link"
-                data-asd-id="${asd.id}"
-                style="border:0;background:none;padding:0;"
-              >
-                Vedi sulla mappa →
-              </button>
-            `
-            :
-            `
-              <span
-                class="card-link"
-                style="color:#7a858f;"
-              >
-                Posizione non disponibile
-              </span>
-            `;
-
-
-        card.innerHTML =
-          `
-            <div class="card-body">
-
-              <span class="tag">
-                ${escapeHtml(asd.sport)}
-              </span>
-
-              <h3>
-                ${escapeHtml(asd.name)}
-              </h3>
-
-              ${
-                asd.description
-                  ?
-                  `<p>
-                     ${escapeHtml(asd.description)}
-                   </p>`
-                  :
-                  ""
-              }
-
-              <p class="card-location">
-                📍 ${escapeHtml(
-                  asd.quartier ||
-                  asd.indirizzo ||
-                  "Municipio Roma V"
-                )}
-              </p>
-
-              ${mapLink}
-
-            </div>
-          `;
-
-
-        grid.appendChild(
-          card
+      const card =
+        document.createElement(
+          "article"
         );
 
-      }
-    );
+      card.className =
+        "card";
 
+      const mapLink =
+        validCoordinates(asd)
+          ?
+          `
+            <button
+              type="button"
+              class="card-link"
+              data-asd-id="${asd.id}"
+              style="border:0;background:none;padding:0;"
+            >
+              Vedi sulla mappa →
+            </button>
+          `
+          :
+          `
+            <span
+              class="card-link"
+              style="color:#7a858f;"
+            >
+              Posizione non disponibile
+            </span>
+          `;
+
+      card.innerHTML =
+        `
+          <div class="card-body">
+
+            <span class="tag">
+              ${escapeHtml(asd.sport)}
+            </span>
+
+            <h3>
+              ${escapeHtml(asd.name)}
+            </h3>
+
+            ${
+              asd.description
+                ?
+                `<p>${escapeHtml(asd.description)}</p>`
+                :
+                ""
+            }
+
+            <p class="card-location">
+              📍 ${escapeHtml(
+                asd.quartier ||
+                asd.indirizzo ||
+                "Municipio Roma V"
+              )}
+            </p>
+
+            ${mapLink}
+
+          </div>
+        `;
+
+      grid.appendChild(card);
+
+    });
 
     grid
-      .querySelectorAll(
-        "[data-asd-id]"
-      )
-      .forEach(
-        button => {
+      .querySelectorAll("[data-asd-id]")
+      .forEach(button => {
 
-          button.addEventListener(
-            "click",
-            () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-              focusAsd(
-                Number(
-                  button.dataset.asdId
-                )
-              );
+            focusAsd(
+              Number(
+                button.dataset.asdId
+              )
+            );
 
-            }
-          );
+          }
+        );
 
-        }
-      );
+      });
 
   }
 
@@ -3157,91 +2429,71 @@ async function uploadEventPoster(file) {
 
     const search =
       document
-        .getElementById(
-          "searchInput"
-        )
+        .getElementById("searchInput")
         .value
         .trim()
         .toLowerCase();
 
-
     const filtered =
-      asdData.filter(
-        asd => {
+      asdData.filter(asd => {
 
-          const sportText =
-            asd.sport
-              .toLowerCase();
+        const sportText =
+          asd.sport.toLowerCase();
 
+        const sportMatch =
+          selectedSport === "Tutti" ||
 
-          const sportMatch =
-            selectedSport === "Tutti" ||
-
-            (
-              selectedSport === "Altro"
-                ?
-                ![
-                  "calcio",
-                  "judo",
-                  "basket",
-                  "danza",
-                  "tennis"
-                ]
-                .some(
-                  sport =>
-                    sportText.includes(
-                      sport
-                    )
-                )
-                :
-                sportText.includes(
-                  selectedSport
-                    .toLowerCase()
-                )
-            );
-
-
-          const searchMatch =
-            !search ||
-
-            asd.name
-              .toLowerCase()
-              .includes(search) ||
-
-            asd.sport
-              .toLowerCase()
-              .includes(search) ||
-
-            asd.quartier
-              .toLowerCase()
-              .includes(search) ||
-
-            asd.description
-              .toLowerCase()
-              .includes(search) ||
-
-            asd.indirizzo
-              .toLowerCase()
-              .includes(search);
-
-
-          return (
-            sportMatch &&
-            searchMatch
+          (
+            selectedSport === "Altro"
+              ?
+              ![
+                "calcio",
+                "judo",
+                "basket",
+                "danza",
+                "tennis"
+              ].some(
+                sport =>
+                  sportText.includes(sport)
+              )
+              :
+              sportText.includes(
+                selectedSport.toLowerCase()
+              )
           );
 
-        }
-      );
+        const searchMatch =
+          !search ||
 
+          asd.name
+            .toLowerCase()
+            .includes(search) ||
 
-    renderMarkers(
-      filtered
-    );
+          asd.sport
+            .toLowerCase()
+            .includes(search) ||
 
+          asd.quartier
+            .toLowerCase()
+            .includes(search) ||
 
-    renderCards(
-      filtered
-    );
+          asd.description
+            .toLowerCase()
+            .includes(search) ||
+
+          asd.indirizzo
+            .toLowerCase()
+            .includes(search);
+
+        return (
+          sportMatch &&
+          searchMatch
+        );
+
+      });
+
+    renderMarkers(filtered);
+    renderCards(filtered);
 
   }
 
@@ -3254,7 +2506,6 @@ async function uploadEventPoster(file) {
           item.id === id
       );
 
-
     if (
       !asd ||
       !validCoordinates(asd)
@@ -3262,15 +2513,10 @@ async function uploadEventPoster(file) {
       return;
     }
 
-
     map.setView(
-      [
-        asd.lat,
-        asd.lng
-      ],
+      [asd.lat, asd.lng],
       16
     );
-
 
     const marker =
       markers.find(
@@ -3278,23 +2524,16 @@ async function uploadEventPoster(file) {
           item.__asdId === id
       );
 
-
     if (marker) {
       marker.openPopup();
     }
 
-
     document
-      .getElementById(
-        "mappa"
-      )
+      .getElementById("mappa")
       .scrollIntoView(
         {
-          behavior:
-            "smooth",
-
-          block:
-            "start"
+          behavior: "smooth",
+          block: "start"
         }
       );
 
@@ -3302,50 +2541,35 @@ async function uploadEventPoster(file) {
 
 
   document
-    .querySelectorAll(
-      ".filter"
-    )
-    .forEach(
-      button => {
+    .querySelectorAll(".filter")
+    .forEach(button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+      button.addEventListener(
+        "click",
+        () => {
 
-            document
-              .querySelectorAll(
-                ".filter"
-              )
-              .forEach(
-                btn =>
-                  btn.classList.remove(
-                    "active"
-                  )
-              );
-
-
-            button.classList.add(
-              "active"
+          document
+            .querySelectorAll(".filter")
+            .forEach(
+              btn =>
+                btn.classList.remove("active")
             );
 
+          button.classList.add("active");
 
-            selectedSport =
-              button.dataset.sport;
+          selectedSport =
+            button.dataset.sport;
 
+          applyFilters();
 
-            applyFilters();
+        }
+      );
 
-          }
-        );
-
-      }
-    );
+    });
 
 
   document
-    .getElementById(
-      "searchButton"
-    )
+    .getElementById("searchButton")
     .addEventListener(
       "click",
       applyFilters
@@ -3353,23 +2577,1076 @@ async function uploadEventPoster(file) {
 
 
   document
-    .getElementById(
-      "searchInput"
-    )
+    .getElementById("searchInput")
     .addEventListener(
       "keyup",
       event => {
 
-        if (
-          event.key ===
-          "Enter"
-        ) {
+        if (event.key === "Enter") {
           applyFilters();
         }
 
       }
     );
 
+
+  /* =========================================================
+     CARICAMENTO EVENTI
+     ========================================================= */
+
+  async function loadEvents() {
+
+    const grid =
+      document.getElementById(
+        "eventGrid"
+      );
+
+    const info =
+      document.getElementById(
+        "eventResultsInfo"
+      );
+
+    info.textContent =
+      "Caricamento eventi...";
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("eventi_pubblici")
+        .select("*")
+        .order(
+          "data_inizio",
+          {
+            ascending: true
+          }
+        );
+
+    if (error) {
+
+      console.error(
+        "Errore caricamento eventi:",
+        error
+      );
+
+      grid.innerHTML =
+        '<div class="event-empty">Impossibile caricare gli eventi in questo momento.</div>';
+
+      info.textContent = "";
+
+      return;
+    }
+
+    eventData =
+      data || [];
+
+    populateEventFilters();
+
+    applyEventFilters();
+
+  }
+
+
+  /* =========================================================
+     FILTRI EVENTI
+     ========================================================= */
+
+  function populateEventFilters() {
+
+    const disciplineSelect =
+      document.getElementById(
+        "filterDiscipline"
+      );
+
+    const quartierSelect =
+      document.getElementById(
+        "filterQuartiere"
+      );
+
+    const disciplineSet =
+      new Set();
+
+    const quartierSet =
+      new Set();
+
+    eventData.forEach(evento => {
+
+      splitDisciplines(
+        evento.asd_discipline
+      )
+      .forEach(
+        discipline =>
+          disciplineSet.add(discipline)
+      );
+
+      if (evento.asd_quartiere) {
+
+        quartierSet.add(
+          evento.asd_quartiere.trim()
+        );
+
+      }
+
+    });
+
+    const currentDiscipline =
+      eventFilters.discipline;
+
+    const currentQuartier =
+      eventFilters.quartier;
+
+    disciplineSelect.innerHTML =
+      '<option value="">Tutte le discipline</option>';
+
+    [...disciplineSet]
+      .sort(
+        (a, b) =>
+          a.localeCompare(b, "it")
+      )
+      .forEach(discipline => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          discipline;
+
+        option.textContent =
+          discipline;
+
+        disciplineSelect
+          .appendChild(option);
+
+      });
+
+    quartierSelect.innerHTML =
+      '<option value="">Tutto il Municipio V</option>';
+
+    [...quartierSet]
+      .sort(
+        (a, b) =>
+          a.localeCompare(b, "it")
+      )
+      .forEach(quartiere => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          quartiere;
+
+        option.textContent =
+          quartiere;
+
+        quartierSelect
+          .appendChild(option);
+
+      });
+
+    disciplineSelect.value =
+      currentDiscipline;
+
+    quartierSelect.value =
+      currentQuartier;
+
+  }
+
+
+  function getWeekendRange() {
+
+    const now =
+      new Date();
+
+    const day =
+      now.getDay();
+
+    const start =
+      new Date(now);
+
+    if (day === 0) {
+
+      start.setDate(
+        now.getDate() - 1
+      );
+
+    }
+    else {
+
+      const daysUntilSaturday =
+        6 - day;
+
+      start.setDate(
+        now.getDate() +
+        daysUntilSaturday
+      );
+
+    }
+
+    start.setHours(
+      0,
+      0,
+      0,
+      0
+    );
+
+    const end =
+      new Date(start);
+
+    end.setDate(
+      start.getDate() + 1
+    );
+
+    end.setHours(
+      23,
+      59,
+      59,
+      999
+    );
+
+    return {
+      start,
+      end
+    };
+
+  }
+
+
+  function eventIsThisWeekend(evento) {
+
+    if (!evento.data_inizio) {
+      return false;
+    }
+
+    const eventDate =
+      new Date(
+        evento.data_inizio
+      );
+
+    if (
+      Number.isNaN(
+        eventDate.getTime()
+      )
+    ) {
+      return false;
+    }
+
+    const {
+      start,
+      end
+    } =
+      getWeekendRange();
+
+    return (
+      eventDate >= start &&
+      eventDate <= end
+    );
+
+  }
+
+
+  function eventIsForChildren(evento) {
+
+    const pubblico =
+      normalizeFilterText(
+        evento.pubblico
+      );
+
+    return (
+      pubblico.includes("bambin") ||
+      pubblico.includes("famigl") ||
+      pubblico === "tutti"
+    );
+
+  }
+
+
+  function eventIsFree(evento) {
+
+    const prezzo =
+      normalizeFilterText(
+        evento.prezzo
+      );
+
+    if (!prezzo) {
+      return false;
+    }
+
+    if (
+      prezzo.includes("gratuit") ||
+      prezzo.includes("gratis") ||
+      prezzo === "free"
+    ) {
+      return true;
+    }
+
+    return /^0([,.]00)?\s*(€|euro)?$/
+      .test(prezzo);
+
+  }
+
+
+  function eventMatchesDiscipline(evento) {
+
+    if (!eventFilters.discipline) {
+      return true;
+    }
+
+    const selected =
+      normalizeFilterText(
+        eventFilters.discipline
+      );
+
+    const disciplines =
+      splitDisciplines(
+        evento.asd_discipline
+      )
+      .map(
+        normalizeFilterText
+      );
+
+    return disciplines.some(
+      discipline =>
+        discipline === selected
+    );
+
+  }
+
+
+  function eventMatchesQuartier(evento) {
+
+    if (!eventFilters.quartier) {
+      return true;
+    }
+
+    return (
+      normalizeFilterText(
+        evento.asd_quartiere
+      )
+      ===
+      normalizeFilterText(
+        eventFilters.quartier
+      )
+    );
+
+  }
+
+
+  function applyEventFilters() {
+
+    const filtered =
+      eventData.filter(evento => {
+
+        if (
+          eventFilters.weekend &&
+          !eventIsThisWeekend(evento)
+        ) {
+          return false;
+        }
+
+        if (
+          eventFilters.children &&
+          !eventIsForChildren(evento)
+        ) {
+          return false;
+        }
+
+        if (
+          eventFilters.free &&
+          !eventIsFree(evento)
+        ) {
+          return false;
+        }
+
+        if (
+          !eventMatchesDiscipline(evento)
+        ) {
+          return false;
+        }
+
+        if (
+          !eventMatchesQuartier(evento)
+        ) {
+          return false;
+        }
+
+        return true;
+
+      });
+
+    renderEvents(filtered);
+
+    updateEventResultsInfo(
+      filtered.length
+    );
+
+  }
+
+
+  function updateEventResultsInfo(count) {
+
+    const info =
+      document.getElementById(
+        "eventResultsInfo"
+      );
+
+    const activeFilters =
+      [];
+
+    if (eventFilters.weekend) {
+      activeFilters.push(
+        "questo weekend"
+      );
+    }
+
+    if (eventFilters.children) {
+      activeFilters.push(
+        "bambini"
+      );
+    }
+
+    if (eventFilters.free) {
+      activeFilters.push(
+        "gratuito"
+      );
+    }
+
+    if (eventFilters.discipline) {
+      activeFilters.push(
+        eventFilters.discipline
+      );
+    }
+
+    if (eventFilters.quartier) {
+      activeFilters.push(
+        eventFilters.quartier
+      );
+    }
+
+    const resultText =
+      count === 1
+        ?
+        "1 opportunità trovata"
+        :
+        `${count} opportunità trovate`;
+
+    if (
+      activeFilters.length === 0
+    ) {
+
+      info.innerHTML =
+        `<span class="event-filter-summary">${resultText}</span>`;
+
+      return;
+    }
+
+    info.innerHTML =
+      `
+        <span class="event-filter-summary">
+          ${resultText}
+        </span>
+
+        · Filtri:
+        ${escapeHtml(
+          activeFilters.join(" · ")
+        )}
+      `;
+
+  }
+
+
+  function setChipState(
+    button,
+    active
+  ) {
+
+    button.classList.toggle(
+      "active",
+      active
+    );
+
+    button.setAttribute(
+      "aria-pressed",
+      active
+        ?
+        "true"
+        :
+        "false"
+    );
+
+  }
+
+
+  function resetEventFilters() {
+
+    eventFilters.weekend =
+      false;
+
+    eventFilters.children =
+      false;
+
+    eventFilters.free =
+      false;
+
+    eventFilters.discipline =
+      "";
+
+    eventFilters.quartier =
+      "";
+
+    setChipState(
+      document.getElementById(
+        "filterWeekend"
+      ),
+      false
+    );
+
+    setChipState(
+      document.getElementById(
+        "filterChildren"
+      ),
+      false
+    );
+
+    setChipState(
+      document.getElementById(
+        "filterFree"
+      ),
+      false
+    );
+
+    document
+      .getElementById(
+        "filterDiscipline"
+      )
+      .value = "";
+
+    document
+      .getElementById(
+        "filterQuartiere"
+      )
+      .value = "";
+
+    applyEventFilters();
+
+  }
+
+
+  /* =========================================================
+     CARD EVENTI
+     ========================================================= */
+
+  function renderEvents(events) {
+
+    const grid =
+      document.getElementById(
+        "eventGrid"
+      );
+
+    grid.innerHTML = "";
+
+    if (events.length === 0) {
+
+      grid.innerHTML =
+        `
+          <div class="event-empty">
+            Nessuna opportunità corrisponde ai filtri selezionati.
+            Prova ad azzerare uno o più filtri.
+          </div>
+        `;
+
+      return;
+    }
+
+    events.forEach(evento => {
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+      card.className =
+        "card";
+
+      const posterUrl =
+        safeHttpUrl(
+          evento.locandina_url
+        );
+
+      const meta = [];
+
+      if (evento.pubblico) {
+
+        meta.push(
+          `<span>👥 ${escapeHtml(evento.pubblico)}</span>`
+        );
+
+      }
+
+      if (evento.prezzo) {
+
+        meta.push(
+          `<span>💶 ${escapeHtml(evento.prezzo)}</span>`
+        );
+
+      }
+
+      card.innerHTML =
+        `
+          ${
+            posterUrl
+              ?
+              `
+                <div class="event-poster">
+
+                  <img
+                    src="${escapeHtml(posterUrl)}"
+                    alt="Locandina: ${escapeHtml(evento.titolo)}"
+                    loading="lazy"
+                  >
+
+                </div>
+              `
+              :
+              `
+                <div class="event-image">
+                  ${eventIcon(evento.tipologia)}
+                </div>
+              `
+          }
+
+          <div class="card-body">
+
+            <div class="event-date">
+              ${escapeHtml(
+                formatEventDate(
+                  evento.data_inizio
+                )
+              )}
+            </div>
+
+            <span class="tag">
+              ${escapeHtml(
+                evento.tipologia ||
+                "Evento"
+              )}
+            </span>
+
+            <h3>
+              ${escapeHtml(
+                evento.titolo
+              )}
+            </h3>
+
+            <p>
+              <strong>
+                ${escapeHtml(
+                  evento.asd_nome ||
+                  "ASD"
+                )}
+              </strong>
+            </p>
+
+            ${
+              evento.descrizione
+                ?
+                `
+                  <p>
+                    ${escapeHtml(
+                      evento.descrizione
+                    )}
+                  </p>
+                `
+                :
+                ""
+            }
+
+            ${
+              evento.luogo ||
+              evento.indirizzo
+                ?
+                `
+                  <p class="card-location">
+
+                    📍 ${escapeHtml(
+                      [
+                        evento.luogo,
+                        evento.indirizzo
+                      ]
+                      .filter(Boolean)
+                      .join(" — ")
+                    )}
+
+                  </p>
+                `
+                :
+                ""
+            }
+
+            ${
+              meta.length
+                ?
+                `
+                  <div class="event-meta">
+                    ${meta.join("")}
+                  </div>
+                `
+                :
+                ""
+            }
+
+            <button
+              type="button"
+              class="event-more-button"
+              data-event-id="${evento.id}"
+            >
+              Scopri tutti i dettagli →
+            </button>
+
+          </div>
+        `;
+
+      grid.appendChild(card);
+
+    });
+
+    grid
+      .querySelectorAll(
+        "[data-event-id]"
+      )
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            openEventDetail(
+              Number(
+                button.dataset.eventId
+              )
+            );
+
+          }
+        );
+
+      });
+
+  }
+
+
+  /* =========================================================
+     DETTAGLIO EVENTO
+     ========================================================= */
+
+  function openEventDetail(id) {
+
+    const evento =
+      eventData.find(
+        item =>
+          Number(item.id) ===
+          Number(id)
+      );
+
+    if (!evento) {
+      return;
+    }
+
+    const modal =
+      document.getElementById(
+        "eventDetailModal"
+      );
+
+    const content =
+      document.getElementById(
+        "eventDetailContent"
+      );
+
+    const posterUrl =
+      safeHttpUrl(
+        evento.locandina_url
+      );
+
+    const infoLink =
+      safeHttpUrl(
+        evento.link_info
+      );
+
+    const luogoCompleto =
+      [
+        evento.luogo,
+        evento.indirizzo
+      ]
+      .filter(Boolean)
+      .join(" — ");
+
+    content.innerHTML =
+      `
+        <div class="event-detail-layout">
+
+          <div>
+
+            ${
+              posterUrl
+                ?
+                `
+                  <div class="event-detail-poster">
+
+                    <img
+                      src="${escapeHtml(posterUrl)}"
+                      alt="Locandina: ${escapeHtml(evento.titolo)}"
+                    >
+
+                  </div>
+                `
+                :
+                `
+                  <div class="event-detail-poster event-detail-placeholder">
+                    ${eventIcon(evento.tipologia)}
+                  </div>
+                `
+            }
+
+          </div>
+
+          <div class="event-detail-main">
+
+            <span class="tag">
+              ${escapeHtml(
+                evento.tipologia ||
+                "Evento"
+              )}
+            </span>
+
+            <h2 id="eventDetailTitle">
+              ${escapeHtml(evento.titolo)}
+            </h2>
+
+            <div class="event-detail-asd">
+              Organizzato da ${escapeHtml(evento.asd_nome || "ASD")}
+            </div>
+
+            <div class="event-detail-info">
+
+              <div class="event-detail-row">
+                <strong>Quando</strong>
+                ${escapeHtml(
+                  formatEventDate(
+                    evento.data_inizio
+                  )
+                )}
+              </div>
+
+              ${
+                evento.data_fine
+                  ?
+                  `
+                    <div class="event-detail-row">
+
+                      <strong>
+                        Termina
+                      </strong>
+
+                      ${escapeHtml(
+                        formatEventDate(
+                          evento.data_fine
+                        )
+                      )}
+
+                    </div>
+                  `
+                  :
+                  ""
+              }
+
+              ${
+                luogoCompleto
+                  ?
+                  `
+                    <div class="event-detail-row">
+
+                      <strong>
+                        Dove
+                      </strong>
+
+                      📍 ${escapeHtml(luogoCompleto)}
+
+                    </div>
+                  `
+                  :
+                  ""
+              }
+
+              ${
+                evento.pubblico
+                  ?
+                  `
+                    <div class="event-detail-row">
+
+                      <strong>
+                        A chi è rivolto
+                      </strong>
+
+                      👥 ${escapeHtml(evento.pubblico)}
+
+                    </div>
+                  `
+                  :
+                  ""
+              }
+
+              ${
+                evento.prezzo
+                  ?
+                  `
+                    <div class="event-detail-row">
+
+                      <strong>
+                        Costo / offerta
+                      </strong>
+
+                      ${escapeHtml(evento.prezzo)}
+
+                    </div>
+                  `
+                  :
+                  ""
+              }
+
+            </div>
+
+            ${
+              evento.descrizione
+                ?
+                `
+                  <div class="event-detail-description">
+                    ${escapeHtml(evento.descrizione)}
+                  </div>
+                `
+                :
+                ""
+            }
+
+            ${
+              infoLink
+                ?
+                `
+                  <div class="event-detail-actions">
+
+                    <a
+                      href="${escapeHtml(infoLink)}"
+                      class="btn btn-primary"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Informazioni e iscrizioni
+                    </a>
+
+                  </div>
+                `
+                :
+                ""
+            }
+
+          </div>
+
+        </div>
+      `;
+
+    modal.classList.add(
+      "open"
+    );
+
+    modal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+    document.body
+      .classList.add(
+        "modal-open"
+      );
+
+  }
+
+
+  function closeEventDetail() {
+
+    const modal =
+      document.getElementById(
+        "eventDetailModal"
+      );
+
+    modal.classList.remove(
+      "open"
+    );
+
+    modal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+    document.body
+      .classList.remove(
+        "modal-open"
+      );
+
+  }
+
+
+  /* =========================================================
+     SELECT ASD NEL MODULO EVENTI
+     ========================================================= */
+
+  function populateEventAsdSelect() {
+
+    const select =
+      document.getElementById(
+        "eventAsdId"
+      );
+
+    select.innerHTML =
+      '<option value="">Seleziona la tua ASD...</option>';
+
+    asdData
+      .slice()
+      .sort(
+        (a, b) =>
+          a.name.localeCompare(
+            b.name,
+            "it"
+          )
+      )
+      .forEach(asd => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          String(asd.id);
+
+        option.textContent =
+          asd.quartier
+            ?
+            `${asd.name} — ${asd.quartier}`
+            :
+            asd.name;
+
+        select.appendChild(option);
+
+      });
+
+  }
+
+
+  /* =========================================================
+     MODALE ASD
+     ========================================================= */
 
   function openAsdModal() {
 
@@ -3378,23 +3655,19 @@ async function uploadEventPoster(file) {
         "asdModal"
       );
 
-
     modal.classList.add(
       "open"
     );
-
 
     modal.setAttribute(
       "aria-hidden",
       "false"
     );
 
-
     document.body
       .classList.add(
         "modal-open"
       );
-
 
     if (!pickerMap) {
 
@@ -3403,13 +3676,9 @@ async function uploadEventPoster(file) {
           "locationPickerMap"
         )
         .setView(
-          [
-            41.879,
-            12.557
-          ],
+          [41.879, 12.557],
           13
         );
-
 
       L.tileLayer(
         "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -3417,10 +3686,7 @@ async function uploadEventPoster(file) {
           maxZoom: 19,
           attribution: "&copy; OpenStreetMap"
         }
-      ).addTo(
-        pickerMap
-      );
-
+      ).addTo(pickerMap);
 
       pickerMap.on(
         "click",
@@ -3429,10 +3695,8 @@ async function uploadEventPoster(file) {
           const lat =
             event.latlng.lat;
 
-
           const lng =
             event.latlng.lng;
-
 
           document
             .getElementById(
@@ -3441,14 +3705,12 @@ async function uploadEventPoster(file) {
             .value =
               String(lat);
 
-
           document
             .getElementById(
               "asdLongitudine"
             )
             .value =
               String(lng);
-
 
           if (pickerMarker) {
 
@@ -3464,22 +3726,17 @@ async function uploadEventPoster(file) {
               L.marker(
                 event.latlng
               )
-              .addTo(
-                pickerMap
-              );
+              .addTo(pickerMap);
 
           }
-
 
           const message =
             document.getElementById(
               "positionMessage"
             );
 
-
           message.textContent =
             "✓ Posizione selezionata sulla mappa";
-
 
           message.classList.add(
             "selected"
@@ -3489,7 +3746,6 @@ async function uploadEventPoster(file) {
       );
 
     }
-
 
     setTimeout(
       () =>
@@ -3507,17 +3763,14 @@ async function uploadEventPoster(file) {
         "asdModal"
       );
 
-
     modal.classList.remove(
       "open"
     );
-
 
     modal.setAttribute(
       "aria-hidden",
       "true"
     );
-
 
     document.body
       .classList.remove(
@@ -3527,27 +3780,27 @@ async function uploadEventPoster(file) {
   }
 
 
+  /* =========================================================
+     MODALE EVENTO
+     ========================================================= */
+
   function openEventModal() {
 
     populateEventAsdSelect();
-
 
     const modal =
       document.getElementById(
         "eventModal"
       );
 
-
     modal.classList.add(
       "open"
     );
-
 
     modal.setAttribute(
       "aria-hidden",
       "false"
     );
-
 
     document.body
       .classList.add(
@@ -3564,17 +3817,14 @@ async function uploadEventPoster(file) {
         "eventModal"
       );
 
-
     modal.classList.remove(
       "open"
     );
-
 
     modal.setAttribute(
       "aria-hidden",
       "true"
     );
-
 
     document.body
       .classList.remove(
@@ -3584,125 +3834,241 @@ async function uploadEventPoster(file) {
   }
 
 
-  document
-    .getElementById(
-      "openAsdModalButton"
-    )
-    .addEventListener(
-      "click",
-      openAsdModal
-    );
+  /* =========================================================
+     LOCANDINE
+     ========================================================= */
+
+  function resetPosterPreview() {
+
+    if (eventPosterPreviewUrl) {
+
+      URL.revokeObjectURL(
+        eventPosterPreviewUrl
+      );
+
+      eventPosterPreviewUrl =
+        null;
+
+    }
+
+    document
+      .getElementById(
+        "eventPosterPreview"
+      )
+      .style.display =
+        "none";
+
+    document
+      .getElementById(
+        "eventPosterPreviewImage"
+      )
+      .removeAttribute(
+        "src"
+      );
+
+  }
 
 
   document
     .getElementById(
-      "closeAsdModalButton"
+      "eventLocandina"
     )
     .addEventListener(
-      "click",
-      closeAsdModal
-    );
-
-
-  document
-    .getElementById(
-      "openEventModalButton"
-    )
-    .addEventListener(
-      "click",
-      openEventModal
-    );
-
-
-  document
-    .getElementById(
-      "closeEventModalButton"
-    )
-    .addEventListener(
-      "click",
-      closeEventModal
-    );
-
-
-  document
-    .getElementById(
-      "asdModal"
-    )
-    .addEventListener(
-      "click",
+      "change",
       event => {
 
-        if (
-          event.target.id ===
-          "asdModal"
-        ) {
-          closeAsdModal();
-        }
+        const file =
+          event.target.files[0];
 
-      }
-    );
+        const message =
+          document.getElementById(
+            "eventFormMessage"
+          );
 
+        message.className =
+          "form-message";
 
-  document
-    .getElementById(
-      "eventModal"
-    )
-    .addEventListener(
-      "click",
-      event => {
+        message.textContent =
+          "";
 
-        if (
-          event.target.id ===
-          "eventModal"
-        ) {
-          closeEventModal();
-        }
+        resetPosterPreview();
 
-      }
-    );
-
-
-  document
-    .addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key !==
-          "Escape"
-        ) {
+        if (!file) {
           return;
         }
 
+        const tipiConsentiti = [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ];
 
         if (
-          document
-            .getElementById(
-              "asdModal"
-            )
-            .classList.contains(
-              "open"
-            )
+          !tipiConsentiti.includes(
+            file.type
+          )
         ) {
-          closeAsdModal();
+
+          event.target.value =
+            "";
+
+          message.className =
+            "form-message error";
+
+          message.textContent =
+            "La locandina deve essere in formato JPG, PNG o WebP.";
+
+          return;
         }
 
+        const maxSize =
+          5 * 1024 * 1024;
 
         if (
-          document
-            .getElementById(
-              "eventModal"
-            )
-            .classList.contains(
-              "open"
-            )
+          file.size > maxSize
         ) {
-          closeEventModal();
+
+          event.target.value =
+            "";
+
+          message.className =
+            "form-message error";
+
+          message.textContent =
+            "La locandina non può superare 5 MB.";
+
+          return;
         }
+
+        eventPosterPreviewUrl =
+          URL.createObjectURL(file);
+
+        document
+          .getElementById(
+            "eventPosterPreviewImage"
+          )
+          .src =
+            eventPosterPreviewUrl;
+
+        document
+          .getElementById(
+            "eventPosterPreview"
+          )
+          .style.display =
+            "block";
 
       }
     );
 
+
+  async function uploadEventPoster(file) {
+
+    if (!file) {
+      return null;
+    }
+
+    const extensions = {
+      "image/jpeg": "jpg",
+      "image/png": "png",
+      "image/webp": "webp"
+    };
+
+    const extension =
+      extensions[file.type];
+
+    if (!extension) {
+
+      throw new Error(
+        "Formato locandina non valido."
+      );
+
+    }
+
+    if (
+      file.size >
+      5 * 1024 * 1024
+    ) {
+
+      throw new Error(
+        "La locandina supera 5 MB."
+      );
+
+    }
+
+    const randomPart =
+      (
+        typeof crypto !== "undefined" &&
+        crypto.randomUUID
+      )
+        ?
+        crypto.randomUUID()
+        :
+        Math.random()
+          .toString(36)
+          .slice(2);
+
+    const filePath =
+      `eventi/${Date.now()}-${randomPart}.${extension}`;
+
+    const {
+      error
+    } =
+      await db
+        .storage
+        .from(
+          "locandine-eventi"
+        )
+        .upload(
+          filePath,
+          file,
+          {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+          }
+        );
+
+    if (error) {
+
+      console.error(
+        "Errore upload locandina:",
+        error
+      );
+
+      throw error;
+    }
+
+    const {
+      data
+    } =
+      db
+        .storage
+        .from(
+          "locandine-eventi"
+        )
+        .getPublicUrl(
+          filePath
+        );
+
+    if (
+      !data ||
+      !data.publicUrl
+    ) {
+
+      throw new Error(
+        "URL pubblico della locandina non disponibile."
+      );
+
+    }
+
+    return data.publicUrl;
+
+  }
+
+
+  /* =========================================================
+     INVIO ASD
+     ========================================================= */
 
   document
     .getElementById(
@@ -3714,38 +4080,31 @@ async function uploadEventPoster(file) {
 
         event.preventDefault();
 
-
         const submitButton =
           document.getElementById(
             "asdSubmit"
           );
-
 
         const message =
           document.getElementById(
             "asdFormMessage"
           );
 
-
         const latitudine =
           document.getElementById(
             "asdLatitudine"
           ).value;
-
 
         const longitudine =
           document.getElementById(
             "asdLongitudine"
           ).value;
 
-
         message.className =
           "form-message";
 
-
         message.textContent =
           "";
-
 
         if (
           !latitudine ||
@@ -3755,23 +4114,17 @@ async function uploadEventPoster(file) {
           message.className =
             "form-message error";
 
-
           message.textContent =
             "Seleziona sulla mappa la posizione della sede o dell'impianto.";
 
-
           return;
-
         }
-
 
         submitButton.disabled =
           true;
 
-
         submitButton.textContent =
           "Invio in corso...";
-
 
         const nuovaAsd = {
 
@@ -3808,14 +4161,10 @@ async function uploadEventPoster(file) {
               .trim(),
 
           latitudine:
-            Number(
-              latitudine
-            ),
+            Number(latitudine),
 
           longitudine:
-            Number(
-              longitudine
-            ),
+            Number(longitudine),
 
           descrizione:
             document
@@ -3888,18 +4237,14 @@ async function uploadEventPoster(file) {
 
         };
 
-
         const {
           error
         } =
           await db
             .from("asd")
             .insert(
-              [
-                nuovaAsd
-              ]
+              [nuovaAsd]
             );
-
 
         if (error) {
 
@@ -3908,42 +4253,32 @@ async function uploadEventPoster(file) {
             error
           );
 
-
           message.className =
             "form-message error";
-
 
           message.textContent =
             "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
 
-
           submitButton.disabled =
             false;
-
 
           submitButton.textContent =
             "Invia la segnalazione";
 
-
           return;
-
         }
-
 
         message.className =
           "form-message success";
 
-
         message.textContent =
           "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
-
 
         document
           .getElementById(
             "asdForm"
           )
           .reset();
-
 
         if (pickerMarker) {
 
@@ -3952,32 +4287,26 @@ async function uploadEventPoster(file) {
               pickerMarker
             );
 
-
           pickerMarker =
             null;
 
         }
-
 
         const positionMessage =
           document.getElementById(
             "positionMessage"
           );
 
-
         positionMessage.textContent =
           "Nessuna posizione selezionata.";
-
 
         positionMessage
           .classList.remove(
             "selected"
           );
 
-
         submitButton.disabled =
           false;
-
 
         submitButton.textContent =
           "Invia la segnalazione";
@@ -3985,6 +4314,10 @@ async function uploadEventPoster(file) {
       }
     );
 
+
+  /* =========================================================
+     INVIO EVENTO
+     ========================================================= */
 
   document
     .getElementById(
@@ -3996,38 +4329,31 @@ async function uploadEventPoster(file) {
 
         event.preventDefault();
 
-
         const submitButton =
           document.getElementById(
             "eventSubmit"
           );
-
 
         const message =
           document.getElementById(
             "eventFormMessage"
           );
 
-
         const startValue =
           document.getElementById(
             "eventDataInizio"
           ).value;
-
 
         const endValue =
           document.getElementById(
             "eventDataFine"
           ).value;
 
-
         message.className =
           "form-message";
 
-
         message.textContent =
           "";
-
 
         if (
           endValue &&
@@ -4038,76 +4364,63 @@ async function uploadEventPoster(file) {
           message.className =
             "form-message error";
 
-
           message.textContent =
             "La data di fine non può precedere la data di inizio.";
 
-
           return;
-
         }
-
 
         submitButton.disabled =
           true;
 
-
         submitButton.textContent =
           "Invio in corso...";
 
-let locandinaUrl =
-  null;
+        let locandinaUrl =
+          null;
 
+        const locandinaFile =
+          document
+            .getElementById(
+              "eventLocandina"
+            )
+            .files[0];
 
-const locandinaFile =
-  document
-    .getElementById(
-      "eventLocandina"
-    )
-    .files[0];
+        if (locandinaFile) {
 
+          submitButton.textContent =
+            "Caricamento locandina...";
 
-if (locandinaFile) {
+          try {
 
-  submitButton.textContent =
-    "Caricamento locandina...";
+            locandinaUrl =
+              await uploadEventPoster(
+                locandinaFile
+              );
 
+          }
+          catch (error) {
 
-  try {
+            message.className =
+              "form-message error";
 
-    locandinaUrl =
-      await uploadEventPoster(
-        locandinaFile
-      );
+            message.textContent =
+              "Non è stato possibile caricare la locandina. Controlla formato e dimensione e riprova.";
 
-  }
-  catch (error) {
+            submitButton.disabled =
+              false;
 
-    message.className =
-      "form-message error";
+            submitButton.textContent =
+              "Invia per approvazione";
 
+            return;
+          }
 
-    message.textContent =
-      "Non è stato possibile caricare la locandina. Controlla formato e dimensione e riprova.";
+        }
 
+        submitButton.textContent =
+          "Invio evento...";
 
-    submitButton.disabled =
-      false;
-
-
-    submitButton.textContent =
-      "Invia per approvazione";
-
-
-    return;
-
-  }
-
-}
-
-
-submitButton.textContent =
-  "Invio evento...";
         const nuovoEvento = {
 
           asd_id:
@@ -4204,7 +4517,8 @@ submitButton.textContent =
             null,
 
           locandina_url:
-  locandinaUrl,
+            locandinaUrl,
+
           nome_referente:
             document
               .getElementById(
@@ -4223,20 +4537,14 @@ submitButton.textContent =
 
         };
 
-
         const {
           error
         } =
           await db
-            .from(
-              "eventi"
-            )
+            .from("eventi")
             .insert(
-              [
-                nuovoEvento
-              ]
+              [nuovoEvento]
             );
-
 
         if (error) {
 
@@ -4245,49 +4553,39 @@ submitButton.textContent =
             error
           );
 
-
           message.className =
             "form-message error";
-
 
           message.textContent =
             "Non è stato possibile inviare l'evento. Riprova tra poco.";
 
-
           submitButton.disabled =
             false;
-
 
           submitButton.textContent =
             "Invia per approvazione";
 
-
           return;
-
         }
-
 
         message.className =
           "form-message success";
 
-
         message.textContent =
           "Evento inviato! Sarà pubblicato dopo la verifica.";
-
 
         document
           .getElementById(
             "eventForm"
           )
           .reset();
-resetPosterPreview();
+
+        resetPosterPreview();
 
         populateEventAsdSelect();
 
-
         submitButton.disabled =
           false;
-
 
         submitButton.textContent =
           "Invia per approvazione";
@@ -4295,1076 +4593,283 @@ resetPosterPreview();
       }
     );
 
-function openEventDetail(id) {
 
-  const evento =
-    eventData.find(
-      item =>
-        Number(item.id) ===
-        Number(id)
+  /* =========================================================
+     PULSANTI MODALI
+     ========================================================= */
+
+  document
+    .getElementById(
+      "openAsdModalButton"
+    )
+    .addEventListener(
+      "click",
+      openAsdModal
+    );
+
+  document
+    .getElementById(
+      "closeAsdModalButton"
+    )
+    .addEventListener(
+      "click",
+      closeAsdModal
+    );
+
+  document
+    .getElementById(
+      "openEventModalButton"
+    )
+    .addEventListener(
+      "click",
+      openEventModal
+    );
+
+  document
+    .getElementById(
+      "closeEventModalButton"
+    )
+    .addEventListener(
+      "click",
+      closeEventModal
+    );
+
+  document
+    .getElementById(
+      "closeEventDetailButton"
+    )
+    .addEventListener(
+      "click",
+      closeEventDetail
     );
 
 
-  if (!evento) {
-    return;
-  }
+  /* =========================================================
+     CLICK SULLO SFONDO MODALI
+     ========================================================= */
 
+  document
+    .getElementById(
+      "asdModal"
+    )
+    .addEventListener(
+      "click",
+      event => {
 
-  const modal =
-    document.getElementById(
-      "eventDetailModal"
-    );
-
-
-  const content =
-    document.getElementById(
-      "eventDetailContent"
-    );
-
-
-  const posterUrl =
-    safeHttpUrl(
-      evento.locandina_url
-    );
-
-
-  const infoLink =
-    safeHttpUrl(
-      evento.link_info
-    );
-
-
-  let luogoCompleto =
-    [
-      evento.luogo,
-      evento.indirizzo
-    ]
-    .filter(Boolean)
-    .join(" — ");
-
-
-  content.innerHTML =
-    `
-      <div class="event-detail-layout">
-
-        <div>
-
-          ${
-            posterUrl
-              ?
-              `
-                <div class="event-detail-poster">
-                  <img
-                    src="${escapeHtml(posterUrl)}"
-                    alt="Locandina: ${escapeHtml(evento.titolo)}"
-                  >
-                </div>
-              `
-              :
-              `
-                <div class="event-detail-poster event-detail-placeholder">
-                  ${eventIcon(evento.tipologia)}
-                </div>
-              `
-          }
-
-        </div>
-
-
-        <div class="event-detail-main">
-
-          <span class="tag">
-            ${escapeHtml(evento.tipologia || "Evento")}
-          </span>
-
-          <h2 id="eventDetailTitle">
-            ${escapeHtml(evento.titolo)}
-          </h2>
-
-          <div class="event-detail-asd">
-            Organizzato da ${escapeHtml(evento.asd_nome || "ASD")}
-          </div>
-
-
-          <div class="event-detail-info">
-
-            <div class="event-detail-row">
-              <strong>Quando</strong>
-              ${escapeHtml(formatEventDate(evento.data_inizio))}
-            </div>
-
-
-            ${
-              evento.data_fine
-                ?
-                `
-                  <div class="event-detail-row">
-                    <strong>Termina</strong>
-                    ${escapeHtml(formatEventDate(evento.data_fine))}
-                  </div>
-                `
-                :
-                ""
-            }
-
-
-            ${
-              luogoCompleto
-                ?
-                `
-                  <div class="event-detail-row">
-                    <strong>Dove</strong>
-                    📍 ${escapeHtml(luogoCompleto)}
-                  </div>
-                `
-                :
-                ""
-            }
-
-
-            ${
-              evento.pubblico
-                ?
-                `
-                  <div class="event-detail-row">
-                    <strong>A chi è rivolto</strong>
-                    👥 ${escapeHtml(evento.pubblico)}
-                  </div>
-                `
-                :
-                ""
-            }
-
-
-            ${
-              evento.prezzo
-                ?
-                `
-                  <div class="event-detail-row">
-                    <strong>Costo / offerta</strong>
-                    ${escapeHtml(evento.prezzo)}
-                  </div>
-                `
-                :
-                ""
-            }
-
-          </div>
-
-
-          ${
-            evento.descrizione
-              ?
-              `
-                <div class="event-detail-description">
-                  ${escapeHtml(evento.descrizione)}
-                </div>
-              `
-              :
-              ""
-          }
-
-
-          ${
-            infoLink
-              ?
-              `
-                <div class="event-detail-actions">
-
-                  <a
-                    href="${escapeHtml(infoLink)}"
-                    class="btn btn-primary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Informazioni e iscrizioni
-                  </a>
-
-                </div>
-              `
-              :
-              ""
-          }
-
-        </div>
-
-      </div>
-    `;
-
-
-  modal.classList.add(
-    "open"
-  );
-
-
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body
-    .classList.add(
-      "modal-open"
-    );
-
-}
-
-
-function closeEventDetail() {
-
-  const modal =
-    document.getElementById(
-      "eventDetailModal"
-    );
-
-
-  modal.classList.remove(
-    "open"
-  );
-
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  document.body
-    .classList.remove(
-      "modal-open"
-    );
-
-}
- document
-  .getElementById(
-    "closeEventDetailButton"
-  )
-  .addEventListener(
-    "click",
-    closeEventDetail
-  );
-
-
-document
-  .getElementById(
-    "eventDetailModal"
-  )
-  .addEventListener(
-    "click",
-    event => {
-
-      if (
-        event.target.id ===
-        "eventDetailModal"
-      ) {
-
-        closeEventDetail();
+        if (
+          event.target.id ===
+          "asdModal"
+        ) {
+          closeAsdModal();
+        }
 
       }
+    );
 
-    }
-  );
+
   document
-  .getElementById(
-    "filterWeekend"
-  )
-  .addEventListener(
-    "click",
-    event => {
+    .getElementById(
+      "eventModal"
+    )
+    .addEventListener(
+      "click",
+      event => {
 
-      eventFilters.weekend =
-        !eventFilters.weekend;
+        if (
+          event.target.id ===
+          "eventModal"
+        ) {
+          closeEventModal();
+        }
 
-
-      setChipState(
-        event.currentTarget,
-        eventFilters.weekend
-      );
-
-
-      applyEventFilters();
-
-    }
-  );
+      }
+    );
 
 
-document
-  .getElementById(
-    "filterChildren"
-  )
-  .addEventListener(
-    "click",
-    event => {
+  document
+    .getElementById(
+      "eventDetailModal"
+    )
+    .addEventListener(
+      "click",
+      event => {
 
-      eventFilters.children =
-        !eventFilters.children;
+        if (
+          event.target.id ===
+          "eventDetailModal"
+        ) {
+          closeEventDetail();
+        }
 
-
-      setChipState(
-        event.currentTarget,
-        eventFilters.children
-      );
-
-
-      applyEventFilters();
-
-    }
-  );
+      }
+    );
 
 
-document
-  .getElementById(
-    "filterFree"
-  )
-  .addEventListener(
-    "click",
-    event => {
+  /* =========================================================
+     TASTO ESC
+     ========================================================= */
 
-      eventFilters.free =
-        !eventFilters.free;
+  document
+    .addEventListener(
+      "keydown",
+      event => {
 
+        if (
+          event.key !== "Escape"
+        ) {
+          return;
+        }
 
-      setChipState(
-        event.currentTarget,
-        eventFilters.free
-      );
+        if (
+          document
+            .getElementById("asdModal")
+            .classList.contains("open")
+        ) {
+          closeAsdModal();
+        }
 
+        if (
+          document
+            .getElementById("eventModal")
+            .classList.contains("open")
+        ) {
+          closeEventModal();
+        }
 
-      applyEventFilters();
+        if (
+          document
+            .getElementById("eventDetailModal")
+            .classList.contains("open")
+        ) {
+          closeEventDetail();
+        }
 
-    }
-  );
-
-
-document
-  .getElementById(
-    "filterDiscipline"
-  )
-  .addEventListener(
-    "change",
-    event => {
-
-      eventFilters.discipline =
-        event.target.value;
-
-
-      applyEventFilters();
-
-    }
-  );
-
-
-document
-  .getElementById(
-    "filterQuartiere"
-  )
-  .addEventListener(
-    "change",
-    event => {
-
-      eventFilters.quartier =
-        event.target.value;
+      }
+    );
 
 
-      applyEventFilters();
+  /* =========================================================
+     CONTROLLI FILTRI EVENTI
+     ========================================================= */
 
-    }
-  );
+  document
+    .getElementById(
+      "filterWeekend"
+    )
+    .addEventListener(
+      "click",
+      event => {
+
+        eventFilters.weekend =
+          !eventFilters.weekend;
+
+        setChipState(
+          event.currentTarget,
+          eventFilters.weekend
+        );
+
+        applyEventFilters();
+
+      }
+    );
 
 
-document
-  .getElementById(
-    "resetEventFilters"
-  )
-  .addEventListener(
-    "click",
-    resetEventFilters
-  );
+  document
+    .getElementById(
+      "filterChildren"
+    )
+    .addEventListener(
+      "click",
+      event => {
+
+        eventFilters.children =
+          !eventFilters.children;
+
+        setChipState(
+          event.currentTarget,
+          eventFilters.children
+        );
+
+        applyEventFilters();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "filterFree"
+    )
+    .addEventListener(
+      "click",
+      event => {
+
+        eventFilters.free =
+          !eventFilters.free;
+
+        setChipState(
+          event.currentTarget,
+          eventFilters.free
+        );
+
+        applyEventFilters();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "filterDiscipline"
+    )
+    .addEventListener(
+      "change",
+      event => {
+
+        eventFilters.discipline =
+          event.target.value;
+
+        applyEventFilters();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "filterQuartiere"
+    )
+    .addEventListener(
+      "change",
+      event => {
+
+        eventFilters.quartier =
+          event.target.value;
+
+        applyEventFilters();
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "resetEventFilters"
+    )
+    .addEventListener(
+      "click",
+      resetEventFilters
+    );
+
+
+  /* =========================================================
+     AVVIO
+     ========================================================= */
+
   loadAsd();
 
   loadEvents();
-function normalizeFilterText(value) {
 
-  return String(
-    value || ""
-  )
-    .trim()
-    .toLowerCase();
-
-}
-
-
-function splitDisciplines(value) {
-
-  return String(
-    value || ""
-  )
-    .split(/[,;]+/)
-    .map(
-      item =>
-        item.trim()
-    )
-    .filter(Boolean);
-
-}
-
-
-function populateEventFilters() {
-
-  const disciplineSelect =
-    document.getElementById(
-      "filterDiscipline"
-    );
-
-
-  const quartierSelect =
-    document.getElementById(
-      "filterQuartiere"
-    );
-
-
-  const disciplineSet =
-    new Set();
-
-
-  const quartierSet =
-    new Set();
-
-
-  eventData.forEach(
-    evento => {
-
-      splitDisciplines(
-        evento.asd_discipline
-      )
-      .forEach(
-        discipline =>
-          disciplineSet.add(
-            discipline
-          )
-      );
-
-
-      if (
-        evento.asd_quartiere
-      ) {
-
-        quartierSet.add(
-          evento.asd_quartiere.trim()
-        );
-
-      }
-
-    }
-  );
-
-
-  const currentDiscipline =
-    eventFilters.discipline;
-
-
-  const currentQuartier =
-    eventFilters.quartier;
-
-
-  disciplineSelect.innerHTML =
-    '<option value="">Tutte le discipline</option>';
-
-
-  [...disciplineSet]
-    .sort(
-      (a, b) =>
-        a.localeCompare(
-          b,
-          "it"
-        )
-    )
-    .forEach(
-      discipline => {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-
-        option.value =
-          discipline;
-
-
-        option.textContent =
-          discipline;
-
-
-        disciplineSelect.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-  quartierSelect.innerHTML =
-    '<option value="">Tutto il Municipio V</option>';
-
-
-  [...quartierSet]
-    .sort(
-      (a, b) =>
-        a.localeCompare(
-          b,
-          "it"
-        )
-    )
-    .forEach(
-      quartier => {
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-
-        option.value =
-          quartier;
-
-
-        option.textContent =
-          quartier;
-
-
-        quartierSelect.appendChild(
-          option
-        );
-
-      }
-    );
-
-
-  disciplineSelect.value =
-    currentDiscipline;
-
-
-  quartierSelect.value =
-    currentQuartier;
-
-}
-
-
-function getWeekendRange() {
-
-  const now =
-    new Date();
-
-
-  const day =
-    now.getDay();
-
-
-  const start =
-    new Date(now);
-
-
-  /*
-    Domenica = 0
-    Sabato = 6
-
-    Se siamo domenica,
-    il weekend è quello in corso.
-
-    Negli altri giorni
-    prendiamo il prossimo sabato.
-  */
-
-  if (day === 0) {
-
-    start.setDate(
-      now.getDate() - 1
-    );
-
-  }
-  else {
-
-    const daysUntilSaturday =
-      6 - day;
-
-
-    start.setDate(
-      now.getDate() +
-      daysUntilSaturday
-    );
-
-  }
-
-
-  start.setHours(
-    0,
-    0,
-    0,
-    0
-  );
-
-
-  const end =
-    new Date(start);
-
-
-  end.setDate(
-    start.getDate() + 1
-  );
-
-
-  end.setHours(
-    23,
-    59,
-    59,
-    999
-  );
-
-
-  return {
-    start,
-    end
-  };
-
-}
-
-
-function eventIsThisWeekend(evento) {
-
-  if (
-    !evento.data_inizio
-  ) {
-    return false;
-  }
-
-
-  const eventDate =
-    new Date(
-      evento.data_inizio
-    );
-
-
-  if (
-    Number.isNaN(
-      eventDate.getTime()
-    )
-  ) {
-    return false;
-  }
-
-
-  const {
-    start,
-    end
-  } =
-    getWeekendRange();
-
-
-  return (
-    eventDate >= start &&
-    eventDate <= end
-  );
-
-}
-
-
-function eventIsForChildren(evento) {
-
-  const pubblico =
-    normalizeFilterText(
-      evento.pubblico
-    );
-
-
-  return (
-    pubblico.includes(
-      "bambin"
-    ) ||
-
-    pubblico.includes(
-      "famigl"
-    ) ||
-
-    pubblico ===
-      "tutti"
-  );
-
-}
-
-
-function eventIsFree(evento) {
-
-  const prezzo =
-    normalizeFilterText(
-      evento.prezzo
-    );
-
-
-  if (!prezzo) {
-    return false;
-  }
-
-
-  if (
-    prezzo.includes(
-      "gratuit"
-    ) ||
-    prezzo.includes(
-      "gratis"
-    ) ||
-    prezzo ===
-      "free"
-  ) {
-    return true;
-  }
-
-
-  return /^0([,.]00)?\s*(€|euro)?$/
-    .test(
-      prezzo
-    );
-
-}
-
-
-function eventMatchesDiscipline(
-  evento
-) {
-
-  if (
-    !eventFilters.discipline
-  ) {
-    return true;
-  }
-
-
-  const selected =
-    normalizeFilterText(
-      eventFilters.discipline
-    );
-
-
-  const disciplines =
-    splitDisciplines(
-      evento.asd_discipline
-    )
-    .map(
-      normalizeFilterText
-    );
-
-
-  return disciplines.some(
-    discipline =>
-      discipline ===
-      selected
-  );
-
-}
-
-
-function eventMatchesQuartier(
-  evento
-) {
-
-  if (
-    !eventFilters.quartier
-  ) {
-    return true;
-  }
-
-
-  return (
-    normalizeFilterText(
-      evento.asd_quartiere
-    ) ===
-    normalizeFilterText(
-      eventFilters.quartier
-    )
-  );
-
-}
-
-
-function applyEventFilters() {
-
-  const filtered =
-    eventData.filter(
-      evento => {
-
-        if (
-          eventFilters.weekend &&
-          !eventIsThisWeekend(
-            evento
-          )
-        ) {
-          return false;
-        }
-
-
-        if (
-          eventFilters.children &&
-          !eventIsForChildren(
-            evento
-          )
-        ) {
-          return false;
-        }
-
-
-        if (
-          eventFilters.free &&
-          !eventIsFree(
-            evento
-          )
-        ) {
-          return false;
-        }
-
-
-        if (
-          !eventMatchesDiscipline(
-            evento
-          )
-        ) {
-          return false;
-        }
-
-
-        if (
-          !eventMatchesQuartier(
-            evento
-          )
-        ) {
-          return false;
-        }
-
-
-        return true;
-
-      }
-    );
-
-
-  renderEvents(
-    filtered
-  );
-
-
-  updateEventResultsInfo(
-    filtered.length
-  );
-
-}
-
-
-function updateEventResultsInfo(
-  count
-) {
-
-  const info =
-    document.getElementById(
-      "eventResultsInfo"
-    );
-
-
-  const activeFilters =
-    [];
-
-
-  if (
-    eventFilters.weekend
-  ) {
-
-    activeFilters.push(
-      "questo weekend"
-    );
-
-  }
-
-
-  if (
-    eventFilters.children
-  ) {
-
-    activeFilters.push(
-      "bambini"
-    );
-
-  }
-
-
-  if (
-    eventFilters.free
-  ) {
-
-    activeFilters.push(
-      "gratuito"
-    );
-
-  }
-
-
-  if (
-    eventFilters.discipline
-  ) {
-
-    activeFilters.push(
-      eventFilters.discipline
-    );
-
-  }
-
-
-  if (
-    eventFilters.quartier
-  ) {
-
-    activeFilters.push(
-      eventFilters.quartier
-    );
-
-  }
-
-
-  const resultText =
-    count === 1
-      ?
-      "1 opportunità trovata"
-      :
-      `${count} opportunità trovate`;
-
-
-  if (
-    activeFilters.length === 0
-  ) {
-
-    info.innerHTML =
-      `<span class="event-filter-summary">${resultText}</span>`;
-
-    return;
-
-  }
-
-
-  info.innerHTML =
-    `
-      <span class="event-filter-summary">
-        ${resultText}
-      </span>
-
-      · Filtri:
-      ${escapeHtml(
-        activeFilters.join(
-          " · "
-        )
-      )}
-    `;
-
-}
-
-
-function setChipState(
-  button,
-  active
-) {
-
-  button.classList.toggle(
-    "active",
-    active
-  );
-
-
-  button.setAttribute(
-    "aria-pressed",
-    active
-      ?
-      "true"
-      :
-      "false"
-  );
-
-}
-
-
-function resetEventFilters() {
-
-  eventFilters.weekend =
-    false;
-
-
-  eventFilters.children =
-    false;
-
-
-  eventFilters.free =
-    false;
-
-
-  eventFilters.discipline =
-    "";
-
-
-  eventFilters.quartier =
-    "";
-
-
-  const weekendButton =
-    document.getElementById(
-      "filterWeekend"
-    );
-
-
-  const childrenButton =
-    document.getElementById(
-      "filterChildren"
-    );
-
-
-  const freeButton =
-    document.getElementById(
-      "filterFree"
-    );
-
-
-  setChipState(
-    weekendButton,
-    false
-  );
-
-
-  setChipState(
-    childrenButton,
-    false
-  );
-
-
-  setChipState(
-    freeButton,
-    false
-  );
-
-
-  document
-    .getElementById(
-      "filterDiscipline"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "filterQuartiere"
-    )
-    .value =
-      "";
-
-
-  applyEventFilters();
-
-}
 </script>
 
 </body>
