@@ -2363,9 +2363,25 @@ const posterUrl =
 
         card.innerHTML =
           `
-            <div class="event-image">
-              ${eventIcon(evento.tipologia)}
-            </div>
+            ${
+  posterUrl
+    ?
+    `
+      <div class="event-poster">
+        <img
+          src="${escapeHtml(posterUrl)}"
+          alt="Locandina: ${escapeHtml(evento.titolo)}"
+          loading="lazy"
+        >
+      </div>
+    `
+    :
+    `
+      <div class="event-image">
+        ${eventIcon(evento.tipologia)}
+      </div>
+    `
+}
 
             <div class="card-body">
 
