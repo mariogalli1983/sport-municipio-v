@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sport V | Lo sport vicino a te</title>
+
+  <meta name="description"
+        content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V.">
+
+  <link rel="preconnect" href="https://unpkg.com">
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  >
+
+  <style>
+    :root {
+      --blu: #123c69;
+      --blu-scuro: #0b2949;
+      --azzurro: #eaf4ff;
+      --verde: #2b8a66;
+      --arancio: #ef7f1a;
+      --rosso: #d64545;
+      --testo: #1c2630;
+      --grigio: #66717d;
+      --sfondo: #f5f7f9;
+      --bianco: #ffffff;
+      --bordo: #dfe5ea;
+      --ombra: 0 8px 24px rgba(20, 40, 60, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--sfondo);
+      color: var(--testo);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+
+    header {
+      background: var(--blu-scuro);
+      color: white;
+    }
+
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #75d0a7;
+    }
+
+    .top-links {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--arancio);
+      color: white;
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--blu-scuro);
+    }
+
+    /* HERO */
+
+    .hero {
+      background:
+        linear-gradient(135deg, #123c69 0%, #176b87 100%);
+      color: white;
+      padding: 58px 0 64px;
+    }
+
+    .hero-content {
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #a8e1c8;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 7vw, 68px);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .hero p {
+      max-width: 700px;
+      font-size: 19px;
+      color: rgba(255,255,255,0.9);
+      margin: 20px 0 28px;
+    }
+
+    .search-box {
+      background: white;
+      border-radius: 14px;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      max-width: 720px;
+      box-shadow: var(--ombra);
+    }
+
+    .search-box input {
+      border: 0;
+      outline: none;
+      flex: 1;
+      padding: 12px;
+      min-width: 0;
+      font-size: 16px;
+      color: var(--testo);
+    }
+
+    /* DEMO */
+
+    .demo-alert {
+      background: #fff4d7;
+      color: #70520a;
+      border-bottom: 1px solid #eed492;
+      padding: 11px 16px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    /* SEZIONI */
+
+    section {
+      padding: 50px 0;
+    }
+
+    .section-title {
+      margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      letter-spacing: -0.8px;
+    }
+
+    .section-title p {
+      margin: 0;
+      color: var(--grigio);
+    }
+
+    /* FILTRI */
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .filter {
+      border: 1px solid var(--bordo);
+      background: white;
+      padding: 9px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: #46515c;
+    }
+
+    .filter:hover,
+    .filter.active {
+      background: var(--blu);
+      color: white;
+      border-color: var(--blu);
+    }
+
+    /* MAPPA */
+
+    #map {
+      height: 490px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--ombra);
+      border: 1px solid var(--bordo);
+    }
+
+    /* RISULTATI */
+
+    .results-info {
+      margin-top: 16px;
+      color: var(--grigio);
+      font-size: 14px;
+    }
+
+    .asd-grid,
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--bordo);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--ombra);
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--azzurro);
+      color: var(--blu);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 9px;
+      border-radius: 6px;
+      margin-bottom: 11px;
+      text-transform: uppercase;
+    }
+
+    .demo-tag {
+      background: #fff1ca;
+      color: #795700;
+      margin-left: 5px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: var(--grigio);
+      margin: 7px 0;
+      font-size: 15px;
+    }
+
+    .card-location {
+      margin-top: 15px !important;
+      color: var(--testo) !important;
+      font-weight: 700;
+    }
+
+    .card-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-weight: 800;
+      color: var(--blu);
+    }
+
+    /* EVENTI */
+
+    .events-section {
+      background: white;
+    }
+
+    .event-image {
+      height: 190px;
+      background:
+        linear-gradient(135deg, #e4edf5, #c8dae8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+
+    .event-date {
+      color: var(--rosso);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* CTA ASD */
+
+    .join-box {
+      background: var(--blu-scuro);
+      color: white;
+      border-radius: 20px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .join-box h2 {
+      font-size: 32px;
+      margin: 0 0 12px;
+    }
+
+    .join-box p {
+      color: rgba(255,255,255,0.85);
+      max-width: 650px;
+    }
+
+    .join-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* COME FUNZIONA */
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .step {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid var(--bordo);
+      padding: 24px;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--verde);
+      color: white;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--grigio);
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #091d31;
+      color: rgba(255,255,255,0.75);
+      padding: 34px 0;
+      margin-top: 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+      .asd-grid,
+      .event-grid,
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .join-box {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .topbar {
+        padding: 13px 0;
+        align-items: flex-start;
+      }
+
+      .top-links .btn-light {
+        display: none;
+      }
+
+      .hero {
+        padding: 42px 0 48px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .search-box .btn {
+        width: 100%;
+      }
+
+      #map {
+        height: 420px;
+      }
+
+      .asd-grid,
+      .event-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .join-box {
+        padding: 28px 22px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container topbar">
+
+    <div class="logo">
+      SPORT <span>V</span>
+    </div>
+
+    <div class="top-links">
+      <a href="#eventi" class="btn btn-light">Eventi e corsi</a>
+      <a href="#partecipa" class="btn btn-primary">Sei una ASD?</a>
+    </div>
+
+  </div>
+</header>
+
+<div class="demo-alert">
+  🛠️ Versione di prova: le ASD e gli eventi mostrati in questa fase sono dati dimostrativi.
+</div>
+
+<section class="hero">
+  <div class="container hero-content">
+
+    <div class="eyebrow">Municipio Roma V</div>
+
+    <h1>Lo sport<br>vicino a te.</h1>
+
+    <p>
+      Scopri associazioni sportive, corsi, open day, tornei,
+      prove gratuite ed eventi organizzati nel territorio.
+    </p>
+
+    <div class="search-box">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Cerca sport, ASD o quartiere..."
+      >
+
+      <button class="btn btn-primary" onclick="applyFilters()">
+        Cerca
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<section id="mappa">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Trova lo sport sulla mappa</h2>
+      <p>
+        Seleziona uno sport oppure cerca un'associazione o un quartiere.
+      </p>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter active" data-sport="Tutti">Tutti</button>
+      <button class="filter" data-sport="Calcio">⚽ Calcio</button>
+      <button class="filter" data-sport="Judo">🥋 Judo</button>
+      <button class="filter" data-sport="Basket">🏀 Basket</button>
+      <button class="filter" data-sport="Danza">💃 Danza</button>
+      <button class="filter" data-sport="Tennis">🎾 Tennis</button>
+      <button class="filter" data-sport="Altro">🏃 Altro</button>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="results-info" id="resultsInfo"></div>
+
+    <div class="asd-grid" id="asdGrid"></div>
+
+  </div>
+</section>
+
+<section id="eventi" class="events-section">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Cosa puoi fare in questi giorni</h2>
+      <p>
+        Corsi, open day, prove gratuite, eventi e iniziative delle ASD del territorio.
+      </p>
+    </div>
+
+    <div class="event-grid">
+
+      <article class="card">
+        <div class="event-image">⚽</div>
+
+        <div class="card-body">
+          <div class="event-date">Evento dimostrativo</div>
+          <h3>Open Day scuola calcio</h3>
+          <p>
+            Una giornata dedicata a bambini e famiglie per conoscere attività,
+            tecnici e impianto.
+          </p>
+          <p class="card-location">📍 Centocelle</p>
+          <span class="card-link">Scopri di più →</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="event-image">🥋</div>
+
+        <div class="card-body">
+          <div class="event-date">Offerta dimostrativa</div>
+          <h3>Prova gratuita di judo</h3>
+          <p>
+            Lezione di prova per chi vuole avvicinarsi alla disciplina
+            e conoscere l'associazione.
+          </p>
+          <p class="card-location">📍 Pigneto</p>
+          <span class="card-link">Scopri di più →</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="event-image">🏀</div>
+
+        <div class="card-body">
+          <div class="event-date">Evento dimostrativo</div>
+          <h3>Giornata minibasket</h3>
+          <p>
+            Attività aperta ai più piccoli con presentazione dei corsi
+            della nuova stagione.
+          </p>
+          <p class="card-location">📍 Tor Pignattara</p>
+          <span class="card-link">Scopri di più →</span>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="partecipa">
+  <div class="container">
+
+    <div class="join-box">
+
+      <div>
+        <div class="eyebrow">Per le associazioni sportive</div>
+
+        <h2>Porta la tua ASD sulla mappa</h2>
+
+        <p>
+          Le associazioni sportive del Municipio V potranno segnalare la propria
+          sede, raccontare le attività che svolgono e pubblicare corsi, open day,
+          tornei, locandine ed eventi.
+        </p>
+
+        <p>
+          Le segnalazioni saranno controllate prima della pubblicazione.
+        </p>
+      </div>
+
+      <div class="join-actions">
+
+        <button class="btn btn-primary" onclick="showComingSoon('asd')">
+          📍 Inserisci la tua ASD
+        </button>
+
+        <button class="btn btn-light" onclick="showComingSoon('evento')">
+          📣 Pubblica corso o evento
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Come funziona</h2>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Le ASD si presentano</h3>
+        <p>
+          Ogni associazione potrà inserire sede, sport praticati,
+          contatti e informazioni sulle proprie attività.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Pubblicano opportunità</h3>
+        <p>
+          Corsi, prove gratuite, tornei, open day, eventi e
+          locandine vengono raccolti in una bacheca unica.
+        </p>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>I cittadini cercano</h3>
+        <p>
+          Chi vive nel territorio può trovare facilmente uno sport,
+          un'associazione o un'attività vicino casa.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-content">
+
+    <div>
+      <strong>SPORT V</strong><br>
+      Lo sport dilettantistico del Municipio Roma V
+    </div>
+
+    <div>
+      Un progetto per mettere in rete sport e territorio.
+    </div>
+
+  </div>
+</footer>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin="">
+</script>
+
+<script>
+
+  /*
+    DATI DIMOSTRATIVI
+    Verranno sostituiti dal database Supabase.
+  */
+
+  const asdData = [
+    {
+      name: "ASD Demo Centocelle",
+      sport: "Calcio",
+      quartier: "Centocelle",
+      lat: 41.8795,
+      lng: 12.5685,
+      description: "Scuola calcio e attività sportive per bambini e ragazzi."
+    },
+    {
+      name: "ASD Demo Pigneto",
+      sport: "Judo",
+      quartier: "Pigneto",
+      lat: 41.8893,
+      lng: 12.5310,
+      description: "Corsi dimostrativi di judo per diverse fasce di età."
+    },
+    {
+      name: "ASD Demo Tor Pignattara",
+      sport: "Basket",
+      quartier: "Tor Pignattara",
+      lat: 41.8738,
+      lng: 12.5435,
+      description: "Basket e minibasket per giovani e giovanissimi."
+    },
+    {
+      name: "ASD Demo Alessandrino",
+      sport: "Danza",
+      quartier: "Alessandrino",
+      lat: 41.8696,
+      lng: 12.5790,
+      description: "Danza e attività motorie per bambini e adulti."
+    }
+  ];
+
+  let selectedSport = "Tutti";
+  let markers = [];
+
+  const map = L.map("map").setView([41.879, 12.557], 13);
+
+  L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap'
+    }
+  ).addTo(map);
+
+  function renderMarkers(data) {
+
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+
+    data.forEach(asd => {
+
+      const marker = L.marker([asd.lat, asd.lng]).addTo(map);
+
+      marker.bindPopup(`
+        <div style="min-width:200px">
+          <strong style="font-size:16px">${asd.name}</strong><br>
+          <span>${asd.sport}</span><br><br>
+          <span>📍 ${asd.quartier}</span><br>
+          <p>${asd.description}</p>
+          <small><strong>DATO DIMOSTRATIVO</strong></small>
+        </div>
+      `);
+
+      markers.push(marker);
+    });
+  }
+
+  function renderCards(data) {
+
+    const grid = document.getElementById("asdGrid");
+    const info = document.getElementById("resultsInfo");
+
+    grid.innerHTML = "";
+
+    info.textContent =
+      `${data.length} associazion${data.length === 1 ? "e" : "i"} trovata${data.length === 1 ? "" : "e"}.`;
+
+    if (data.length === 0) {
+
+      grid.innerHTML = `
+        <div class="card">
+          <div class="card-body">
+            <h3>Nessun risultato</h3>
+            <p>Prova a modificare la ricerca o selezionare un altro sport.</p>
+          </div>
+        </div>
+      `;
+
+      return;
+    }
+
+    data.forEach(asd => {
+
+      const card = document.createElement("article");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="card-body">
+
+          <span class="tag">${asd.sport}</span>
+          <span class="tag demo-tag">DEMO</span>
+
+          <h3>${asd.name}</h3>
+
+          <p>${asd.description}</p>
+
+          <p class="card-location">
+            📍 ${asd.quartier}
+          </p>
+
+          <a
+            class="card-link"
+            href="#mappa"
+            onclick="focusAsd('${asd.name.replace(/'/g, "\\'")}')"
+          >
+            Vedi sulla mappa →
+          </a>
+
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  }
+
+  function applyFilters() {
+
+    const search =
+      document.getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+    const filtered = asdData.filter(asd => {
+
+      const sportMatch =
+        selectedSport === "Tutti" ||
+        asd.sport === selectedSport ||
+        (selectedSport === "Altro" &&
+          !["Calcio", "Judo", "Basket", "Danza", "Tennis"].includes(asd.sport));
+
+      const searchMatch =
+        asd.name.toLowerCase().includes(search) ||
+        asd.sport.toLowerCase().includes(search) ||
+        asd.quartier.toLowerCase().includes(search) ||
+        asd.description.toLowerCase().includes(search);
+
+      return sportMatch && searchMatch;
+    });
+
+    renderMarkers(filtered);
+    renderCards(filtered);
+  }
+
+  document.querySelectorAll(".filter").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      document
+        .querySelectorAll(".filter")
+        .forEach(btn => btn.classList.remove("active"));
+
+      button.classList.add("active");
+
+      selectedSport = button.dataset.sport;
+
+      applyFilters();
+    });
+
+  });
+
+  document
+    .getElementById("searchInput")
+    .addEventListener("keyup", event => {
+
+      if (event.key === "Enter") {
+        applyFilters();
+      }
+
+    });
+
+  function focusAsd(name) {
+
+    const asd = asdData.find(item => item.name === name);
+
+    if (!asd) return;
+
+    map.setView([asd.lat, asd.lng], 16);
+
+    const marker = markers.find(marker => {
+      const position = marker.getLatLng();
+      return position.lat === asd.lat && position.lng === asd.lng;
+    });
+
+    if (marker) {
+      marker.openPopup();
+    }
+  }
+
+  function showComingSoon(type) {
+
+    if (type === "asd") {
+      alert(
+        "Nel prossimo passaggio attiveremo il modulo per inserire una ASD."
+      );
+    }
+
+    if (type === "evento") {
+      alert(
+        "Nel prossimo passaggio attiveremo il modulo per pubblicare corsi, offerte ed eventi."
+      );
+    }
+
+  }
+
+  applyFilters();
+
+</script>
+
+</body>
+</html>
