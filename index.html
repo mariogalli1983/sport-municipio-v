@@ -421,7 +421,156 @@
     footer strong {
       color: white;
     }
+/* MODULO ASD */
 
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 25, 42, 0.72);
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.modal-overlay.open {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.modal-box {
+  position: relative;
+  width: min(720px, 100%);
+  margin: 30px auto;
+  background: white;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modal-box h2 {
+  margin: 0 45px 8px 0;
+  font-size: 30px;
+}
+
+.modal-intro {
+  color: var(--grigio);
+  margin: 0 0 26px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: #eef2f5;
+  border-radius: 50%;
+  font-size: 27px;
+  cursor: pointer;
+}
+
+#asdForm {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+#asdForm label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#asdForm input,
+#asdForm textarea {
+  width: 100%;
+  border: 1px solid var(--bordo);
+  border-radius: 9px;
+  padding: 12px 13px;
+  font: inherit;
+  color: var(--testo);
+  background: white;
+}
+
+#asdForm input:focus,
+#asdForm textarea:focus {
+  outline: 2px solid #88bce5;
+  border-color: var(--blu);
+}
+
+.form-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-divider {
+  border: 0;
+  border-top: 1px solid var(--bordo);
+  width: 100%;
+  margin: 5px 0;
+}
+
+.form-note {
+  margin: -8px 0 0;
+  color: var(--grigio);
+  font-size: 14px;
+}
+
+.privacy-check {
+  flex-direction: row !important;
+  align-items: flex-start;
+  font-weight: 400 !important;
+}
+
+.privacy-check input {
+  width: auto !important;
+  margin-top: 3px;
+}
+
+.form-submit {
+  margin-top: 5px;
+  min-height: 48px;
+}
+
+.form-message {
+  display: none;
+  border-radius: 9px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.form-message.success {
+  display: block;
+  background: #e5f6ee;
+  color: #176044;
+}
+
+.form-message.error {
+  display: block;
+  background: #fdeaea;
+  color: #912d2d;
+}
+
+@media (max-width: 650px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-box {
+    padding: 25px 18px;
+    margin: 10px auto;
+  }
+
+  .form-two-columns {
+    grid-template-columns: 1fr;
+  }
+}
     /* MOBILE */
 
     @media (max-width: 900px) {
@@ -642,9 +791,9 @@
 
       <div class="join-actions">
 
-        <button class="btn btn-primary" onclick="showComingSoon('asd')">
-          📍 Inserisci la tua ASD
-        </button>
+       <button class="btn btn-primary" onclick="openAsdModal()">
+  📍 Inserisci la tua ASD
+</button>
 
         <button class="btn btn-light" onclick="showComingSoon('evento')">
           📣 Pubblica corso o evento
@@ -697,7 +846,184 @@
 
   </div>
 </section>
+<div id="asdModal" class="modal-overlay" aria-hidden="true">
 
+  <div class="modal-box">
+
+    <button
+      type="button"
+      class="modal-close"
+      onclick="closeAsdModal()"
+      aria-label="Chiudi"
+    >
+      ×
+    </button>
+
+    <h2>Inserisci la tua ASD</h2>
+
+    <p class="modal-intro">
+      Segnala un'associazione sportiva del Municipio Roma V.
+      La scheda sarà controllata prima della pubblicazione.
+    </p>
+
+    <form id="asdForm">
+
+      <label>
+        Nome dell'associazione *
+        <input
+          type="text"
+          id="asdNome"
+          required
+          placeholder="Es. ASD Sport Centocelle"
+        >
+      </label>
+
+      <label>
+        Disciplina o discipline *
+        <input
+          type="text"
+          id="asdDiscipline"
+          required
+          placeholder="Es. Calcio, calcio a 5"
+        >
+      </label>
+
+      <label>
+        Quartiere *
+        <input
+          type="text"
+          id="asdQuartiere"
+          required
+          placeholder="Es. Centocelle"
+        >
+      </label>
+
+      <label>
+        Indirizzo della sede o impianto *
+        <input
+          type="text"
+          id="asdIndirizzo"
+          required
+          placeholder="Via, numero civico, Roma"
+        >
+      </label>
+
+      <label>
+        Descrizione
+        <textarea
+          id="asdDescrizione"
+          rows="4"
+          placeholder="Racconta brevemente le attività dell'associazione..."
+        ></textarea>
+      </label>
+
+      <div class="form-two-columns">
+
+        <label>
+          Telefono pubblico
+          <input
+            type="tel"
+            id="asdTelefono"
+            placeholder="Numero visibile sul sito"
+          >
+        </label>
+
+        <label>
+          Email pubblica
+          <input
+            type="email"
+            id="asdEmailPubblica"
+            placeholder="Email visibile sul sito"
+          >
+        </label>
+
+      </div>
+
+      <label>
+        Sito web
+        <input
+          type="url"
+          id="asdSito"
+          placeholder="https://..."
+        >
+      </label>
+
+      <div class="form-two-columns">
+
+        <label>
+          Facebook
+          <input
+            type="text"
+            id="asdFacebook"
+            placeholder="Link o nome pagina"
+          >
+        </label>
+
+        <label>
+          Instagram
+          <input
+            type="text"
+            id="asdInstagram"
+            placeholder="Link o profilo"
+          >
+        </label>
+
+      </div>
+
+      <hr class="form-divider">
+
+      <h3>Referente della segnalazione</h3>
+
+      <p class="form-note">
+        Questi dati servono per verificare la richiesta e non saranno
+        mostrati nella scheda pubblica.
+      </p>
+
+      <div class="form-two-columns">
+
+        <label>
+          Nome referente *
+          <input
+            type="text"
+            id="asdReferente"
+            required
+          >
+        </label>
+
+        <label>
+          Email referente *
+          <input
+            type="email"
+            id="asdEmailReferente"
+            required
+          >
+        </label>
+
+      </div>
+
+      <label class="privacy-check">
+        <input type="checkbox" id="asdConferma" required>
+        <span>
+          Confermo di essere autorizzato a inviare queste informazioni
+          e che i dati forniti sono corretti.
+        </span>
+      </label>
+
+      <div id="asdFormMessage" class="form-message"></div>
+
+      <button
+        type="submit"
+        class="btn btn-primary form-submit"
+        id="asdSubmit"
+      >
+        Invia la segnalazione
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
 <footer>
   <div class="container footer-content">
 
@@ -956,7 +1282,102 @@ let asdData = [];
     }
 
   }
+function openAsdModal() {
+  const modal = document.getElementById("asdModal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+}
 
+function closeAsdModal() {
+  const modal = document.getElementById("asdModal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+document
+  .getElementById("asdForm")
+  .addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const submitButton = document.getElementById("asdSubmit");
+    const message = document.getElementById("asdFormMessage");
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Invio in corso...";
+
+    message.className = "form-message";
+    message.textContent = "";
+
+    const nuovaAsd = {
+
+      nome:
+        document.getElementById("asdNome").value.trim(),
+
+      discipline:
+        document.getElementById("asdDiscipline").value.trim(),
+
+      quartiere:
+        document.getElementById("asdQuartiere").value.trim(),
+
+      indirizzo:
+        document.getElementById("asdIndirizzo").value.trim(),
+
+      descrizione:
+        document.getElementById("asdDescrizione").value.trim(),
+
+      telefono_pubblico:
+        document.getElementById("asdTelefono").value.trim() || null,
+
+      email_pubblica:
+        document.getElementById("asdEmailPubblica").value.trim() || null,
+
+      sito_web:
+        document.getElementById("asdSito").value.trim() || null,
+
+      facebook:
+        document.getElementById("asdFacebook").value.trim() || null,
+
+      instagram:
+        document.getElementById("asdInstagram").value.trim() || null,
+
+      nome_referente:
+        document.getElementById("asdReferente").value.trim(),
+
+      email_referente:
+        document.getElementById("asdEmailReferente").value.trim()
+
+    };
+
+    const { error } = await db
+      .from("asd")
+      .insert([nuovaAsd]);
+
+    if (error) {
+
+      console.error("Errore inserimento ASD:", error);
+
+      message.className = "form-message error";
+      message.textContent =
+        "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+
+      submitButton.disabled = false;
+      submitButton.textContent = "Invia la segnalazione";
+
+      return;
+    }
+
+    message.className = "form-message success";
+
+    message.textContent =
+      "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
+
+    document.getElementById("asdForm").reset();
+
+    submitButton.disabled = false;
+    submitButton.textContent = "Invia la segnalazione";
+
+  });
   loadAsd();
 
 </script>
