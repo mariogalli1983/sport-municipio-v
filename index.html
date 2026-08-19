@@ -1964,7 +1964,300 @@
 
   }
 
+let eventPosterPreviewUrl = null;
 
+
+function safeHttpUrl(value) {
+
+  if (!value) {
+    return "";
+  }
+
+  try {
+
+    const url = new URL(value);
+
+    if (
+      url.protocol === "https:" ||
+      url.protocol === "http:"
+    ) {
+      return url.href;
+    }
+
+  }
+  catch (_) {}
+
+  return "";
+
+}
+
+
+function resetPosterPreview() {
+
+  if (eventPosterPreviewUrl) {
+
+    URL.revokeObjectURL(
+      eventPosterPreviewUrl
+    );
+
+    eventPosterPreviewUrl = null;
+
+  }
+
+  document
+    .getElementById(
+      "eventPosterPreview"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "eventPosterPreviewImage"
+    )
+    .removeAttribute(
+      "src"
+    );
+
+}
+
+
+document
+  .getElementById(
+    "eventLocandina"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      const file =
+        event.target.files[0];
+
+
+      const message =
+        document.getElementById(
+          "eventFormMessage"
+        );
+
+
+      message.className =
+        "form-message";
+
+      message.textContent =
+        "";
+
+
+      resetPosterPreview();
+
+
+      if (!file) {
+        return;
+      }
+
+
+      const tipiConsentiti = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+      ];
+
+
+      if (
+        !tipiConsentiti.includes(
+          file.type
+        )
+      ) {
+
+        event.target.value =
+          "";
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "La locandina deve essere in formato JPG, PNG o WebP.";
+
+        return;
+
+      }
+
+
+      const maxSize =
+        5 * 1024 * 1024;
+
+
+      if (
+        file.size > maxSize
+      ) {
+
+        event.target.value =
+          "";
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "La locandina non può superare 5 MB.";
+
+        return;
+
+      }
+
+
+      eventPosterPreviewUrl =
+        URL.createObjectURL(
+          file
+        );
+
+
+      document
+        .getElementById(
+          "eventPosterPreviewImage"
+        )
+        .src =
+          eventPosterPreviewUrl;
+
+
+      document
+        .getElementById(
+          "eventPosterPreview"
+        )
+        .style.display =
+          "block";
+
+    }
+  );
+
+
+async function uploadEventPoster(file) {
+
+  if (!file) {
+    return null;
+  }
+
+
+  const extensions = {
+
+    "image/jpeg":
+      "jpg",
+
+    "image/png":
+      "png",
+
+    "image/webp":
+      "webp"
+
+  };
+
+
+  const extension =
+    extensions[file.type];
+
+
+  if (!extension) {
+
+    throw new Error(
+      "Formato locandina non valido."
+    );
+
+  }
+
+
+  if (
+    file.size >
+    5 * 1024 * 1024
+  ) {
+
+    throw new Error(
+      "La locandina supera 5 MB."
+    );
+
+  }
+
+
+  const randomPart =
+    (
+      typeof crypto !== "undefined" &&
+      crypto.randomUUID
+    )
+      ?
+      crypto.randomUUID()
+      :
+      Math.random()
+        .toString(36)
+        .slice(2);
+
+
+  const filePath =
+    `eventi/${Date.now()}-${randomPart}.${extension}`;
+
+
+  const {
+    error
+  } =
+    await db
+      .storage
+      .from(
+        "locandine-eventi"
+      )
+      .upload(
+        filePath,
+        file,
+        {
+
+          cacheControl:
+            "3600",
+
+          upsert:
+            false,
+
+          contentType:
+            file.type
+
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Errore upload locandina:",
+      error
+    );
+
+    throw error;
+
+  }
+
+
+  const {
+    data
+  } =
+    db
+      .storage
+      .from(
+        "locandine-eventi"
+      )
+      .getPublicUrl(
+        filePath
+      );
+
+
+  if (
+    !data ||
+    !data.publicUrl
+  ) {
+
+    throw new Error(
+      "URL pubblico della locandina non disponibile."
+    );
+
+  }
+
+
+  return data.publicUrl;
+
+}
   function renderEvents(events) {
 
     const grid =
