@@ -8,6 +8,7 @@
   <meta name="description" content="Scopri associazioni sportive, corsi, eventi e opportunità dello sport dilettantistico nel Municipio Roma V.">
 
   <link rel="preconnect" href="https://unpkg.com">
+
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -26,7 +27,6 @@
       --testo: #1c2630;
       --grigio: #66717d;
       --sfondo: #f5f7f9;
-      --bianco: #ffffff;
       --bordo: #dfe5ea;
       --ombra: 0 8px 24px rgba(20, 40, 60, 0.08);
     }
@@ -58,7 +58,8 @@
 
     button,
     input,
-    textarea {
+    textarea,
+    select {
       font-family: inherit;
     }
 
@@ -66,8 +67,6 @@
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
-
-    /* HEADER */
 
     header {
       background: var(--blu-scuro);
@@ -108,7 +107,7 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: .2s ease;
     }
 
     .btn:hover {
@@ -116,7 +115,7 @@
     }
 
     .btn:disabled {
-      opacity: 0.65;
+      opacity: .65;
       cursor: wait;
       transform: none;
     }
@@ -131,7 +130,14 @@
       color: var(--blu-scuro);
     }
 
-    /* HERO */
+    .beta-alert {
+      background: #eef7ff;
+      color: #234b6d;
+      border-bottom: 1px solid #d5e6f3;
+      padding: 11px 16px;
+      font-size: 14px;
+      text-align: center;
+    }
 
     .hero {
       background: linear-gradient(135deg, #123c69 0%, #176b87 100%);
@@ -162,7 +168,7 @@
     .hero p {
       max-width: 700px;
       font-size: 19px;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255,255,255,.9);
       margin: 20px 0 28px;
     }
 
@@ -186,17 +192,6 @@
       color: var(--testo);
     }
 
-    .beta-alert {
-      background: #eef7ff;
-      color: #234b6d;
-      border-bottom: 1px solid #d5e6f3;
-      padding: 11px 16px;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    /* SEZIONI */
-
     section {
       padding: 50px 0;
     }
@@ -208,15 +203,13 @@
     .section-title h2 {
       margin: 0 0 6px;
       font-size: 30px;
-      letter-spacing: -0.8px;
+      letter-spacing: -.8px;
     }
 
     .section-title p {
       margin: 0;
       color: var(--grigio);
     }
-
-    /* FILTRI */
 
     .filters {
       display: flex;
@@ -243,8 +236,6 @@
       border-color: var(--blu);
     }
 
-    /* MAPPA */
-
     #map {
       height: 490px;
       border-radius: 16px;
@@ -260,17 +251,21 @@
       font-size: 14px;
     }
 
-    /* CARD */
-
     .asd-grid,
-    .event-grid {
+    .event-grid,
+    .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+
+    .asd-grid,
+    .event-grid {
       margin-top: 25px;
     }
 
-    .card {
+    .card,
+    .step {
       background: white;
       border: 1px solid var(--bordo);
       border-radius: 15px;
@@ -278,7 +273,8 @@
       box-shadow: var(--ombra);
     }
 
-    .card-body {
+    .card-body,
+    .step {
       padding: 20px;
     }
 
@@ -319,8 +315,6 @@
       cursor: pointer;
     }
 
-    /* EVENTI */
-
     .events-section {
       background: white;
     }
@@ -339,9 +333,32 @@
       font-size: 13px;
       font-weight: 800;
       text-transform: uppercase;
+      margin-bottom: 8px;
     }
 
-    /* CTA ASD */
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .event-meta span {
+      background: #f1f4f7;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      color: #4f5b66;
+    }
+
+    .event-empty {
+      grid-column: 1 / -1;
+      background: var(--sfondo);
+      border: 1px dashed var(--bordo);
+      border-radius: 14px;
+      padding: 24px;
+      color: var(--grigio);
+    }
 
     .join-box {
       background: var(--blu-scuro);
@@ -360,7 +377,7 @@
     }
 
     .join-box p {
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255,255,255,.85);
       max-width: 650px;
     }
 
@@ -368,21 +385,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-    }
-
-    /* COME FUNZIONA */
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .step {
-      background: white;
-      border-radius: 14px;
-      border: 1px solid var(--bordo);
-      padding: 24px;
     }
 
     .step-number {
@@ -407,14 +409,12 @@
       color: var(--grigio);
     }
 
-    /* MODALE ASD */
-
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(8, 25, 42, 0.72);
+      background: rgba(8,25,42,.72);
       padding: 24px;
       overflow-y: auto;
     }
@@ -432,7 +432,7 @@
       background: white;
       border-radius: 18px;
       padding: 32px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
     }
 
     .modal-box h2 {
@@ -458,13 +458,15 @@
       cursor: pointer;
     }
 
-    #asdForm {
+    #asdForm,
+    #eventForm {
       display: flex;
       flex-direction: column;
       gap: 17px;
     }
 
-    #asdForm label {
+    #asdForm label,
+    #eventForm label {
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -473,7 +475,11 @@
     }
 
     #asdForm input,
-    #asdForm textarea {
+    #asdForm textarea,
+    #asdForm select,
+    #eventForm input,
+    #eventForm textarea,
+    #eventForm select {
       width: 100%;
       border: 1px solid var(--bordo);
       border-radius: 9px;
@@ -484,7 +490,11 @@
     }
 
     #asdForm input:focus,
-    #asdForm textarea:focus {
+    #asdForm textarea:focus,
+    #asdForm select:focus,
+    #eventForm input:focus,
+    #eventForm textarea:focus,
+    #eventForm select:focus {
       outline: 2px solid #88bce5;
       border-color: var(--blu);
     }
@@ -568,11 +578,9 @@
       font-weight: 700;
     }
 
-    /* FOOTER */
-
     footer {
       background: #091d31;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(255,255,255,.75);
       padding: 34px 0;
       margin-top: 20px;
     }
@@ -587,8 +595,6 @@
     footer strong {
       color: white;
     }
-
-    /* MOBILE */
 
     @media (max-width: 900px) {
       .asd-grid,
@@ -663,12 +669,21 @@
 
 <header>
   <div class="container topbar">
-    <div class="logo">SPORT <span>V</span></div>
+
+    <div class="logo">
+      SPORT <span>V</span>
+    </div>
 
     <div class="top-links">
-      <a href="#eventi" class="btn btn-light">Eventi e corsi</a>
-      <a href="#partecipa" class="btn btn-primary">Sei una ASD?</a>
+      <a href="#eventi" class="btn btn-light">
+        Eventi e corsi
+      </a>
+
+      <a href="#partecipa" class="btn btn-primary">
+        Sei una ASD?
+      </a>
     </div>
+
   </div>
 </header>
 
@@ -677,10 +692,17 @@
 </div>
 
 <section class="hero">
-  <div class="container hero-content">
-    <div class="eyebrow">Municipio Roma V</div>
 
-    <h1>Lo sport<br>vicino a te.</h1>
+  <div class="container hero-content">
+
+    <div class="eyebrow">
+      Municipio Roma V
+    </div>
+
+    <h1>
+      Lo sport<br>
+      vicino a te.
+    </h1>
 
     <p>
       Scopri associazioni sportive, corsi, open day, tornei,
@@ -688,153 +710,263 @@
     </p>
 
     <div class="search-box">
+
       <input
         id="searchInput"
         type="text"
         placeholder="Cerca sport, ASD o quartiere..."
       >
 
-      <button type="button" class="btn btn-primary" id="searchButton">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="searchButton"
+      >
         Cerca
       </button>
+
     </div>
+
   </div>
+
 </section>
 
 <section id="mappa">
+
   <div class="container">
+
     <div class="section-title">
-      <h2>Trova lo sport sulla mappa</h2>
-      <p>Seleziona uno sport oppure cerca un'associazione o un quartiere.</p>
+
+      <h2>
+        Trova lo sport sulla mappa
+      </h2>
+
+      <p>
+        Seleziona uno sport oppure cerca un'associazione o un quartiere.
+      </p>
+
     </div>
 
     <div class="filters" id="filters">
-      <button type="button" class="filter active" data-sport="Tutti">Tutti</button>
-      <button type="button" class="filter" data-sport="Calcio">⚽ Calcio</button>
-      <button type="button" class="filter" data-sport="Judo">🥋 Judo</button>
-      <button type="button" class="filter" data-sport="Basket">🏀 Basket</button>
-      <button type="button" class="filter" data-sport="Danza">💃 Danza</button>
-      <button type="button" class="filter" data-sport="Tennis">🎾 Tennis</button>
-      <button type="button" class="filter" data-sport="Altro">🏃 Altro</button>
+
+      <button type="button" class="filter active" data-sport="Tutti">
+        Tutti
+      </button>
+
+      <button type="button" class="filter" data-sport="Calcio">
+        ⚽ Calcio
+      </button>
+
+      <button type="button" class="filter" data-sport="Judo">
+        🥋 Judo
+      </button>
+
+      <button type="button" class="filter" data-sport="Basket">
+        🏀 Basket
+      </button>
+
+      <button type="button" class="filter" data-sport="Danza">
+        💃 Danza
+      </button>
+
+      <button type="button" class="filter" data-sport="Tennis">
+        🎾 Tennis
+      </button>
+
+      <button type="button" class="filter" data-sport="Altro">
+        🏃 Altro
+      </button>
+
     </div>
 
     <div id="map"></div>
 
-    <div class="results-info" id="resultsInfo">Caricamento associazioni...</div>
-    <div class="asd-grid" id="asdGrid"></div>
+    <div
+      class="results-info"
+      id="resultsInfo"
+    >
+      Caricamento associazioni...
+    </div>
+
+    <div
+      class="asd-grid"
+      id="asdGrid"
+    ></div>
+
   </div>
+
 </section>
 
-<section id="eventi" class="events-section">
+<section
+  id="eventi"
+  class="events-section"
+>
+
   <div class="container">
+
     <div class="section-title">
-      <h2>Cosa puoi fare in questi giorni</h2>
-      <p>Corsi, open day, prove gratuite, eventi e iniziative delle ASD del territorio.</p>
+
+      <h2>
+        Cosa puoi fare in questi giorni
+      </h2>
+
+      <p>
+        Corsi, open day, prove gratuite, tornei ed eventi pubblicati dalle ASD del territorio.
+      </p>
+
     </div>
 
-    <div class="event-grid">
-      <article class="card">
-        <div class="event-image">⚽</div>
-        <div class="card-body">
-          <div class="event-date">Esempio</div>
-          <h3>Open Day scuola calcio</h3>
-          <p>Qui compariranno gli eventi pubblicati dalle associazioni.</p>
-          <p class="card-location">📍 Municipio Roma V</p>
-        </div>
-      </article>
+    <div
+      class="event-grid"
+      id="eventGrid"
+    >
 
-      <article class="card">
-        <div class="event-image">🥋</div>
-        <div class="card-body">
-          <div class="event-date">Esempio</div>
-          <h3>Prova gratuita</h3>
-          <p>Le ASD potranno segnalare corsi, prove e promozioni.</p>
-          <p class="card-location">📍 Municipio Roma V</p>
-        </div>
-      </article>
+      <div class="event-empty">
+        Caricamento eventi...
+      </div>
 
-      <article class="card">
-        <div class="event-image">🏀</div>
-        <div class="card-body">
-          <div class="event-date">Esempio</div>
-          <h3>Tornei ed eventi</h3>
-          <p>Le iniziative approvate saranno raccolte in questa bacheca.</p>
-          <p class="card-location">📍 Municipio Roma V</p>
-        </div>
-      </article>
     </div>
+
   </div>
+
 </section>
 
 <section id="partecipa">
+
   <div class="container">
+
     <div class="join-box">
+
       <div>
-        <div class="eyebrow">Per le associazioni sportive</div>
-        <h2>Porta la tua ASD sulla mappa</h2>
+
+        <div class="eyebrow">
+          Per le associazioni sportive
+        </div>
+
+        <h2>
+          Porta la tua ASD sulla mappa
+        </h2>
 
         <p>
-          Le associazioni sportive del Municipio V possono segnalare la propria
-          sede, raccontare le attività che svolgono e, prossimamente, pubblicare
-          corsi, open day, tornei, locandine ed eventi.
+          Le associazioni sportive del Municipio V possono segnalare la propria sede,
+          raccontare le attività che svolgono e proporre corsi, open day,
+          tornei, offerte ed eventi.
         </p>
 
-        <p>Le segnalazioni saranno controllate prima della pubblicazione.</p>
+        <p>
+          Le segnalazioni saranno controllate prima della pubblicazione.
+        </p>
+
       </div>
 
       <div class="join-actions">
-        <button type="button" class="btn btn-primary" id="openAsdModalButton">
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="openAsdModalButton"
+        >
           📍 Inserisci la tua ASD
         </button>
 
-        <button type="button" class="btn btn-light" id="eventComingSoonButton">
+        <button
+          type="button"
+          class="btn btn-light"
+          id="openEventModalButton"
+        >
           📣 Pubblica corso o evento
         </button>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
 
 <section>
+
   <div class="container">
+
     <div class="section-title">
       <h2>Come funziona</h2>
     </div>
 
     <div class="steps">
+
       <div class="step">
-        <div class="step-number">1</div>
-        <h3>Le ASD si presentano</h3>
+
+        <div class="step-number">
+          1
+        </div>
+
+        <h3>
+          Le ASD si presentano
+        </h3>
+
         <p>
           Ogni associazione può inserire sede, sport praticati,
           contatti e informazioni sulle proprie attività.
         </p>
+
       </div>
 
       <div class="step">
-        <div class="step-number">2</div>
-        <h3>Pubblicano opportunità</h3>
+
+        <div class="step-number">
+          2
+        </div>
+
+        <h3>
+          Pubblicano opportunità
+        </h3>
+
         <p>
           Corsi, prove gratuite, tornei, open day, eventi e
           locandine saranno raccolti in una bacheca unica.
         </p>
+
       </div>
 
       <div class="step">
-        <div class="step-number">3</div>
-        <h3>I cittadini cercano</h3>
+
+        <div class="step-number">
+          3
+        </div>
+
+        <h3>
+          I cittadini cercano
+        </h3>
+
         <p>
           Chi vive nel territorio può trovare facilmente uno sport,
           un'associazione o un'attività vicino casa.
         </p>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
 
+
 <!-- MODALE INSERIMENTO ASD -->
-<div id="asdModal" class="modal-overlay" aria-hidden="true">
-  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="asdModalTitle">
+
+<div
+  id="asdModal"
+  class="modal-overlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="asdModalTitle"
+  >
 
     <button
       type="button"
@@ -845,7 +977,9 @@
       ×
     </button>
 
-    <h2 id="asdModalTitle">Inserisci la tua ASD</h2>
+    <h2 id="asdModalTitle">
+      Inserisci la tua ASD
+    </h2>
 
     <p class="modal-intro">
       Segnala un'associazione sportiva del Municipio Roma V.
@@ -853,48 +987,64 @@
     </p>
 
     <form id="asdForm">
+
       <label>
+
         Nome dell'associazione *
+
         <input
           type="text"
           id="asdNome"
           required
           placeholder="Es. ASD Sport Centocelle"
         >
+
       </label>
 
       <label>
+
         Disciplina o discipline *
+
         <input
           type="text"
           id="asdDiscipline"
           required
           placeholder="Es. Calcio, calcio a 5"
         >
+
       </label>
 
       <label>
+
         Quartiere *
+
         <input
           type="text"
           id="asdQuartiere"
           required
           placeholder="Es. Centocelle"
         >
+
       </label>
 
       <label>
+
         Indirizzo della sede o impianto *
+
         <input
           type="text"
           id="asdIndirizzo"
           required
           placeholder="Via, numero civico, Roma"
         >
+
       </label>
 
       <div class="location-picker">
-        <strong>Posizione sulla mappa *</strong>
+
+        <strong>
+          Posizione sulla mappa *
+        </strong>
 
         <p class="form-note">
           Clicca sulla mappa nel punto in cui si trova la sede o l'impianto sportivo.
@@ -902,102 +1052,163 @@
 
         <div id="locationPickerMap"></div>
 
-        <div id="positionMessage" class="position-message">
+        <div
+          id="positionMessage"
+          class="position-message"
+        >
           Nessuna posizione selezionata.
         </div>
 
-        <input type="hidden" id="asdLatitudine">
-        <input type="hidden" id="asdLongitudine">
+        <input
+          type="hidden"
+          id="asdLatitudine"
+        >
+
+        <input
+          type="hidden"
+          id="asdLongitudine"
+        >
+
       </div>
 
       <label>
+
         Descrizione
+
         <textarea
           id="asdDescrizione"
           rows="4"
           placeholder="Racconta brevemente le attività dell'associazione..."
         ></textarea>
+
       </label>
 
       <div class="form-two-columns">
+
         <label>
+
           Telefono pubblico
+
           <input
             type="tel"
             id="asdTelefono"
             placeholder="Numero visibile sul sito"
           >
+
         </label>
 
         <label>
+
           Email pubblica
+
           <input
             type="email"
             id="asdEmailPubblica"
             placeholder="Email visibile sul sito"
           >
+
         </label>
+
       </div>
 
       <label>
+
         Sito web
+
         <input
           type="url"
           id="asdSito"
           placeholder="https://..."
         >
+
       </label>
 
       <div class="form-two-columns">
+
         <label>
+
           Facebook
+
           <input
             type="text"
             id="asdFacebook"
             placeholder="Link o nome pagina"
           >
+
         </label>
 
         <label>
+
           Instagram
+
           <input
             type="text"
             id="asdInstagram"
             placeholder="Link o profilo"
           >
+
         </label>
+
       </div>
 
       <hr class="form-divider">
 
-      <h3>Referente della segnalazione</h3>
+      <h3>
+        Referente della segnalazione
+      </h3>
 
       <p class="form-note">
-        Questi dati servono per verificare la richiesta e non saranno
-        mostrati nella scheda pubblica.
+        Questi dati servono per verificare la richiesta e non saranno mostrati nella scheda pubblica.
       </p>
 
       <div class="form-two-columns">
+
         <label>
+
           Nome referente *
-          <input type="text" id="asdReferente" required>
+
+          <input
+            type="text"
+            id="asdReferente"
+            required
+          >
+
         </label>
 
         <label>
+
           Email referente *
-          <input type="email" id="asdEmailReferente" required>
+
+          <input
+            type="email"
+            id="asdEmailReferente"
+            required
+          >
+
         </label>
+
       </div>
 
       <label class="privacy-check">
-        <input type="checkbox" id="asdConferma" required>
+
+        <input
+          type="checkbox"
+          id="asdConferma"
+          required
+        >
+
         <span>
           Confermo di essere autorizzato a inviare queste informazioni
           e che i dati forniti sono corretti.
         </span>
+
       </label>
 
-      <div id="asdFormMessage" class="form-message" aria-live="polite"></div>
+      <div
+        id="asdFormMessage"
+        class="form-message"
+        aria-live="polite"
+      ></div>
 
       <button
         type="submit"
@@ -1006,12 +1217,335 @@
       >
         Invia la segnalazione
       </button>
+
     </form>
+
   </div>
+
 </div>
 
+
+<!-- MODALE INSERIMENTO EVENTO -->
+
+<div
+  id="eventModal"
+  class="modal-overlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="eventModalTitle"
+  >
+
+    <button
+      type="button"
+      class="modal-close"
+      id="closeEventModalButton"
+      aria-label="Chiudi"
+    >
+      ×
+    </button>
+
+    <h2 id="eventModalTitle">
+      Pubblica corso o evento
+    </h2>
+
+    <p class="modal-intro">
+      Proponi un corso, open day, torneo, prova gratuita, offerta o altro evento.
+      La pubblicazione avverrà dopo la verifica.
+    </p>
+
+    <form id="eventForm">
+
+      <label>
+
+        Associazione organizzatrice *
+
+        <select
+          id="eventAsdId"
+          required
+        >
+
+          <option value="">
+            Caricamento ASD...
+          </option>
+
+        </select>
+
+      </label>
+
+      <div class="form-two-columns">
+
+        <label>
+
+          Tipologia *
+
+          <select
+            id="eventTipologia"
+            required
+          >
+
+            <option value="">
+              Seleziona...
+            </option>
+
+            <option value="Corso">
+              Corso
+            </option>
+
+            <option value="Open day">
+              Open day
+            </option>
+
+            <option value="Prova gratuita">
+              Prova gratuita
+            </option>
+
+            <option value="Torneo">
+              Torneo
+            </option>
+
+            <option value="Offerta">
+              Offerta
+            </option>
+
+            <option value="Evento">
+              Evento
+            </option>
+
+            <option value="Altro">
+              Altro
+            </option>
+
+          </select>
+
+        </label>
+
+        <label>
+
+          Titolo *
+
+          <input
+            type="text"
+            id="eventTitolo"
+            required
+            placeholder="Es. Open Day minibasket"
+          >
+
+        </label>
+
+      </div>
+
+      <label>
+
+        Descrizione
+
+        <textarea
+          id="eventDescrizione"
+          rows="4"
+          placeholder="Spiega cosa proponete, a chi è rivolto e come partecipare..."
+        ></textarea>
+
+      </label>
+
+      <div class="form-two-columns">
+
+        <label>
+
+          Data e ora di inizio *
+
+          <input
+            type="datetime-local"
+            id="eventDataInizio"
+            required
+          >
+
+        </label>
+
+        <label>
+
+          Data e ora di fine
+
+          <input
+            type="datetime-local"
+            id="eventDataFine"
+          >
+
+        </label>
+
+      </div>
+
+      <div class="form-two-columns">
+
+        <label>
+
+          Luogo
+
+          <input
+            type="text"
+            id="eventLuogo"
+            placeholder="Es. Palestra comunale"
+          >
+
+        </label>
+
+        <label>
+
+          Indirizzo
+
+          <input
+            type="text"
+            id="eventIndirizzo"
+            placeholder="Via, numero civico, Roma"
+          >
+
+        </label>
+
+      </div>
+
+      <div class="form-two-columns">
+
+        <label>
+
+          A chi è rivolto
+
+          <select id="eventPubblico">
+
+            <option value="">
+              Non specificato
+            </option>
+
+            <option value="Bambini">
+              Bambini
+            </option>
+
+            <option value="Ragazzi">
+              Ragazzi
+            </option>
+
+            <option value="Adulti">
+              Adulti
+            </option>
+
+            <option value="Famiglie">
+              Famiglie
+            </option>
+
+            <option value="Tutti">
+              Tutti
+            </option>
+
+          </select>
+
+        </label>
+
+        <label>
+
+          Prezzo / offerta
+
+          <input
+            type="text"
+            id="eventPrezzo"
+            placeholder="Es. Gratuito oppure 10 €"
+          >
+
+        </label>
+
+      </div>
+
+      <label>
+
+        Link per informazioni o iscrizioni
+
+        <input
+          type="url"
+          id="eventLinkInfo"
+          placeholder="https://..."
+        >
+
+      </label>
+
+      <hr class="form-divider">
+
+      <h3>
+        Referente della segnalazione
+      </h3>
+
+      <p class="form-note">
+        Questi dati servono per la verifica e non saranno mostrati pubblicamente.
+      </p>
+
+      <div class="form-two-columns">
+
+        <label>
+
+          Nome referente *
+
+          <input
+            type="text"
+            id="eventReferente"
+            required
+          >
+
+        </label>
+
+        <label>
+
+          Email referente *
+
+          <input
+            type="email"
+            id="eventEmailReferente"
+            required
+          >
+
+        </label>
+
+      </div>
+
+      <label class="privacy-check">
+
+        <input
+          type="checkbox"
+          id="eventConferma"
+          required
+        >
+
+        <span>
+          Confermo di essere autorizzato a inviare queste informazioni
+          e che i dati forniti sono corretti.
+        </span>
+
+      </label>
+
+      <div
+        id="eventFormMessage"
+        class="form-message"
+        aria-live="polite"
+      ></div>
+
+      <button
+        type="submit"
+        class="btn btn-primary form-submit"
+        id="eventSubmit"
+      >
+        Invia per approvazione
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
 <footer>
+
   <div class="container footer-content">
+
     <div>
       <strong>SPORT V</strong><br>
       Lo sport dilettantistico del Municipio Roma V
@@ -1020,8 +1554,11 @@
     <div>
       Un progetto per mettere in rete sport e territorio.
     </div>
+
   </div>
+
 </footer>
+
 
 <script
   src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -1031,396 +1568,1869 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-  const SUPABASE_URL = "https://yordjsaevwflqakzhfdf.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
 
-  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+
+  const SUPABASE_URL =
+    "https://yordjsaevwflqakzhfdf.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_4WCIyjutbUFBi3hLC-VJJA_wy60LKPT";
+
+
+  const db =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
 
   let asdData = [];
-  let selectedSport = "Tutti";
+
+  let selectedSport =
+    "Tutti";
+
   let markers = [];
+
   let pickerMap = null;
+
   let pickerMarker = null;
 
-  /* MAPPA PRINCIPALE */
 
-  const map = L.map("map").setView([41.879, 12.557], 13);
+  const map =
+    L.map("map")
+      .setView(
+        [41.879, 12.557],
+        13
+      );
+
 
   L.tileLayer(
     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       maxZoom: 19,
-      attribution: '&copy; OpenStreetMap'
+      attribution: "&copy; OpenStreetMap"
     }
   ).addTo(map);
 
-  function validCoordinates(asd) {
-    return Number.isFinite(asd.lat) &&
-           Number.isFinite(asd.lng) &&
-           asd.lat >= -90 &&
-           asd.lat <= 90 &&
-           asd.lng >= -180 &&
-           asd.lng <= 180;
-  }
-
-  async function loadAsd() {
-    const info = document.getElementById("resultsInfo");
-
-    info.textContent = "Caricamento associazioni...";
-
-    const { data, error } = await db
-      .from("asd_pubbliche")
-      .select("*")
-      .order("nome");
-
-    if (error) {
-      console.error("Errore Supabase:", error);
-      info.textContent = "Impossibile caricare le associazioni in questo momento.";
-      return;
-    }
-
-    asdData = (data || []).map(asd => ({
-      id: asd.id,
-      name: asd.nome || "",
-      sport: asd.discipline || "Altro",
-      quartier: asd.quartiere || "",
-      lat: Number(asd.latitudine),
-      lng: Number(asd.longitudine),
-      description: asd.descrizione || "",
-      indirizzo: asd.indirizzo || "",
-      telefono: asd.telefono_pubblico || "",
-      email: asd.email_pubblica || "",
-      sito: asd.sito_web || ""
-    }));
-
-    applyFilters();
-  }
-
-  function renderMarkers(data) {
-    markers.forEach(marker => map.removeLayer(marker));
-    markers = [];
-
-    data
-      .filter(validCoordinates)
-      .forEach(asd => {
-        const marker = L.marker([asd.lat, asd.lng]).addTo(map);
-
-        marker.bindPopup(`
-          <div style="min-width:200px">
-            <strong style="font-size:16px">${escapeHtml(asd.name)}</strong><br>
-            <span>${escapeHtml(asd.sport)}</span><br><br>
-            <span>📍 ${escapeHtml(asd.quartier)}</span>
-            ${asd.indirizzo ? `<br><span>${escapeHtml(asd.indirizzo)}</span>` : ""}
-            ${asd.description ? `<p>${escapeHtml(asd.description)}</p>` : ""}
-          </div>
-        `);
-
-        marker.__asdId = asd.id;
-        markers.push(marker);
-      });
-  }
-
-  function renderCards(data) {
-    const grid = document.getElementById("asdGrid");
-    const info = document.getElementById("resultsInfo");
-
-    grid.innerHTML = "";
-
-    info.textContent =
-      `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.`;
-
-    if (data.length === 0) {
-      grid.innerHTML = `
-        <div class="card">
-          <div class="card-body">
-            <h3>Nessun risultato</h3>
-            <p>Prova a modificare la ricerca o selezionare un altro sport.</p>
-          </div>
-        </div>
-      `;
-      return;
-    }
-
-    data.forEach(asd => {
-      const card = document.createElement("article");
-      card.className = "card";
-
-      const mapLink = validCoordinates(asd)
-        ? `<button type="button" class="card-link" data-asd-id="${asd.id}" style="border:0;background:none;padding:0;">
-             Vedi sulla mappa →
-           </button>`
-        : `<span class="card-link" style="color:#7a858f;">Posizione non disponibile</span>`;
-
-      card.innerHTML = `
-        <div class="card-body">
-          <span class="tag">${escapeHtml(asd.sport)}</span>
-          <h3>${escapeHtml(asd.name)}</h3>
-          ${asd.description ? `<p>${escapeHtml(asd.description)}</p>` : ""}
-          <p class="card-location">📍 ${escapeHtml(asd.quartier || asd.indirizzo || "Municipio Roma V")}</p>
-          ${mapLink}
-        </div>
-      `;
-
-      grid.appendChild(card);
-    });
-
-    grid.querySelectorAll("[data-asd-id]").forEach(button => {
-      button.addEventListener("click", () => {
-        focusAsd(Number(button.dataset.asdId));
-      });
-    });
-  }
-
-  function applyFilters() {
-    const search = document
-      .getElementById("searchInput")
-      .value
-      .trim()
-      .toLowerCase();
-
-    const filtered = asdData.filter(asd => {
-      const sportText = asd.sport.toLowerCase();
-
-      const sportMatch =
-        selectedSport === "Tutti" ||
-        (selectedSport === "Altro"
-          ? !["calcio", "judo", "basket", "danza", "tennis"].some(s => sportText.includes(s))
-          : sportText.includes(selectedSport.toLowerCase()));
-
-      const searchMatch =
-        !search ||
-        asd.name.toLowerCase().includes(search) ||
-        asd.sport.toLowerCase().includes(search) ||
-        asd.quartier.toLowerCase().includes(search) ||
-        asd.description.toLowerCase().includes(search) ||
-        asd.indirizzo.toLowerCase().includes(search);
-
-      return sportMatch && searchMatch;
-    });
-
-    renderMarkers(filtered);
-    renderCards(filtered);
-  }
-
-  function focusAsd(id) {
-    const asd = asdData.find(item => item.id === id);
-
-    if (!asd || !validCoordinates(asd)) {
-      return;
-    }
-
-    map.setView([asd.lat, asd.lng], 16);
-
-    const marker = markers.find(item => item.__asdId === id);
-
-    if (marker) {
-      marker.openPopup();
-    }
-
-    document.getElementById("mappa").scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
 
   function escapeHtml(value) {
+
     return String(value ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+
   }
 
-  /* FILTRI E RICERCA */
 
-  document.querySelectorAll(".filter").forEach(button => {
-    button.addEventListener("click", () => {
-      document
-        .querySelectorAll(".filter")
-        .forEach(btn => btn.classList.remove("active"));
+  function validCoordinates(asd) {
 
-      button.classList.add("active");
-      selectedSport = button.dataset.sport;
-      applyFilters();
-    });
-  });
+    return (
+      Number.isFinite(asd.lat) &&
+      Number.isFinite(asd.lng) &&
+      asd.lat >= -90 &&
+      asd.lat <= 90 &&
+      asd.lng >= -180 &&
+      asd.lng <= 180
+    );
 
-  document
-    .getElementById("searchButton")
-    .addEventListener("click", applyFilters);
+  }
 
-  document
-    .getElementById("searchInput")
-    .addEventListener("keyup", event => {
-      if (event.key === "Enter") {
-        applyFilters();
+
+  async function loadAsd() {
+
+    const info =
+      document.getElementById(
+        "resultsInfo"
+      );
+
+    info.textContent =
+      "Caricamento associazioni...";
+
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("asd_pubbliche")
+        .select("*")
+        .order("nome");
+
+
+    if (error) {
+
+      console.error(
+        "Errore Supabase ASD:",
+        error
+      );
+
+      info.textContent =
+        "Impossibile caricare le associazioni in questo momento.";
+
+      return;
+
+    }
+
+
+    asdData =
+      (data || []).map(
+        asd => ({
+
+          id:
+            asd.id,
+
+          name:
+            asd.nome || "",
+
+          sport:
+            asd.discipline || "Altro",
+
+          quartier:
+            asd.quartiere || "",
+
+          lat:
+            Number(asd.latitudine),
+
+          lng:
+            Number(asd.longitudine),
+
+          description:
+            asd.descrizione || "",
+
+          indirizzo:
+            asd.indirizzo || "",
+
+          telefono:
+            asd.telefono_pubblico || "",
+
+          email:
+            asd.email_pubblica || "",
+
+          sito:
+            asd.sito_web || ""
+
+        })
+      );
+
+
+    applyFilters();
+
+    populateEventAsdSelect();
+
+  }
+
+
+  async function loadEvents() {
+
+    const grid =
+      document.getElementById(
+        "eventGrid"
+      );
+
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from("eventi_pubblici")
+        .select("*")
+        .order(
+          "data_inizio",
+          {
+            ascending: true
+          }
+        );
+
+
+    if (error) {
+
+      console.error(
+        "Errore caricamento eventi:",
+        error
+      );
+
+      grid.innerHTML =
+        '<div class="event-empty">Impossibile caricare gli eventi in questo momento.</div>';
+
+      return;
+
+    }
+
+
+    renderEvents(
+      data || []
+    );
+
+  }
+
+
+  function populateEventAsdSelect() {
+
+    const select =
+      document.getElementById(
+        "eventAsdId"
+      );
+
+
+    select.innerHTML =
+      '<option value="">Seleziona la tua ASD...</option>';
+
+
+    asdData
+      .slice()
+      .sort(
+        (a, b) =>
+          a.name.localeCompare(
+            b.name,
+            "it"
+          )
+      )
+      .forEach(
+        asd => {
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            String(asd.id);
+
+
+          option.textContent =
+            asd.quartier
+              ? `${asd.name} — ${asd.quartier}`
+              : asd.name;
+
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+  }
+
+
+  function eventIcon(tipologia) {
+
+    const type =
+      String(
+        tipologia || ""
+      ).toLowerCase();
+
+
+    if (
+      type.includes("torneo")
+    ) {
+      return "🏆";
+    }
+
+
+    if (
+      type.includes("prova")
+    ) {
+      return "🎟️";
+    }
+
+
+    if (
+      type.includes("corso")
+    ) {
+      return "🏃";
+    }
+
+
+    if (
+      type.includes("open")
+    ) {
+      return "📣";
+    }
+
+
+    if (
+      type.includes("offerta")
+    ) {
+      return "💡";
+    }
+
+
+    return "📅";
+
+  }
+
+
+  function formatEventDate(value) {
+
+    if (!value) {
+      return "Data da definire";
+    }
+
+
+    const date =
+      new Date(value);
+
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return "Data da definire";
+    }
+
+
+    return new Intl.DateTimeFormat(
+      "it-IT",
+      {
+
+        day:
+          "2-digit",
+
+        month:
+          "short",
+
+        year:
+          "numeric",
+
+        hour:
+          "2-digit",
+
+        minute:
+          "2-digit"
+
       }
-    });
+    ).format(date);
 
-  /* MODALE ASD */
+  }
+
+
+  function renderEvents(events) {
+
+    const grid =
+      document.getElementById(
+        "eventGrid"
+      );
+
+
+    grid.innerHTML =
+      "";
+
+
+    if (
+      events.length === 0
+    ) {
+
+      grid.innerHTML =
+        '<div class="event-empty">Non ci sono ancora eventi approvati. Le ASD possono proporne uno dal pulsante “Pubblica corso o evento”.</div>';
+
+      return;
+
+    }
+
+
+    events.forEach(
+      evento => {
+
+        const card =
+          document.createElement(
+            "article"
+          );
+
+
+        card.className =
+          "card";
+
+
+        const meta =
+          [];
+
+
+        if (
+          evento.pubblico
+        ) {
+
+          meta.push(
+            `<span>👥 ${escapeHtml(evento.pubblico)}</span>`
+          );
+
+        }
+
+
+        if (
+          evento.prezzo
+        ) {
+
+          meta.push(
+            `<span>💶 ${escapeHtml(evento.prezzo)}</span>`
+          );
+
+        }
+
+
+        let safeLink =
+          "";
+
+
+        if (
+          evento.link_info
+        ) {
+
+          try {
+
+            const url =
+              new URL(
+                evento.link_info
+              );
+
+
+            if (
+              url.protocol === "http:" ||
+              url.protocol === "https:"
+            ) {
+
+              safeLink =
+                `<a class="card-link"
+                    href="${escapeHtml(url.href)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Informazioni / iscrizioni →
+                 </a>`;
+
+            }
+
+          }
+          catch (_) {}
+
+        }
+
+
+        card.innerHTML =
+          `
+            <div class="event-image">
+              ${eventIcon(evento.tipologia)}
+            </div>
+
+            <div class="card-body">
+
+              <div class="event-date">
+                ${escapeHtml(formatEventDate(evento.data_inizio))}
+              </div>
+
+              <span class="tag">
+                ${escapeHtml(evento.tipologia || "Evento")}
+              </span>
+
+              <h3>
+                ${escapeHtml(evento.titolo)}
+              </h3>
+
+              <p>
+                <strong>
+                  ${escapeHtml(evento.asd_nome || "ASD")}
+                </strong>
+              </p>
+
+              ${
+                evento.descrizione
+                  ? `<p>${escapeHtml(evento.descrizione)}</p>`
+                  : ""
+              }
+
+              ${
+                evento.luogo ||
+                evento.indirizzo
+                  ?
+                  `<p class="card-location">
+                     📍 ${escapeHtml(
+                       [
+                         evento.luogo,
+                         evento.indirizzo
+                       ]
+                       .filter(Boolean)
+                       .join(" — ")
+                     )}
+                   </p>`
+                  :
+                  ""
+              }
+
+              ${
+                meta.length
+                  ?
+                  `<div class="event-meta">
+                     ${meta.join("")}
+                   </div>`
+                  :
+                  ""
+              }
+
+              ${safeLink}
+
+            </div>
+          `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+  }
+
+
+  function renderMarkers(data) {
+
+    markers.forEach(
+      marker =>
+        map.removeLayer(
+          marker
+        )
+    );
+
+
+    markers = [];
+
+
+    data
+      .filter(
+        validCoordinates
+      )
+      .forEach(
+        asd => {
+
+          const marker =
+            L.marker(
+              [
+                asd.lat,
+                asd.lng
+              ]
+            )
+            .addTo(map);
+
+
+          marker.bindPopup(
+            `
+              <div style="min-width:200px">
+
+                <strong style="font-size:16px">
+                  ${escapeHtml(asd.name)}
+                </strong>
+
+                <br>
+
+                <span>
+                  ${escapeHtml(asd.sport)}
+                </span>
+
+                <br><br>
+
+                <span>
+                  📍 ${escapeHtml(asd.quartier)}
+                </span>
+
+                ${
+                  asd.indirizzo
+                    ?
+                    `<br>
+                     <span>
+                       ${escapeHtml(asd.indirizzo)}
+                     </span>`
+                    :
+                    ""
+                }
+
+                ${
+                  asd.description
+                    ?
+                    `<p>
+                       ${escapeHtml(asd.description)}
+                     </p>`
+                    :
+                    ""
+                }
+
+              </div>
+            `
+          );
+
+
+          marker.__asdId =
+            asd.id;
+
+
+          markers.push(
+            marker
+          );
+
+        }
+      );
+
+  }
+
+
+  function renderCards(data) {
+
+    const grid =
+      document.getElementById(
+        "asdGrid"
+      );
+
+
+    const info =
+      document.getElementById(
+        "resultsInfo"
+      );
+
+
+    grid.innerHTML =
+      "";
+
+
+    info.textContent =
+      `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.`;
+
+
+    if (
+      data.length === 0
+    ) {
+
+      grid.innerHTML =
+        `
+          <div class="card">
+
+            <div class="card-body">
+
+              <h3>
+                Nessun risultato
+              </h3>
+
+              <p>
+                Prova a modificare la ricerca
+                o selezionare un altro sport.
+              </p>
+
+            </div>
+
+          </div>
+        `;
+
+      return;
+
+    }
+
+
+    data.forEach(
+      asd => {
+
+        const card =
+          document.createElement(
+            "article"
+          );
+
+
+        card.className =
+          "card";
+
+
+        const mapLink =
+          validCoordinates(asd)
+            ?
+            `
+              <button
+                type="button"
+                class="card-link"
+                data-asd-id="${asd.id}"
+                style="border:0;background:none;padding:0;"
+              >
+                Vedi sulla mappa →
+              </button>
+            `
+            :
+            `
+              <span
+                class="card-link"
+                style="color:#7a858f;"
+              >
+                Posizione non disponibile
+              </span>
+            `;
+
+
+        card.innerHTML =
+          `
+            <div class="card-body">
+
+              <span class="tag">
+                ${escapeHtml(asd.sport)}
+              </span>
+
+              <h3>
+                ${escapeHtml(asd.name)}
+              </h3>
+
+              ${
+                asd.description
+                  ?
+                  `<p>
+                     ${escapeHtml(asd.description)}
+                   </p>`
+                  :
+                  ""
+              }
+
+              <p class="card-location">
+                📍 ${escapeHtml(
+                  asd.quartier ||
+                  asd.indirizzo ||
+                  "Municipio Roma V"
+                )}
+              </p>
+
+              ${mapLink}
+
+            </div>
+          `;
+
+
+        grid.appendChild(
+          card
+        );
+
+      }
+    );
+
+
+    grid
+      .querySelectorAll(
+        "[data-asd-id]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              focusAsd(
+                Number(
+                  button.dataset.asdId
+                )
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  function applyFilters() {
+
+    const search =
+      document
+        .getElementById(
+          "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const filtered =
+      asdData.filter(
+        asd => {
+
+          const sportText =
+            asd.sport
+              .toLowerCase();
+
+
+          const sportMatch =
+            selectedSport === "Tutti" ||
+
+            (
+              selectedSport === "Altro"
+                ?
+                ![
+                  "calcio",
+                  "judo",
+                  "basket",
+                  "danza",
+                  "tennis"
+                ]
+                .some(
+                  sport =>
+                    sportText.includes(
+                      sport
+                    )
+                )
+                :
+                sportText.includes(
+                  selectedSport
+                    .toLowerCase()
+                )
+            );
+
+
+          const searchMatch =
+            !search ||
+
+            asd.name
+              .toLowerCase()
+              .includes(search) ||
+
+            asd.sport
+              .toLowerCase()
+              .includes(search) ||
+
+            asd.quartier
+              .toLowerCase()
+              .includes(search) ||
+
+            asd.description
+              .toLowerCase()
+              .includes(search) ||
+
+            asd.indirizzo
+              .toLowerCase()
+              .includes(search);
+
+
+          return (
+            sportMatch &&
+            searchMatch
+          );
+
+        }
+      );
+
+
+    renderMarkers(
+      filtered
+    );
+
+
+    renderCards(
+      filtered
+    );
+
+  }
+
+
+  function focusAsd(id) {
+
+    const asd =
+      asdData.find(
+        item =>
+          item.id === id
+      );
+
+
+    if (
+      !asd ||
+      !validCoordinates(asd)
+    ) {
+      return;
+    }
+
+
+    map.setView(
+      [
+        asd.lat,
+        asd.lng
+      ],
+      16
+    );
+
+
+    const marker =
+      markers.find(
+        item =>
+          item.__asdId === id
+      );
+
+
+    if (marker) {
+      marker.openPopup();
+    }
+
+
+    document
+      .getElementById(
+        "mappa"
+      )
+      .scrollIntoView(
+        {
+          behavior:
+            "smooth",
+
+          block:
+            "start"
+        }
+      );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".filter"
+    )
+    .forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            document
+              .querySelectorAll(
+                ".filter"
+              )
+              .forEach(
+                btn =>
+                  btn.classList.remove(
+                    "active"
+                  )
+              );
+
+
+            button.classList.add(
+              "active"
+            );
+
+
+            selectedSport =
+              button.dataset.sport;
+
+
+            applyFilters();
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "searchButton"
+    )
+    .addEventListener(
+      "click",
+      applyFilters
+    );
+
+
+  document
+    .getElementById(
+      "searchInput"
+    )
+    .addEventListener(
+      "keyup",
+      event => {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+          applyFilters();
+        }
+
+      }
+    );
+
 
   function openAsdModal() {
-    const modal = document.getElementById("asdModal");
 
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
+    const modal =
+      document.getElementById(
+        "asdModal"
+      );
+
+
+    modal.classList.add(
+      "open"
+    );
+
+
+    modal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
+    document.body
+      .classList.add(
+        "modal-open"
+      );
+
 
     if (!pickerMap) {
-      pickerMap = L.map("locationPickerMap").setView([41.879, 12.557], 13);
+
+      pickerMap =
+        L.map(
+          "locationPickerMap"
+        )
+        .setView(
+          [
+            41.879,
+            12.557
+          ],
+          13
+        );
+
 
       L.tileLayer(
         "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
           maxZoom: 19,
-          attribution: '&copy; OpenStreetMap'
+          attribution: "&copy; OpenStreetMap"
         }
-      ).addTo(pickerMap);
+      ).addTo(
+        pickerMap
+      );
 
-      pickerMap.on("click", event => {
-        const lat = event.latlng.lat;
-        const lng = event.latlng.lng;
 
-        document.getElementById("asdLatitudine").value = String(lat);
-        document.getElementById("asdLongitudine").value = String(lng);
+      pickerMap.on(
+        "click",
+        event => {
 
-        if (pickerMarker) {
-          pickerMarker.setLatLng(event.latlng);
-        } else {
-          pickerMarker = L.marker(event.latlng).addTo(pickerMap);
+          const lat =
+            event.latlng.lat;
+
+
+          const lng =
+            event.latlng.lng;
+
+
+          document
+            .getElementById(
+              "asdLatitudine"
+            )
+            .value =
+              String(lat);
+
+
+          document
+            .getElementById(
+              "asdLongitudine"
+            )
+            .value =
+              String(lng);
+
+
+          if (pickerMarker) {
+
+            pickerMarker
+              .setLatLng(
+                event.latlng
+              );
+
+          }
+          else {
+
+            pickerMarker =
+              L.marker(
+                event.latlng
+              )
+              .addTo(
+                pickerMap
+              );
+
+          }
+
+
+          const message =
+            document.getElementById(
+              "positionMessage"
+            );
+
+
+          message.textContent =
+            "✓ Posizione selezionata sulla mappa";
+
+
+          message.classList.add(
+            "selected"
+          );
+
         }
+      );
 
-        const message = document.getElementById("positionMessage");
-        message.textContent = "✓ Posizione selezionata sulla mappa";
-        message.classList.add("selected");
-      });
     }
 
-    window.setTimeout(() => {
-      pickerMap.invalidateSize();
-    }, 200);
+
+    setTimeout(
+      () =>
+        pickerMap.invalidateSize(),
+      200
+    );
+
   }
+
 
   function closeAsdModal() {
-    const modal = document.getElementById("asdModal");
 
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
+    const modal =
+      document.getElementById(
+        "asdModal"
+      );
+
+
+    modal.classList.remove(
+      "open"
+    );
+
+
+    modal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+
+    document.body
+      .classList.remove(
+        "modal-open"
+      );
+
   }
 
-  document
-    .getElementById("openAsdModalButton")
-    .addEventListener("click", openAsdModal);
+
+  function openEventModal() {
+
+    populateEventAsdSelect();
+
+
+    const modal =
+      document.getElementById(
+        "eventModal"
+      );
+
+
+    modal.classList.add(
+      "open"
+    );
+
+
+    modal.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
+    document.body
+      .classList.add(
+        "modal-open"
+      );
+
+  }
+
+
+  function closeEventModal() {
+
+    const modal =
+      document.getElementById(
+        "eventModal"
+      );
+
+
+    modal.classList.remove(
+      "open"
+    );
+
+
+    modal.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+
+
+    document.body
+      .classList.remove(
+        "modal-open"
+      );
+
+  }
+
 
   document
-    .getElementById("closeAsdModalButton")
-    .addEventListener("click", closeAsdModal);
+    .getElementById(
+      "openAsdModalButton"
+    )
+    .addEventListener(
+      "click",
+      openAsdModal
+    );
+
 
   document
-    .getElementById("asdModal")
-    .addEventListener("click", event => {
-      if (event.target.id === "asdModal") {
-        closeAsdModal();
+    .getElementById(
+      "closeAsdModalButton"
+    )
+    .addEventListener(
+      "click",
+      closeAsdModal
+    );
+
+
+  document
+    .getElementById(
+      "openEventModalButton"
+    )
+    .addEventListener(
+      "click",
+      openEventModal
+    );
+
+
+  document
+    .getElementById(
+      "closeEventModalButton"
+    )
+    .addEventListener(
+      "click",
+      closeEventModal
+    );
+
+
+  document
+    .getElementById(
+      "asdModal"
+    )
+    .addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target.id ===
+          "asdModal"
+        ) {
+          closeAsdModal();
+        }
+
       }
-    });
+    );
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" &&
-        document.getElementById("asdModal").classList.contains("open")) {
-      closeAsdModal();
-    }
-  });
 
   document
-    .getElementById("eventComingSoonButton")
-    .addEventListener("click", () => {
-      alert("Nel prossimo passaggio attiveremo il modulo per pubblicare corsi, offerte ed eventi.");
-    });
+    .getElementById(
+      "eventModal"
+    )
+    .addEventListener(
+      "click",
+      event => {
 
-  /* INVIO ASD */
+        if (
+          event.target.id ===
+          "eventModal"
+        ) {
+          closeEventModal();
+        }
+
+      }
+    );
+
 
   document
-    .getElementById("asdForm")
-    .addEventListener("submit", async event => {
-      event.preventDefault();
+    .addEventListener(
+      "keydown",
+      event => {
 
-      const submitButton = document.getElementById("asdSubmit");
-      const message = document.getElementById("asdFormMessage");
+        if (
+          event.key !==
+          "Escape"
+        ) {
+          return;
+        }
 
-      message.className = "form-message";
-      message.textContent = "";
 
-      const latitudine = document.getElementById("asdLatitudine").value;
-      const longitudine = document.getElementById("asdLongitudine").value;
+        if (
+          document
+            .getElementById(
+              "asdModal"
+            )
+            .classList.contains(
+              "open"
+            )
+        ) {
+          closeAsdModal();
+        }
 
-      if (!latitudine || !longitudine) {
-        message.className = "form-message error";
+
+        if (
+          document
+            .getElementById(
+              "eventModal"
+            )
+            .classList.contains(
+              "open"
+            )
+        ) {
+          closeEventModal();
+        }
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "asdForm"
+    )
+    .addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+
+        const submitButton =
+          document.getElementById(
+            "asdSubmit"
+          );
+
+
+        const message =
+          document.getElementById(
+            "asdFormMessage"
+          );
+
+
+        const latitudine =
+          document.getElementById(
+            "asdLatitudine"
+          ).value;
+
+
+        const longitudine =
+          document.getElementById(
+            "asdLongitudine"
+          ).value;
+
+
+        message.className =
+          "form-message";
+
+
         message.textContent =
-          "Seleziona sulla mappa la posizione della sede o dell'impianto.";
-        return;
-      }
+          "";
 
-      submitButton.disabled = true;
-      submitButton.textContent = "Invio in corso...";
 
-      const nuovaAsd = {
-        nome: document.getElementById("asdNome").value.trim(),
-        discipline: document.getElementById("asdDiscipline").value.trim(),
-        quartiere: document.getElementById("asdQuartiere").value.trim(),
-        indirizzo: document.getElementById("asdIndirizzo").value.trim(),
-        latitudine: Number(latitudine),
-        longitudine: Number(longitudine),
-        descrizione: document.getElementById("asdDescrizione").value.trim(),
-        telefono_pubblico: document.getElementById("asdTelefono").value.trim() || null,
-        email_pubblica: document.getElementById("asdEmailPubblica").value.trim() || null,
-        sito_web: document.getElementById("asdSito").value.trim() || null,
-        facebook: document.getElementById("asdFacebook").value.trim() || null,
-        instagram: document.getElementById("asdInstagram").value.trim() || null,
-        nome_referente: document.getElementById("asdReferente").value.trim(),
-        email_referente: document.getElementById("asdEmailReferente").value.trim()
-      };
+        if (
+          !latitudine ||
+          !longitudine
+        ) {
 
-      const { error } = await db
-        .from("asd")
-        .insert([nuovaAsd]);
+          message.className =
+            "form-message error";
 
-      if (error) {
-        console.error("Errore inserimento ASD:", error);
 
-        message.className = "form-message error";
+          message.textContent =
+            "Seleziona sulla mappa la posizione della sede o dell'impianto.";
+
+
+          return;
+
+        }
+
+
+        submitButton.disabled =
+          true;
+
+
+        submitButton.textContent =
+          "Invio in corso...";
+
+
+        const nuovaAsd = {
+
+          nome:
+            document
+              .getElementById(
+                "asdNome"
+              )
+              .value
+              .trim(),
+
+          discipline:
+            document
+              .getElementById(
+                "asdDiscipline"
+              )
+              .value
+              .trim(),
+
+          quartiere:
+            document
+              .getElementById(
+                "asdQuartiere"
+              )
+              .value
+              .trim(),
+
+          indirizzo:
+            document
+              .getElementById(
+                "asdIndirizzo"
+              )
+              .value
+              .trim(),
+
+          latitudine:
+            Number(
+              latitudine
+            ),
+
+          longitudine:
+            Number(
+              longitudine
+            ),
+
+          descrizione:
+            document
+              .getElementById(
+                "asdDescrizione"
+              )
+              .value
+              .trim(),
+
+          telefono_pubblico:
+            document
+              .getElementById(
+                "asdTelefono"
+              )
+              .value
+              .trim() ||
+            null,
+
+          email_pubblica:
+            document
+              .getElementById(
+                "asdEmailPubblica"
+              )
+              .value
+              .trim() ||
+            null,
+
+          sito_web:
+            document
+              .getElementById(
+                "asdSito"
+              )
+              .value
+              .trim() ||
+            null,
+
+          facebook:
+            document
+              .getElementById(
+                "asdFacebook"
+              )
+              .value
+              .trim() ||
+            null,
+
+          instagram:
+            document
+              .getElementById(
+                "asdInstagram"
+              )
+              .value
+              .trim() ||
+            null,
+
+          nome_referente:
+            document
+              .getElementById(
+                "asdReferente"
+              )
+              .value
+              .trim(),
+
+          email_referente:
+            document
+              .getElementById(
+                "asdEmailReferente"
+              )
+              .value
+              .trim()
+
+        };
+
+
+        const {
+          error
+        } =
+          await db
+            .from("asd")
+            .insert(
+              [
+                nuovaAsd
+              ]
+            );
+
+
+        if (error) {
+
+          console.error(
+            "Errore inserimento ASD:",
+            error
+          );
+
+
+          message.className =
+            "form-message error";
+
+
+          message.textContent =
+            "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+
+
+          submitButton.disabled =
+            false;
+
+
+          submitButton.textContent =
+            "Invia la segnalazione";
+
+
+          return;
+
+        }
+
+
+        message.className =
+          "form-message success";
+
+
         message.textContent =
-          "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+          "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
 
-        submitButton.disabled = false;
-        submitButton.textContent = "Invia la segnalazione";
-        return;
+
+        document
+          .getElementById(
+            "asdForm"
+          )
+          .reset();
+
+
+        if (pickerMarker) {
+
+          pickerMap
+            .removeLayer(
+              pickerMarker
+            );
+
+
+          pickerMarker =
+            null;
+
+        }
+
+
+        const positionMessage =
+          document.getElementById(
+            "positionMessage"
+          );
+
+
+        positionMessage.textContent =
+          "Nessuna posizione selezionata.";
+
+
+        positionMessage
+          .classList.remove(
+            "selected"
+          );
+
+
+        submitButton.disabled =
+          false;
+
+
+        submitButton.textContent =
+          "Invia la segnalazione";
+
       }
+    );
 
-      message.className = "form-message success";
-      message.textContent =
-        "Segnalazione inviata! L'associazione sarà pubblicata dopo la verifica.";
 
-      document.getElementById("asdForm").reset();
+  document
+    .getElementById(
+      "eventForm"
+    )
+    .addEventListener(
+      "submit",
+      async event => {
 
-      if (pickerMarker) {
-        pickerMap.removeLayer(pickerMarker);
-        pickerMarker = null;
+        event.preventDefault();
+
+
+        const submitButton =
+          document.getElementById(
+            "eventSubmit"
+          );
+
+
+        const message =
+          document.getElementById(
+            "eventFormMessage"
+          );
+
+
+        const startValue =
+          document.getElementById(
+            "eventDataInizio"
+          ).value;
+
+
+        const endValue =
+          document.getElementById(
+            "eventDataFine"
+          ).value;
+
+
+        message.className =
+          "form-message";
+
+
+        message.textContent =
+          "";
+
+
+        if (
+          endValue &&
+          new Date(endValue) <
+          new Date(startValue)
+        ) {
+
+          message.className =
+            "form-message error";
+
+
+          message.textContent =
+            "La data di fine non può precedere la data di inizio.";
+
+
+          return;
+
+        }
+
+
+        submitButton.disabled =
+          true;
+
+
+        submitButton.textContent =
+          "Invio in corso...";
+
+
+        const nuovoEvento = {
+
+          asd_id:
+            Number(
+              document
+                .getElementById(
+                  "eventAsdId"
+                )
+                .value
+            ),
+
+          titolo:
+            document
+              .getElementById(
+                "eventTitolo"
+              )
+              .value
+              .trim(),
+
+          descrizione:
+            document
+              .getElementById(
+                "eventDescrizione"
+              )
+              .value
+              .trim() ||
+            null,
+
+          tipologia:
+            document
+              .getElementById(
+                "eventTipologia"
+              )
+              .value,
+
+          data_inizio:
+            new Date(
+              startValue
+            )
+            .toISOString(),
+
+          data_fine:
+            endValue
+              ?
+              new Date(
+                endValue
+              )
+              .toISOString()
+              :
+              null,
+
+          luogo:
+            document
+              .getElementById(
+                "eventLuogo"
+              )
+              .value
+              .trim() ||
+            null,
+
+          indirizzo:
+            document
+              .getElementById(
+                "eventIndirizzo"
+              )
+              .value
+              .trim() ||
+            null,
+
+          pubblico:
+            document
+              .getElementById(
+                "eventPubblico"
+              )
+              .value ||
+            null,
+
+          prezzo:
+            document
+              .getElementById(
+                "eventPrezzo"
+              )
+              .value
+              .trim() ||
+            null,
+
+          link_info:
+            document
+              .getElementById(
+                "eventLinkInfo"
+              )
+              .value
+              .trim() ||
+            null,
+
+          locandina_url:
+            null,
+
+          nome_referente:
+            document
+              .getElementById(
+                "eventReferente"
+              )
+              .value
+              .trim(),
+
+          email_referente:
+            document
+              .getElementById(
+                "eventEmailReferente"
+              )
+              .value
+              .trim()
+
+        };
+
+
+        const {
+          error
+        } =
+          await db
+            .from(
+              "eventi"
+            )
+            .insert(
+              [
+                nuovoEvento
+              ]
+            );
+
+
+        if (error) {
+
+          console.error(
+            "Errore inserimento evento:",
+            error
+          );
+
+
+          message.className =
+            "form-message error";
+
+
+          message.textContent =
+            "Non è stato possibile inviare l'evento. Riprova tra poco.";
+
+
+          submitButton.disabled =
+            false;
+
+
+          submitButton.textContent =
+            "Invia per approvazione";
+
+
+          return;
+
+        }
+
+
+        message.className =
+          "form-message success";
+
+
+        message.textContent =
+          "Evento inviato! Sarà pubblicato dopo la verifica.";
+
+
+        document
+          .getElementById(
+            "eventForm"
+          )
+          .reset();
+
+
+        populateEventAsdSelect();
+
+
+        submitButton.disabled =
+          false;
+
+
+        submitButton.textContent =
+          "Invia per approvazione";
+
       }
+    );
 
-      const positionMessage = document.getElementById("positionMessage");
-      positionMessage.textContent = "Nessuna posizione selezionata.";
-      positionMessage.classList.remove("selected");
-
-      submitButton.disabled = false;
-      submitButton.textContent = "Invia la segnalazione";
-    });
-
-  /* AVVIO */
 
   loadAsd();
+
+  loadEvents();
+
 </script>
 
 </body>
