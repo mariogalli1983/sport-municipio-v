@@ -1327,6 +1327,56 @@ let pickerMarker = null;
 
   }
 function openAsdModal() {
+
+  const modal = document.getElementById("asdModal");
+
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+
+  if (!pickerMap) {
+
+    pickerMap = L.map("locationPickerMap")
+      .setView([41.879, 12.557], 13);
+
+    L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }
+    ).addTo(pickerMap);
+
+    pickerMap.on("click", function(e) {
+
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+
+      document.getElementById("asdLatitudine").value = lat;
+      document.getElementById("asdLongitudine").value = lng;
+
+      if (pickerMarker) {
+        pickerMarker.setLatLng(e.latlng);
+      } else {
+        pickerMarker = L.marker(e.latlng).addTo(pickerMap);
+      }
+
+      const message =
+        document.getElementById("positionMessage");
+
+      message.textContent =
+        "✓ Posizione selezionata sulla mappa";
+
+      message.classList.add("selected");
+
+    });
+
+  }
+
+  setTimeout(() => {
+    pickerMap.invalidateSize();
+  }, 150);
+
+}
   const modal = document.getElementById("asdModal");
   modal.classList.add("open");
   modal.setAttribute("aria-hidden", "false");
