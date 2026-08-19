@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    SPORT V — Moderazione
+  </title>
+
+
+  <style>
+
+    :root {
+
+      --blu:
+        #123c69;
+
+      --blu-scuro:
+        #0b2949;
+
+      --verde:
+        #2b8a66;
+
+      --rosso:
+        #c83d3d;
+
+      --testo:
+        #1c2630;
+
+      --grigio:
+        #66717d;
+
+      --sfondo:
+        #f5f7f9;
+
+      --bordo:
+        #dfe5ea;
+
+    }
+
+
+    * {
+      box-sizing:
+        border-box;
+    }
+
+
+    body {
+
+      margin:
+        0;
+
+      background:
+        var(--sfondo);
+
+      color:
+        var(--testo);
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      line-height:
+        1.5;
+
+    }
+
+
+    .page {
+
+      width:
+        min(
+          820px,
+          calc(100% - 28px)
+        );
+
+      margin:
+        30px auto 50px;
+
+    }
+
+
+    .header {
+
+      background:
+        var(--blu-scuro);
+
+      color:
+        white;
+
+      padding:
+        24px;
+
+      border-radius:
+        16px 16px 0 0;
+
+    }
+
+
+    .brand {
+
+      font-size:
+        20px;
+
+      font-weight:
+        900;
+
+    }
+
+
+    .brand span {
+      color: #75d0a7;
+    }
+
+
+    .header p {
+
+      margin:
+        4px 0 0;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          .72
+        );
+
+    }
+
+
+    .content {
+
+      background:
+        white;
+
+      padding:
+        28px;
+
+      border-radius:
+        0 0 16px 16px;
+
+      box-shadow:
+        0 10px 30px
+        rgba(
+          20,
+          40,
+          60,
+          .08
+        );
+
+    }
+
+
+    .eyebrow {
+
+      color:
+        var(--verde);
+
+      text-transform:
+        uppercase;
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        1px;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    h1 {
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        30px;
+
+      line-height:
+        1.1;
+
+    }
+
+
+    .intro {
+
+      color:
+        var(--grigio);
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .asd-box {
+
+      padding:
+        14px;
+
+      margin-bottom:
+        18px;
+
+      border-radius:
+        10px;
+
+      background:
+        #eaf4ff;
+
+      color:
+        var(--blu);
+
+    }
+
+
+    .data-list {
+
+      border-top:
+        1px solid
+        var(--bordo);
+
+      margin-top:
+        20px;
+
+    }
+
+
+    .row {
+
+      padding:
+        13px 0;
+
+      border-bottom:
+        1px solid
+        var(--bordo);
+
+    }
+
+
+    .label {
+
+      font-size:
+        11px;
+
+      color:
+        var(--grigio);
+
+      text-transform:
+        uppercase;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        .5px;
+
+      margin-bottom:
+        3px;
+
+    }
+
+
+    .value {
+
+      font-size:
+        15px;
+
+      word-break:
+        break-word;
+
+      white-space:
+        pre-wrap;
+
+    }
+
+
+    .poster {
+
+      margin:
+        25px 0;
+
+    }
+
+
+    .poster img {
+
+      display:
+        block;
+
+      width:
+        min(
+          100%,
+          450px
+        );
+
+      height:
+        auto;
+
+      border:
+        1px solid
+        var(--bordo);
+
+      border-radius:
+        12px;
+
+    }
+
+
+    .actions {
+
+      margin-top:
+        30px;
+
+      padding-top:
+        25px;
+
+      border-top:
+        1px solid
+        var(--bordo);
+
+    }
+
+
+    .approve {
+
+      width:
+        100%;
+
+      min-height:
+        56px;
+
+      border:
+        0;
+
+      border-radius:
+        11px;
+
+      background:
+        var(--verde);
+
+      color:
+        white;
+
+      font-size:
+        17px;
+
+      font-weight:
+        900;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .approve:hover {
+      opacity: .92;
+    }
+
+
+    .approve:disabled {
+
+      opacity:
+        .6;
+
+      cursor:
+        wait;
+
+    }
+
+
+    .status {
+
+      text-align:
+        center;
+
+      padding:
+        35px 15px;
+
+    }
+
+
+    .status-icon {
+
+      font-size:
+        55px;
+
+      margin-bottom:
+        12px;
+
+    }
+
+
+    .success {
+
+      padding:
+        20px;
+
+      border-radius:
+        12px;
+
+      background:
+        #e5f6ee;
+
+      color:
+        #176044;
+
+      text-align:
+        center;
+
+    }
+
+
+    .error {
+
+      padding:
+        20px;
+
+      border-radius:
+        12px;
+
+      background:
+        #fdeaea;
+
+      color:
+        #8d2929;
+
+    }
+
+
+    .site-link {
+
+      display:
+        inline-block;
+
+      margin-top:
+        20px;
+
+      color:
+        var(--blu);
+
+      font-weight:
+        800;
+
+      text-decoration:
+        none;
+
+    }
+
+
+    @media (
+      max-width: 600px
+    ) {
+
+      .page {
+
+        width:
+          calc(
+            100% - 16px
+          );
+
+        margin-top:
+          8px;
+
+      }
+
+
+      .content {
+
+        padding:
+          21px 17px;
+
+      }
+
+
+      .header {
+
+        padding:
+          20px 17px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <main class="page">
+
+
+    <header class="header">
+
+      <div class="brand">
+
+        SPORT <span>V</span>
+
+      </div>
+
+      <p>
+        Moderazione delle pubblicazioni
+      </p>
+
+    </header>
+
+
+    <section
+      class="content"
+      id="content"
+    >
+
+      <div class="status">
+
+        <div class="status-icon">
+          ⏳
+        </div>
+
+        <h1>
+          Caricamento...
+        </h1>
+
+        <p>
+          Sto recuperando i dati
+          della richiesta.
+        </p>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+<script>
+
+
+const FUNCTION_URL =
+  "https://yordjsaevwflqakzhfdf.supabase.co/functions/v1/approve-submission";
+
+
+const SITE_URL =
+  "https://mariogalli1983.github.io/sport-municipio-v/";
+
+
+const labels = {
+
+  id:
+    "ID",
+
+  created_at:
+    "Data invio",
+
+  nome:
+    "Nome ASD",
+
+  descrizione:
+    "Descrizione",
+
+  discipline:
+    "Discipline",
+
+  indirizzo:
+    "Indirizzo",
+
+  quartiere:
+    "Quartiere",
+
+  latitudine:
+    "Latitudine",
+
+  longitudine:
+    "Longitudine",
+
+  telefono_pubblico:
+    "Telefono pubblico",
+
+  email_pubblica:
+    "Email pubblica",
+
+  sito_web:
+    "Sito web",
+
+  instagram:
+    "Instagram",
+
+  facebook:
+    "Facebook",
+
+  logo_url:
+    "Logo",
+
+  nome_referente:
+    "Nome referente",
+
+  email_referente:
+    "Email referente",
+
+  asd_id:
+    "ID ASD",
+
+  titolo:
+    "Titolo",
+
+  tipologia:
+    "Tipologia",
+
+  data_inizio:
+    "Data e ora inizio",
+
+  data_fine:
+    "Data e ora fine",
+
+  luogo:
+    "Luogo",
+
+  pubblico:
+    "Pubblico",
+
+  prezzo:
+    "Prezzo / offerta",
+
+  link_info:
+    "Link informazioni",
+
+  locandina_url:
+    "Locandina"
+
+};
+
+
+function escapeHtml(value) {
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
+
+}
+
+
+function safeHttpUrl(value) {
+
+  if (!value) {
+    return "";
+  }
+
+
+  try {
+
+    const url =
+      new URL(value);
+
+
+    if (
+      url.protocol === "https:" ||
+      url.protocol === "http:"
+    ) {
+
+      return url.href;
+
+    }
+
+  }
+  catch (_) {}
+
+
+  return "";
+
+}
+
+
+function displayValue(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "—";
+
+  }
+
+
+  if (
+    typeof value === "boolean"
+  ) {
+
+    return value
+      ?
+      "Sì"
+      :
+      "No";
+
+  }
+
+
+  return String(value);
+
+}
+
+
+function buildApiUrl() {
+
+  const pageParams =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const apiParams =
+    new URLSearchParams();
+
+
+  [
+    "type",
+    "id",
+    "exp",
+    "token"
+  ]
+  .forEach(key => {
+
+    const value =
+      pageParams.get(key);
+
+
+    if (value) {
+
+      apiParams.set(
+        key,
+        value
+      );
+
+    }
+
+  });
+
+
+  return (
+    FUNCTION_URL
+    +
+    "?"
+    +
+    apiParams.toString()
+  );
+
+}
+
+
+function showError(message) {
+
+  document
+    .getElementById(
+      "content"
+    )
+    .innerHTML =
+      `
+
+        <div class="error">
+
+          <h1>
+            Impossibile aprire la richiesta
+          </h1>
+
+          <p>
+            ${escapeHtml(message)}
+          </p>
+
+        </div>
+
+        <a
+          class="site-link"
+          href="${SITE_URL}"
+        >
+          ← Torna a SPORT V
+        </a>
+
+      `;
+
+}
+
+
+function renderRequest(data) {
+
+  const record =
+    data.record;
+
+
+  const type =
+    data.type;
+
+
+  const approvalField =
+    type === "asd"
+      ?
+      "approvata"
+      :
+      "approvato";
+
+
+  const title =
+    type === "asd"
+      ?
+      record.nome
+      :
+      record.titolo;
+
+
+  const typeLabel =
+    type === "asd"
+      ?
+      "Associazione sportiva"
+      :
+      "Evento";
+
+
+  let rows =
+    "";
+
+
+  Object.entries(record)
+    .forEach(
+      ([key,value]) => {
+
+
+        if (
+          key === approvalField ||
+          key === "locandina_url"
+        ) {
+
+          return;
+
+        }
+
+
+        rows +=
+          `
+
+            <div class="row">
+
+              <div class="label">
+
+                ${escapeHtml(
+                  labels[key]
+                  ||
+                  key
+                )}
+
+              </div>
+
+              <div class="value">
+
+                ${escapeHtml(
+                  displayValue(value)
+                )}
+
+              </div>
+
+            </div>
+
+          `;
+
+      }
+    );
+
+
+  let poster =
+    "";
+
+
+  if (
+    type === "evento"
+  ) {
+
+    const posterUrl =
+      safeHttpUrl(
+        record.locandina_url
+      );
+
+
+    if (posterUrl) {
+
+      poster =
+        `
+
+          <div class="poster">
+
+            <div class="label">
+              Locandina
+            </div>
+
+            <img
+              src="${escapeHtml(posterUrl)}"
+              alt="Locandina evento"
+            >
+
+          </div>
+
+        `;
+
+    }
+
+  }
+
+
+  const asdBlock =
+    (
+      type === "evento" &&
+      data.asd_name
+    )
+      ?
+      `
+
+        <div class="asd-box">
+
+          <strong>
+            ASD organizzatrice:
+          </strong>
+
+          ${escapeHtml(
+            data.asd_name
+          )}
+
+        </div>
+
+      `
+      :
+      "";
+
+
+  const action =
+    data.approved
+      ?
+      `
+
+        <div class="success">
+
+          <strong>
+            ✅ Questa richiesta
+            è già stata pubblicata.
+          </strong>
+
+        </div>
+
+      `
+      :
+      `
+
+        <div class="actions">
+
+          <button
+            type="button"
+            class="approve"
+            id="approveButton"
+          >
+            ✅ CONFERMA PUBBLICAZIONE
+          </button>
+
+          <p style="
+            text-align:center;
+            color:#66717d;
+            font-size:12px;
+          ">
+
+            Nessuna modifica
+            viene effettuata
+            finché non premi
+            questo pulsante.
+
+          </p>
+
+        </div>
+
+      `;
+
+
+  document
+    .getElementById(
+      "content"
+    )
+    .innerHTML =
+      `
+
+        <div class="eyebrow">
+          ${escapeHtml(typeLabel)}
+        </div>
+
+        <h1>
+          ${escapeHtml(title)}
+        </h1>
+
+        <p class="intro">
+
+          Controlla attentamente
+          tutti i dati prima
+          della pubblicazione.
+
+        </p>
+
+
+        ${asdBlock}
+
+
+        <div class="data-list">
+          ${rows}
+        </div>
+
+
+        ${poster}
+
+
+        ${action}
+
+
+        <a
+          class="site-link"
+          href="${SITE_URL}"
+        >
+          ← Torna a SPORT V
+        </a>
+
+      `;
+
+
+  const button =
+    document.getElementById(
+      "approveButton"
+    );
+
+
+  if (button) {
+
+    button.addEventListener(
+      "click",
+      approveRequest
+    );
+
+  }
+
+}
+
+
+async function approveRequest() {
+
+  const button =
+    document.getElementById(
+      "approveButton"
+    );
+
+
+  if (!button) {
+    return;
+  }
+
+
+  const confirmed =
+    window.confirm(
+      "Confermi la pubblicazione su SPORT V?"
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    "Pubblicazione in corso...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        buildApiUrl(),
+        {
+          method:
+            "POST"
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.ok
+    ) {
+
+      throw new Error(
+        data.error ||
+        "Errore durante l'approvazione."
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "content"
+      )
+      .innerHTML =
+        `
+
+          <div class="status">
+
+            <div class="status-icon">
+              ✅
+            </div>
+
+            <h1>
+              Pubblicazione approvata
+            </h1>
+
+            <p>
+
+              ${
+                escapeHtml(
+                  data.title ||
+                  "La richiesta"
+                )
+              }
+
+              è ora pubblicata
+              su SPORT V.
+
+            </p>
+
+
+            <a
+              class="site-link"
+              href="${SITE_URL}"
+            >
+              Vai a SPORT V →
+            </a>
+
+          </div>
+
+        `;
+
+
+  }
+  catch (error) {
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      "✅ CONFERMA PUBBLICAZIONE";
+
+
+    alert(
+      error.message ||
+      "Errore durante l'approvazione."
+    );
+
+  }
+
+}
+
+
+async function loadRequest() {
+
+  try {
+
+    const response =
+      await fetch(
+        buildApiUrl()
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !response.ok ||
+      !data.ok
+    ) {
+
+      throw new Error(
+        data.error ||
+        "Link non valido."
+      );
+
+    }
+
+
+    renderRequest(
+      data
+    );
+
+
+  }
+  catch (error) {
+
+    showError(
+      error.message ||
+      "Errore durante il caricamento."
+    );
+
+  }
+
+}
+
+
+loadRequest();
+
+
+</script>
+
+
+</body>
+
+</html>
