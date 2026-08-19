@@ -318,7 +318,112 @@
     .events-section {
       background: white;
     }
+.event-eyebrow {
+  color: var(--verde);
+}
 
+.event-filters {
+  margin: 28px 0 10px;
+  padding: 20px;
+  background: #f5f7f9;
+  border: 1px solid var(--bordo);
+  border-radius: 16px;
+}
+
+.event-quick-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+
+.event-filter-chip {
+  min-height: 44px;
+  border: 1px solid var(--bordo);
+  border-radius: 999px;
+  background: white;
+  padding: 9px 15px;
+  color: #46515c;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.event-filter-chip:hover {
+  border-color: var(--blu);
+}
+
+.event-filter-chip.active {
+  background: var(--blu);
+  border-color: var(--blu);
+  color: white;
+}
+
+.event-select-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.event-select-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.event-select-filters label span {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--grigio);
+}
+
+.event-select-filters select {
+  min-height: 46px;
+  width: 100%;
+  border: 1px solid var(--bordo);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: white;
+  color: var(--testo);
+  font-size: 15px;
+}
+
+.event-reset-button {
+  min-height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--blu);
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.event-results-info {
+  min-height: 24px;
+  margin-top: 18px;
+  color: var(--grigio);
+  font-size: 14px;
+}
+
+.event-filter-summary {
+  font-weight: 700;
+  color: var(--testo);
+}
+
+@media (max-width: 750px) {
+
+  .event-select-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .event-reset-button {
+    justify-self: start;
+    padding: 4px 0;
+  }
+
+}
     .event-image {
       height: 190px;
       background: linear-gradient(135deg, #e4edf5, #c8dae8);
@@ -933,6 +1038,7 @@
 </section>
 
 <section
+  <section
   id="eventi"
   class="events-section"
 >
@@ -941,15 +1047,112 @@
 
     <div class="section-title">
 
+      <div class="eyebrow event-eyebrow">
+        Corsi, eventi e opportunità
+      </div>
+
       <h2>
-        Cosa puoi fare in questi giorni
+        Trova qualcosa da fare
       </h2>
 
       <p>
-        Corsi, open day, prove gratuite, tornei ed eventi pubblicati dalle ASD del territorio.
+        Cerca tra corsi, open day, tornei, prove gratuite
+        e iniziative delle associazioni sportive del Municipio V.
       </p>
 
     </div>
+
+
+    <div class="event-filters">
+
+      <div class="event-quick-filters">
+
+        <button
+          type="button"
+          class="event-filter-chip"
+          id="filterWeekend"
+          aria-pressed="false"
+        >
+          📅 Questo weekend
+        </button>
+
+        <button
+          type="button"
+          class="event-filter-chip"
+          id="filterChildren"
+          aria-pressed="false"
+        >
+          👧 Bambini
+        </button>
+
+        <button
+          type="button"
+          class="event-filter-chip"
+          id="filterFree"
+          aria-pressed="false"
+        >
+          🎟️ Gratuito
+        </button>
+
+      </div>
+
+
+      <div class="event-select-filters">
+
+        <label>
+
+          <span>
+            Disciplina
+          </span>
+
+          <select id="filterDiscipline">
+
+            <option value="">
+              Tutte le discipline
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+
+          <span>
+            Quartiere
+          </span>
+
+          <select id="filterQuartiere">
+
+            <option value="">
+              Tutto il Municipio V
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <button
+          type="button"
+          class="event-reset-button"
+          id="resetEventFilters"
+        >
+          Azzera filtri
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="event-results-info"
+      id="eventResultsInfo"
+    >
+      Caricamento eventi...
+    </div>
+
 
     <div
       class="event-grid"
@@ -963,6 +1166,8 @@
     </div>
 
   </div>
+
+</section>
 
 </section>
 
@@ -1773,6 +1978,19 @@
 
   let asdData = [];
 let eventData = [];
+  const eventFilters = {
+
+  weekend: false,
+
+  children: false,
+
+  free: false,
+
+  discipline: "",
+
+  quartier: ""
+
+};
   let selectedSport =
     "Tutti";
 
@@ -1910,28 +2128,67 @@ let eventData = [];
   }
 
 
-  async function loadEvents() {
+ async function loadEvents() {
 
-    const grid =
-      document.getElementById(
-        "eventGrid"
+  const grid =
+    document.getElementById(
+      "eventGrid"
+    );
+
+
+  const info =
+    document.getElementById(
+      "eventResultsInfo"
+    );
+
+
+  info.textContent =
+    "Caricamento eventi...";
+
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("eventi_pubblici")
+      .select("*")
+      .order(
+        "data_inizio",
+        {
+          ascending: true
+        }
       );
 
 
-    const {
-      data,
-      error
-    } =
-      await db
-        .from("eventi_pubblici")
-        .select("*")
-        .order(
-          "data_inizio",
-          {
-            ascending: true
-          }
-        );
+  if (error) {
 
+    console.error(
+      "Errore caricamento eventi:",
+      error
+    );
+
+
+    grid.innerHTML =
+      '<div class="event-empty">Impossibile caricare gli eventi in questo momento.</div>';
+
+
+    info.textContent = "";
+
+    return;
+
+  }
+
+
+  eventData =
+    data || [];
+
+
+  populateEventFilters();
+
+  applyEventFilters();
+
+}
 
     if (error) {
 
@@ -4308,10 +4565,806 @@ document
 
     }
   );
+  document
+  .getElementById(
+    "filterWeekend"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      eventFilters.weekend =
+        !eventFilters.weekend;
+
+
+      setChipState(
+        event.currentTarget,
+        eventFilters.weekend
+      );
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "filterChildren"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      eventFilters.children =
+        !eventFilters.children;
+
+
+      setChipState(
+        event.currentTarget,
+        eventFilters.children
+      );
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "filterFree"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      eventFilters.free =
+        !eventFilters.free;
+
+
+      setChipState(
+        event.currentTarget,
+        eventFilters.free
+      );
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "filterDiscipline"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      eventFilters.discipline =
+        event.target.value;
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "filterQuartiere"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      eventFilters.quartier =
+        event.target.value;
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "resetEventFilters"
+  )
+  .addEventListener(
+    "click",
+    resetEventFilters
+  );
   loadAsd();
 
   loadEvents();
+function normalizeFilterText(value) {
 
+  return String(
+    value || ""
+  )
+    .trim()
+    .toLowerCase();
+
+}
+
+
+function splitDisciplines(value) {
+
+  return String(
+    value || ""
+  )
+    .split(/[,;]+/)
+    .map(
+      item =>
+        item.trim()
+    )
+    .filter(Boolean);
+
+}
+
+
+function populateEventFilters() {
+
+  const disciplineSelect =
+    document.getElementById(
+      "filterDiscipline"
+    );
+
+
+  const quartierSelect =
+    document.getElementById(
+      "filterQuartiere"
+    );
+
+
+  const disciplineSet =
+    new Set();
+
+
+  const quartierSet =
+    new Set();
+
+
+  eventData.forEach(
+    evento => {
+
+      splitDisciplines(
+        evento.asd_discipline
+      )
+      .forEach(
+        discipline =>
+          disciplineSet.add(
+            discipline
+          )
+      );
+
+
+      if (
+        evento.asd_quartiere
+      ) {
+
+        quartierSet.add(
+          evento.asd_quartiere.trim()
+        );
+
+      }
+
+    }
+  );
+
+
+  const currentDiscipline =
+    eventFilters.discipline;
+
+
+  const currentQuartier =
+    eventFilters.quartier;
+
+
+  disciplineSelect.innerHTML =
+    '<option value="">Tutte le discipline</option>';
+
+
+  [...disciplineSet]
+    .sort(
+      (a, b) =>
+        a.localeCompare(
+          b,
+          "it"
+        )
+    )
+    .forEach(
+      discipline => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          discipline;
+
+
+        option.textContent =
+          discipline;
+
+
+        disciplineSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  quartierSelect.innerHTML =
+    '<option value="">Tutto il Municipio V</option>';
+
+
+  [...quartierSet]
+    .sort(
+      (a, b) =>
+        a.localeCompare(
+          b,
+          "it"
+        )
+    )
+    .forEach(
+      quartier => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          quartier;
+
+
+        option.textContent =
+          quartier;
+
+
+        quartierSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  disciplineSelect.value =
+    currentDiscipline;
+
+
+  quartierSelect.value =
+    currentQuartier;
+
+}
+
+
+function getWeekendRange() {
+
+  const now =
+    new Date();
+
+
+  const day =
+    now.getDay();
+
+
+  const start =
+    new Date(now);
+
+
+  /*
+    Domenica = 0
+    Sabato = 6
+
+    Se siamo domenica,
+    il weekend è quello in corso.
+
+    Negli altri giorni
+    prendiamo il prossimo sabato.
+  */
+
+  if (day === 0) {
+
+    start.setDate(
+      now.getDate() - 1
+    );
+
+  }
+  else {
+
+    const daysUntilSaturday =
+      6 - day;
+
+
+    start.setDate(
+      now.getDate() +
+      daysUntilSaturday
+    );
+
+  }
+
+
+  start.setHours(
+    0,
+    0,
+    0,
+    0
+  );
+
+
+  const end =
+    new Date(start);
+
+
+  end.setDate(
+    start.getDate() + 1
+  );
+
+
+  end.setHours(
+    23,
+    59,
+    59,
+    999
+  );
+
+
+  return {
+    start,
+    end
+  };
+
+}
+
+
+function eventIsThisWeekend(evento) {
+
+  if (
+    !evento.data_inizio
+  ) {
+    return false;
+  }
+
+
+  const eventDate =
+    new Date(
+      evento.data_inizio
+    );
+
+
+  if (
+    Number.isNaN(
+      eventDate.getTime()
+    )
+  ) {
+    return false;
+  }
+
+
+  const {
+    start,
+    end
+  } =
+    getWeekendRange();
+
+
+  return (
+    eventDate >= start &&
+    eventDate <= end
+  );
+
+}
+
+
+function eventIsForChildren(evento) {
+
+  const pubblico =
+    normalizeFilterText(
+      evento.pubblico
+    );
+
+
+  return (
+    pubblico.includes(
+      "bambin"
+    ) ||
+
+    pubblico.includes(
+      "famigl"
+    ) ||
+
+    pubblico ===
+      "tutti"
+  );
+
+}
+
+
+function eventIsFree(evento) {
+
+  const prezzo =
+    normalizeFilterText(
+      evento.prezzo
+    );
+
+
+  if (!prezzo) {
+    return false;
+  }
+
+
+  if (
+    prezzo.includes(
+      "gratuit"
+    ) ||
+    prezzo.includes(
+      "gratis"
+    ) ||
+    prezzo ===
+      "free"
+  ) {
+    return true;
+  }
+
+
+  return /^0([,.]00)?\s*(€|euro)?$/
+    .test(
+      prezzo
+    );
+
+}
+
+
+function eventMatchesDiscipline(
+  evento
+) {
+
+  if (
+    !eventFilters.discipline
+  ) {
+    return true;
+  }
+
+
+  const selected =
+    normalizeFilterText(
+      eventFilters.discipline
+    );
+
+
+  const disciplines =
+    splitDisciplines(
+      evento.asd_discipline
+    )
+    .map(
+      normalizeFilterText
+    );
+
+
+  return disciplines.some(
+    discipline =>
+      discipline ===
+      selected
+  );
+
+}
+
+
+function eventMatchesQuartier(
+  evento
+) {
+
+  if (
+    !eventFilters.quartier
+  ) {
+    return true;
+  }
+
+
+  return (
+    normalizeFilterText(
+      evento.asd_quartiere
+    ) ===
+    normalizeFilterText(
+      eventFilters.quartier
+    )
+  );
+
+}
+
+
+function applyEventFilters() {
+
+  const filtered =
+    eventData.filter(
+      evento => {
+
+        if (
+          eventFilters.weekend &&
+          !eventIsThisWeekend(
+            evento
+          )
+        ) {
+          return false;
+        }
+
+
+        if (
+          eventFilters.children &&
+          !eventIsForChildren(
+            evento
+          )
+        ) {
+          return false;
+        }
+
+
+        if (
+          eventFilters.free &&
+          !eventIsFree(
+            evento
+          )
+        ) {
+          return false;
+        }
+
+
+        if (
+          !eventMatchesDiscipline(
+            evento
+          )
+        ) {
+          return false;
+        }
+
+
+        if (
+          !eventMatchesQuartier(
+            evento
+          )
+        ) {
+          return false;
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  renderEvents(
+    filtered
+  );
+
+
+  updateEventResultsInfo(
+    filtered.length
+  );
+
+}
+
+
+function updateEventResultsInfo(
+  count
+) {
+
+  const info =
+    document.getElementById(
+      "eventResultsInfo"
+    );
+
+
+  const activeFilters =
+    [];
+
+
+  if (
+    eventFilters.weekend
+  ) {
+
+    activeFilters.push(
+      "questo weekend"
+    );
+
+  }
+
+
+  if (
+    eventFilters.children
+  ) {
+
+    activeFilters.push(
+      "bambini"
+    );
+
+  }
+
+
+  if (
+    eventFilters.free
+  ) {
+
+    activeFilters.push(
+      "gratuito"
+    );
+
+  }
+
+
+  if (
+    eventFilters.discipline
+  ) {
+
+    activeFilters.push(
+      eventFilters.discipline
+    );
+
+  }
+
+
+  if (
+    eventFilters.quartier
+  ) {
+
+    activeFilters.push(
+      eventFilters.quartier
+    );
+
+  }
+
+
+  const resultText =
+    count === 1
+      ?
+      "1 opportunità trovata"
+      :
+      `${count} opportunità trovate`;
+
+
+  if (
+    activeFilters.length === 0
+  ) {
+
+    info.innerHTML =
+      `<span class="event-filter-summary">${resultText}</span>`;
+
+    return;
+
+  }
+
+
+  info.innerHTML =
+    `
+      <span class="event-filter-summary">
+        ${resultText}
+      </span>
+
+      · Filtri:
+      ${escapeHtml(
+        activeFilters.join(
+          " · "
+        )
+      )}
+    `;
+
+}
+
+
+function setChipState(
+  button,
+  active
+) {
+
+  button.classList.toggle(
+    "active",
+    active
+  );
+
+
+  button.setAttribute(
+    "aria-pressed",
+    active
+      ?
+      "true"
+      :
+      "false"
+  );
+
+}
+
+
+function resetEventFilters() {
+
+  eventFilters.weekend =
+    false;
+
+
+  eventFilters.children =
+    false;
+
+
+  eventFilters.free =
+    false;
+
+
+  eventFilters.discipline =
+    "";
+
+
+  eventFilters.quartier =
+    "";
+
+
+  const weekendButton =
+    document.getElementById(
+      "filterWeekend"
+    );
+
+
+  const childrenButton =
+    document.getElementById(
+      "filterChildren"
+    );
+
+
+  const freeButton =
+    document.getElementById(
+      "filterFree"
+    );
+
+
+  setChipState(
+    weekendButton,
+    false
+  );
+
+
+  setChipState(
+    childrenButton,
+    false
+  );
+
+
+  setChipState(
+    freeButton,
+    false
+  );
+
+
+  document
+    .getElementById(
+      "filterDiscipline"
+    )
+    .value =
+      "";
+
+
+  document
+    .getElementById(
+      "filterQuartiere"
+    )
+    .value =
+      "";
+
+
+  applyEventFilters();
+
+}
 </script>
 
 </body>
