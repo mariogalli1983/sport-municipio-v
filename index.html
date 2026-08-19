@@ -3584,7 +3584,59 @@ async function uploadEventPoster(file) {
         submitButton.textContent =
           "Invio in corso...";
 
+let locandinaUrl =
+  null;
 
+
+const locandinaFile =
+  document
+    .getElementById(
+      "eventLocandina"
+    )
+    .files[0];
+
+
+if (locandinaFile) {
+
+  submitButton.textContent =
+    "Caricamento locandina...";
+
+
+  try {
+
+    locandinaUrl =
+      await uploadEventPoster(
+        locandinaFile
+      );
+
+  }
+  catch (error) {
+
+    message.className =
+      "form-message error";
+
+
+    message.textContent =
+      "Non è stato possibile caricare la locandina. Controlla formato e dimensione e riprova.";
+
+
+    submitButton.disabled =
+      false;
+
+
+    submitButton.textContent =
+      "Invia per approvazione";
+
+
+    return;
+
+  }
+
+}
+
+
+submitButton.textContent =
+  "Invio evento...";
         const nuovoEvento = {
 
           asd_id:
