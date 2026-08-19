@@ -1402,7 +1402,24 @@ document
 
     message.className = "form-message";
     message.textContent = "";
+const latitudine =
+  document.getElementById("asdLatitudine").value;
 
+const longitudine =
+  document.getElementById("asdLongitudine").value;
+
+if (!latitudine || !longitudine) {
+
+  message.className = "form-message error";
+
+  message.textContent =
+    "Seleziona sulla mappa la posizione della sede o dell'impianto.";
+
+  submitButton.disabled = false;
+  submitButton.textContent = "Invia la segnalazione";
+
+  return;
+}
     const nuovaAsd = {
 
       nome:
