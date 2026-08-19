@@ -1948,9 +1948,12 @@ let eventData = [];
     }
 
 
-    renderEvents(
-      data || []
-    );
+    eventData =
+  data || [];
+
+renderEvents(
+  eventData
+);
 
   }
 
@@ -2392,198 +2395,258 @@ async function uploadEventPoster(file) {
 }
   function renderEvents(events) {
 
-    const grid =
-      document.getElementById(
-        "eventGrid"
+  const grid =
+    document.getElementById(
+      "eventGrid"
+    );
+
+  grid.innerHTML = "";
+
+
+  if (events.length === 0) {
+
+    grid.innerHTML =
+      '<div class="event-empty">Non ci sono ancora eventi approvati. Le ASD possono proporne uno dal pulsante “Pubblica corso o evento”.</div>';
+
+    return;
+  }
+
+
+  events.forEach(evento => {
+
+    const card =
+      document.createElement(
+        "article"
+      );
+
+    card.className = "card";
+
+
+    const posterUrl =
+      safeHttpUrl(
+        evento.locandina_url
       );
 
 
-    grid.innerHTML =
-      "";
+    const meta = [];
 
 
-    if (
-      events.length === 0
-    ) {
+    if (evento.pubblico) {
 
-      grid.innerHTML =
-        '<div class="event-empty">Non ci sono ancora eventi approvati. Le ASD possono proporne uno dal pulsante “Pubblica corso o evento”.</div>';
-
-      return;
+      meta.push(
+        `<span>👥 ${escapeHtml(evento.pubblico)}</span>`
+      );
 
     }
 
 
-    events.forEach(
-      evento => {
-const posterUrl =
-  safeHttpUrl(
-    evento.locandina_url
-  );
-        const card =
-          document.createElement(
-            "article"
+    if (evento.prezzo) {
+
+      meta.push(
+        `<span>💶 ${escapeHtml(evento.prezzo)}</span>`
+      );
+
+    }
+
+
+    let safeLink = "";
+
+
+    if (evento.link_info) {
+
+      try {
+
+        const url =
+          new URL(
+            evento.link_info
           );
 
 
-        card.className =
-          "card";
-
-
-        const meta =
-          [];
-
-
         if (
-          evento.pubblico
+          url.protocol === "http:" ||
+          url.protocol === "https:"
         ) {
 
-          meta.push(
-            `<span>👥 ${escapeHtml(evento.pubblico)}</span>`
-          );
+          safeLink =
+            `
+              <a
+                class="card-link"
+                href="${escapeHtml(url.href)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Informazioni / iscrizioni →
+              </a>
+            `;
 
         }
-
-
-        if (
-          evento.prezzo
-        ) {
-
-          meta.push(
-            `<span>💶 ${escapeHtml(evento.prezzo)}</span>`
-          );
-
-        }
-
-
-        let safeLink =
-          "";
-
-
-        if (
-          evento.link_info
-        ) {
-
-          try {
-
-            const url =
-              new URL(
-                evento.link_info
-              );
-
-
-            if (
-              url.protocol === "http:" ||
-              url.protocol === "https:"
-            ) {
-
-              safeLink =
-                `<a class="card-link"
-                    href="${escapeHtml(url.href)}"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    Informazioni / iscrizioni →
-                 </a>`;
-
-            }
-
-          }
-          catch (_) {}
-
-        }
-
-
-        card.innerHTML =
-          `
-            ${
-  posterUrl
-    ?
-    `
-      <div class="event-poster">
-        <img
-          src="${escapeHtml(posterUrl)}"
-          alt="Locandina: ${escapeHtml(evento.titolo)}"
-          loading="lazy"
-        >
-      </div>
-    `
-    :
-    `
-      <div class="event-image">
-        ${eventIcon(evento.tipologia)}
-      </div>
-    `
-}
-
-            <div class="card-body">
-
-              <div class="event-date">
-                ${escapeHtml(formatEventDate(evento.data_inizio))}
-              </div>
-
-              <span class="tag">
-                ${escapeHtml(evento.tipologia || "Evento")}
-              </span>
-
-              <h3>
-                ${escapeHtml(evento.titolo)}
-              </h3>
-
-              <p>
-                <strong>
-                  ${escapeHtml(evento.asd_nome || "ASD")}
-                </strong>
-              </p>
-
-              ${
-                evento.descrizione
-                  ? `<p>${escapeHtml(evento.descrizione)}</p>`
-                  : ""
-              }
-
-              ${
-                evento.luogo ||
-                evento.indirizzo
-                  ?
-                  `<p class="card-location">
-                     📍 ${escapeHtml(
-                       [
-                         evento.luogo,
-                         evento.indirizzo
-                       ]
-                       .filter(Boolean)
-                       .join(" — ")
-                     )}
-                   </p>`
-                  :
-                  ""
-              }
-
-              ${
-                meta.length
-                  ?
-                  `<div class="event-meta">
-                     ${meta.join("")}
-                   </div>`
-                  :
-                  ""
-              }
-
-              ${safeLink}
-
-            </div>
-          `;
-
-
-        grid.appendChild(
-          card
-        );
 
       }
+      catch (_) {}
+
+    }
+
+
+    card.innerHTML =
+      `
+
+        ${
+          posterUrl
+            ?
+            `
+              <div class="event-poster">
+
+                <img
+                  src="${escapeHtml(posterUrl)}"
+                  alt="Locandina: ${escapeHtml(evento.titolo)}"
+                  loading="lazy"
+                >
+
+              </div>
+            `
+            :
+            `
+              <div class="event-image">
+                ${eventIcon(evento.tipologia)}
+              </div>
+            `
+        }
+
+
+        <div class="card-body">
+
+          <div class="event-date">
+            ${escapeHtml(
+              formatEventDate(
+                evento.data_inizio
+              )
+            )}
+          </div>
+
+
+          <span class="tag">
+            ${escapeHtml(
+              evento.tipologia ||
+              "Evento"
+            )}
+          </span>
+
+
+          <h3>
+            ${escapeHtml(
+              evento.titolo
+            )}
+          </h3>
+
+
+          <p>
+            <strong>
+              ${escapeHtml(
+                evento.asd_nome ||
+                "ASD"
+              )}
+            </strong>
+          </p>
+
+
+          ${
+            evento.descrizione
+              ?
+              `
+                <p>
+                  ${escapeHtml(
+                    evento.descrizione
+                  )}
+                </p>
+              `
+              :
+              ""
+          }
+
+
+          ${
+            evento.luogo ||
+            evento.indirizzo
+              ?
+              `
+                <p class="card-location">
+
+                  📍 ${escapeHtml(
+                    [
+                      evento.luogo,
+                      evento.indirizzo
+                    ]
+                    .filter(Boolean)
+                    .join(" — ")
+                  )}
+
+                </p>
+              `
+              :
+              ""
+          }
+
+
+          ${
+            meta.length
+              ?
+              `
+                <div class="event-meta">
+                  ${meta.join("")}
+                </div>
+              `
+              :
+              ""
+          }
+
+
+          ${safeLink}
+
+
+          <button
+            type="button"
+            class="event-more-button"
+            data-event-id="${evento.id}"
+          >
+            Scopri tutti i dettagli →
+          </button>
+
+        </div>
+      `;
+
+
+    grid.appendChild(
+      card
     );
 
-  }
+  });
 
+
+  /* QUI siamo dopo events.forEach,
+     ma ancora dentro renderEvents */
+
+  grid
+    .querySelectorAll(
+      "[data-event-id]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          openEventDetail(
+            Number(
+              button.dataset.eventId
+            )
+          );
+
+        }
+      );
+
+    });
+
+}
 
   function renderMarkers(data) {
 
@@ -3975,7 +4038,276 @@ resetPosterPreview();
       }
     );
 
+function openEventDetail(id) {
 
+  const evento =
+    eventData.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+
+  if (!evento) {
+    return;
+  }
+
+
+  const modal =
+    document.getElementById(
+      "eventDetailModal"
+    );
+
+
+  const content =
+    document.getElementById(
+      "eventDetailContent"
+    );
+
+
+  const posterUrl =
+    safeHttpUrl(
+      evento.locandina_url
+    );
+
+
+  const infoLink =
+    safeHttpUrl(
+      evento.link_info
+    );
+
+
+  let luogoCompleto =
+    [
+      evento.luogo,
+      evento.indirizzo
+    ]
+    .filter(Boolean)
+    .join(" — ");
+
+
+  content.innerHTML =
+    `
+      <div class="event-detail-layout">
+
+        <div>
+
+          ${
+            posterUrl
+              ?
+              `
+                <div class="event-detail-poster">
+                  <img
+                    src="${escapeHtml(posterUrl)}"
+                    alt="Locandina: ${escapeHtml(evento.titolo)}"
+                  >
+                </div>
+              `
+              :
+              `
+                <div class="event-detail-poster event-detail-placeholder">
+                  ${eventIcon(evento.tipologia)}
+                </div>
+              `
+          }
+
+        </div>
+
+
+        <div class="event-detail-main">
+
+          <span class="tag">
+            ${escapeHtml(evento.tipologia || "Evento")}
+          </span>
+
+          <h2 id="eventDetailTitle">
+            ${escapeHtml(evento.titolo)}
+          </h2>
+
+          <div class="event-detail-asd">
+            Organizzato da ${escapeHtml(evento.asd_nome || "ASD")}
+          </div>
+
+
+          <div class="event-detail-info">
+
+            <div class="event-detail-row">
+              <strong>Quando</strong>
+              ${escapeHtml(formatEventDate(evento.data_inizio))}
+            </div>
+
+
+            ${
+              evento.data_fine
+                ?
+                `
+                  <div class="event-detail-row">
+                    <strong>Termina</strong>
+                    ${escapeHtml(formatEventDate(evento.data_fine))}
+                  </div>
+                `
+                :
+                ""
+            }
+
+
+            ${
+              luogoCompleto
+                ?
+                `
+                  <div class="event-detail-row">
+                    <strong>Dove</strong>
+                    📍 ${escapeHtml(luogoCompleto)}
+                  </div>
+                `
+                :
+                ""
+            }
+
+
+            ${
+              evento.pubblico
+                ?
+                `
+                  <div class="event-detail-row">
+                    <strong>A chi è rivolto</strong>
+                    👥 ${escapeHtml(evento.pubblico)}
+                  </div>
+                `
+                :
+                ""
+            }
+
+
+            ${
+              evento.prezzo
+                ?
+                `
+                  <div class="event-detail-row">
+                    <strong>Costo / offerta</strong>
+                    ${escapeHtml(evento.prezzo)}
+                  </div>
+                `
+                :
+                ""
+            }
+
+          </div>
+
+
+          ${
+            evento.descrizione
+              ?
+              `
+                <div class="event-detail-description">
+                  ${escapeHtml(evento.descrizione)}
+                </div>
+              `
+              :
+              ""
+          }
+
+
+          ${
+            infoLink
+              ?
+              `
+                <div class="event-detail-actions">
+
+                  <a
+                    href="${escapeHtml(infoLink)}"
+                    class="btn btn-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Informazioni e iscrizioni
+                  </a>
+
+                </div>
+              `
+              :
+              ""
+          }
+
+        </div>
+
+      </div>
+    `;
+
+
+  modal.classList.add(
+    "open"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+
+  document.body
+    .classList.add(
+      "modal-open"
+    );
+
+}
+
+
+function closeEventDetail() {
+
+  const modal =
+    document.getElementById(
+      "eventDetailModal"
+    );
+
+
+  modal.classList.remove(
+    "open"
+  );
+
+
+  modal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
+  document.body
+    .classList.remove(
+      "modal-open"
+    );
+
+}
+ document
+  .getElementById(
+    "closeEventDetailButton"
+  )
+  .addEventListener(
+    "click",
+    closeEventDetail
+  );
+
+
+document
+  .getElementById(
+    "eventDetailModal"
+  )
+  .addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.id ===
+        "eventDetailModal"
+      ) {
+
+        closeEventDetail();
+
+      }
+
+    }
+  );
   loadAsd();
 
   loadEvents();
