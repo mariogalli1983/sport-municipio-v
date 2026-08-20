@@ -3273,6 +3273,53 @@
     }
 
 
+    .visit-counter {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        6px;
+
+      margin-top:
+        12px;
+
+      padding:
+        7px 10px;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(255,255,255,.08);
+
+      color:
+        rgba(255,255,255,.78);
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .visit-counter[hidden] {
+      display:
+        none;
+    }
+
+
+    .visit-counter strong {
+      color:
+        white;
+    }
+
+
     /* ======================================================
        RESPONSIVE
        ====================================================== */
@@ -5787,6 +5834,16 @@
       e dalle segnalazioni ricevute
       e vengono verificate
       prima della pubblicazione.
+
+      <div
+        class="visit-counter"
+        id="visitCounter"
+        hidden
+      >
+        👀
+        <strong id="visitCount">—</strong>
+        visite a SPORT V
+      </div>
 
     </div>
 
@@ -13309,6 +13366,145 @@ document.addEventListener(
 
 
 /* ==========================================================
+   CONTATORE VISITE
+   ========================================================== */
+
+
+function formatVisitCount(value) {
+
+  return new Intl.NumberFormat(
+    "it-IT"
+  ).format(value);
+
+}
+
+
+async function updateVisitCounter() {
+
+  const counter =
+    document.getElementById(
+      "visitCounter"
+    );
+
+  const countElement =
+    document.getElementById(
+      "visitCount"
+    );
+
+
+  if (
+    !counter
+    ||
+    !countElement
+  ) {
+    return;
+  }
+
+
+  const now =
+    new Date();
+
+  const today =
+    [
+      now.getFullYear(),
+      String(now.getMonth() + 1)
+        .padStart(2,"0"),
+      String(now.getDate())
+        .padStart(2,"0")
+    ].join("-");
+
+  const storageKey =
+    "sportv_last_counted_visit_day";
+
+  let alreadyCounted =
+    false;
+
+
+  try {
+
+    alreadyCounted =
+      window.localStorage
+        .getItem(storageKey)
+      ===
+      today;
+
+  }
+  catch (_) {}
+
+
+  try {
+
+    const rpcName =
+      alreadyCounted
+        ?
+        "get_site_visit_count"
+        :
+        "increment_site_visit";
+
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        rpcName
+      );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    const total =
+      Number(data);
+
+
+    if (
+      !Number.isFinite(total)
+      ||
+      total < 0
+    ) {
+      return;
+    }
+
+
+    countElement.textContent =
+      formatVisitCount(total);
+
+    counter.hidden =
+      false;
+
+
+    if (!alreadyCounted) {
+
+      try {
+
+        window.localStorage
+          .setItem(
+            storageKey,
+            today
+          );
+
+      }
+      catch (_) {}
+
+    }
+
+  }
+  catch (error) {
+
+    console.warn(
+      "Contatore visite non disponibile:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ==========================================================
    LINK DIRETTI
    ========================================================== */
 
@@ -13504,6 +13700,9 @@ async function init() {
     loadEvents()
 
   ]);
+
+
+  updateVisitCounter();
 
 
   updateStats();
