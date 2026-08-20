@@ -28,12 +28,17 @@
 
   <link
     rel="preconnect"
-    href="https://unpkg.com"
+    href="https://cdn.jsdelivr.net"
+  >
+
+  <meta
+    name="referrer"
+    content="strict-origin-when-cross-origin"
   >
 
   <link
     rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   >
@@ -3161,6 +3166,23 @@
 
 
     /* ======================================================
+       PRIVACY / LEGAL / SEGNALAZIONI
+       ====================================================== */
+
+    .form-legal-links { display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:8px; }
+    .legal-meta { display:inline-block; margin:0 0 18px; padding:6px 9px; border-radius:999px; background:var(--sfondo); color:var(--grigio); font-size:12px; font-weight:800; }
+    .legal-section { margin-top:22px; }
+    .legal-section h3 { margin:0 0 8px; color:var(--blu-scuro); font-size:18px; }
+    .legal-section p { margin:7px 0; }
+    .legal-section ul { margin:8px 0 0; padding-left:20px; }
+    .legal-section li { margin:7px 0; }
+    .legal-note { margin-top:18px; padding:14px; border-radius:12px; background:var(--azzurro); border:1px solid #cfe3f7; color:var(--blu-scuro); }
+    .legal-links { display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:12px; }
+    .legal-links a { color:var(--blu); font-weight:800; }
+    .report-context { margin:12px 0 18px; padding:12px 14px; border-radius:10px; background:var(--sfondo); color:var(--grigio); font-size:13px; overflow-wrap:anywhere; }
+    .report-form textarea { min-height:130px; }
+
+    /* ======================================================
        FOOTER
        ====================================================== */
 
@@ -4929,29 +4951,28 @@
       </div>
 
 
-      <button
-        type="button"
-        class="form-inline-link"
-        data-open-rules
-      >
-        Leggi le regole di pubblicazione
-      </button>
+      <div class="form-legal-links">
+
+        <button type="button" class="form-inline-link" data-open-rules>
+          Regole di pubblicazione
+        </button>
+
+        <button type="button" class="form-inline-link" data-open-privacy>
+          Informativa privacy
+        </button>
+
+      </div>
 
 
       <label class="privacy-check">
 
-        <input
-          type="checkbox"
-          id="asdConferma"
-          required
-        >
+        <input type="checkbox" id="asdConferma" required>
 
         <span>
-
-          Confermo di essere autorizzato
-          a inviare queste informazioni
-          e che i dati forniti sono corretti.
-
+          Dichiaro di aver letto l'Informativa privacy, di essere autorizzato
+          a trasmettere i dati e i materiali inseriti e, se sono presenti
+          immagini di persone, di disporre delle autorizzazioni necessarie
+          alla pubblicazione.
         </span>
 
       </label>
@@ -5324,29 +5345,28 @@
       </div>
 
 
-      <button
-        type="button"
-        class="form-inline-link"
-        data-open-rules
-      >
-        Leggi le regole di pubblicazione
-      </button>
+      <div class="form-legal-links">
+
+        <button type="button" class="form-inline-link" data-open-rules>
+          Regole di pubblicazione
+        </button>
+
+        <button type="button" class="form-inline-link" data-open-privacy>
+          Informativa privacy
+        </button>
+
+      </div>
 
 
       <label class="privacy-check">
 
-        <input
-          type="checkbox"
-          id="eventConferma"
-          required
-        >
+        <input type="checkbox" id="eventConferma" required>
 
         <span>
-
-          Confermo di essere autorizzato
-          a inviare queste informazioni
-          e che i dati forniti sono corretti.
-
+          Dichiaro di aver letto l'Informativa privacy, di essere autorizzato
+          a trasmettere i dati e i materiali inseriti e, se sono presenti
+          immagini di persone, di disporre delle autorizzazioni necessarie
+          alla pubblicazione.
         </span>
 
       </label>
@@ -5576,171 +5596,216 @@
      REGOLE
      ======================================================== -->
 
-
-<div
-  id="rulesModal"
-  class="modal-overlay"
-  aria-hidden="true"
->
-
-  <div
-    class="modal-box"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="rulesTitle"
-  >
-
-    <button
-      type="button"
-      class="modal-close"
-      id="closeRulesButton"
-      aria-label="Chiudi"
-    >
-      ×
-    </button>
-
-
-    <div class="eyebrow event-eyebrow">
-      Trasparenza
-    </div>
-
-
-    <h2 id="rulesTitle">
-      Regole di pubblicazione
-    </h2>
-
-
-    <p class="modal-intro">
-
-      SPORT V vuole essere
-      uno spazio utile e affidabile
-      per lo sport dilettantistico
-      del territorio.
-
-    </p>
-
+<div id="rulesModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+    <button type="button" class="modal-close" id="closeRulesButton" aria-label="Chiudi">×</button>
+    <div class="eyebrow event-eyebrow">Trasparenza</div>
+    <h2 id="rulesTitle">Regole di pubblicazione</h2>
+    <div class="legal-meta">Aggiornate il 20 agosto 2026</div>
+    <p class="modal-intro">SPORT V è uno spazio informativo indipendente dedicato allo sport dilettantistico del territorio. Ogni contenuto proposto viene sottoposto a verifica prima della pubblicazione.</p>
 
     <div class="rules-list">
-
-      <div class="rule">
-
-        <strong>
-          Pertinenza
-        </strong>
-
-        Sono ammessi contenuti
-        relativi ad associazioni sportive,
-        corsi, attività,
-        open day, tornei,
-        prove gratuite
-        e iniziative sportive.
-
-      </div>
-
-
-      <div class="rule">
-
-        <strong>
-          Informazioni corrette
-        </strong>
-
-        Chi invia una segnalazione
-        deve fornire informazioni
-        corrette e aggiornate
-        ed essere autorizzato
-        a comunicarle.
-
-      </div>
-
-
-      <div class="rule">
-
-        <strong>
-          Moderazione
-        </strong>
-
-        Le ASD e gli eventi
-        non vengono pubblicati automaticamente.
-        Le segnalazioni vengono controllate
-        prima della pubblicazione.
-
-      </div>
-
-
-      <div class="rule">
-
-        <strong>
-          Contenuti esclusi
-        </strong>
-
-        Non vengono pubblicati
-        contenuti offensivi,
-        ingannevoli,
-        non pertinenti,
-        spam o pubblicità
-        estranea alle finalità
-        del progetto.
-
-      </div>
-
-
-      <div class="rule">
-
-        <strong>
-          Dati dei referenti
-        </strong>
-
-        Nome ed email del referente
-        indicati nei moduli
-        servono per la verifica
-        della segnalazione
-        e non vengono mostrati
-        nella scheda pubblica.
-
-      </div>
-
-
-      <div class="rule">
-
-        <strong>
-          Correzioni
-        </strong>
-
-        Associazioni e cittadini
-        possono segnalare
-        informazioni errate
-        o chiedere aggiornamenti
-        scrivendo al curatore
-        di SPORT V.
-
-      </div>
-
+      <div class="rule"><strong>Pertinenza</strong>Sono ammessi contenuti relativi ad associazioni sportive, corsi, attività, open day, tornei, prove gratuite, offerte e iniziative sportive coerenti con le finalità di SPORT V.</div>
+      <div class="rule"><strong>Correttezza e autorizzazione</strong>Chi invia una richiesta dichiara che le informazioni sono corrette e aggiornate e di essere autorizzato a trasmetterle e a chiederne la pubblicazione.</div>
+      <div class="rule"><strong>Loghi, locandine e immagini</strong>Chi carica materiali dichiara di avere i diritti e le autorizzazioni necessarie al loro utilizzo e alla pubblicazione. Se compaiono persone riconoscibili, e in particolare minori, devono essere state ottenute le autorizzazioni richieste dalla legge.</div>
+      <div class="rule"><strong>Dati particolari e documenti</strong>Non devono essere inviati dati sanitari, certificati medici, documenti di identità o altri dati particolari non necessari alla pubblicazione della scheda o dell'evento.</div>
+      <div class="rule"><strong>Moderazione</strong>ASD ed eventi non vengono pubblicati automaticamente. SPORT V può chiedere chiarimenti, correggere errori evidenti, sospendere, rifiutare o rimuovere contenuti inesatti, illeciti, non aggiornati o contrari a queste regole.</div>
+      <div class="rule"><strong>Contenuti esclusi</strong>Non vengono pubblicati contenuti offensivi, discriminatori, ingannevoli, illeciti, non pertinenti, spam o pubblicità estranea alle finalità del progetto.</div>
+      <div class="rule"><strong>Dati dei referenti</strong>Nome ed email del referente indicati nei moduli servono alla verifica e alla gestione della richiesta e non vengono mostrati nella scheda pubblica. I contatti indicati come pubblici, invece, possono essere mostrati nella scheda dell'associazione.</div>
+      <div class="rule"><strong>Responsabilità delle informazioni</strong>Le informazioni relative ad attività, prezzi, orari, iscrizioni, idoneità sportiva e disponibilità sono fornite dalle realtà segnalate. Prima di aderire a un'attività è opportuno verificarle direttamente con l'associazione interessata.</div>
+      <div class="rule"><strong>Correzioni e segnalazioni</strong>Associazioni, interessati e utenti possono chiedere modifiche o segnalare contenuti da verificare utilizzando gli strumenti presenti nelle schede o il comando “Segnala contenuto”.</div>
     </div>
-
 
     <div class="contact-grid">
-
-      <a
-        class="btn btn-blue"
-        href="mailto:mariogalli1983@gmail.com"
-      >
-        ✉️ Contatta SPORT V
-      </a>
+      <button type="button" class="btn btn-blue" data-open-privacy>🔒 Informativa privacy</button>
+      <button type="button" class="btn btn-soft" data-open-report>⚑ Segnala contenuto</button>
+    </div>
+  </div>
+</div>
 
 
-      <a
-        class="btn btn-green"
-        href="https://wa.me/393928895626"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        💬 WhatsApp
-      </a>
+<!-- ========================================================
+     PRIVACY
+     ======================================================== -->
 
+<div id="privacyModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <button type="button" class="modal-close" id="closePrivacyButton" aria-label="Chiudi">×</button>
+    <div class="eyebrow event-eyebrow">Protezione dei dati</div>
+    <h2 id="privacyTitle">Informativa privacy</h2>
+    <div class="legal-meta">Versione del 20 agosto 2026</div>
+
+    <div class="legal-section">
+      <h3>1. Titolare del trattamento</h3>
+      <p>Il titolare del trattamento dei dati personali raccolti attraverso SPORT V è <strong>Mario Galli</strong>, persona fisica, ideatore e curatore del progetto.</p>
+      <p>Per richieste relative alla privacy e all'esercizio dei diritti: <a href="mailto:mariogalli1983@gmail.com?subject=Privacy%20SPORT%20V">mariogalli1983@gmail.com</a>.</p>
     </div>
 
-  </div>
+    <div class="legal-section">
+      <h3>2. Quali dati vengono trattati</h3>
+      <ul>
+        <li>dati relativi alle ASD e agli eventi inseriti nei moduli, compresi eventuali recapiti indicati espressamente come pubblici;</li>
+        <li>nome ed email del referente, utilizzati per verificare e gestire la richiesta e non mostrati nella scheda pubblica;</li>
+        <li>loghi, locandine e altri materiali caricati volontariamente;</li>
+        <li>dati contenuti nelle richieste di modifica, nelle segnalazioni e nelle comunicazioni inviate al titolare;</li>
+        <li>dati tecnici necessari al funzionamento del sito, come indirizzo IP, tipo di browser, data e ora delle richieste e log di sicurezza, trattati anche dai fornitori tecnici indicati sotto.</li>
+      </ul>
+    </div>
 
+    <div class="legal-section">
+      <h3>3. Finalità e basi giuridiche</h3>
+      <ul>
+        <li>ricevere, verificare e gestire richieste di pubblicazione, aggiornamento e rimozione: esecuzione di misure richieste dall'interessato, ove applicabile, e legittimo interesse del titolare alla gestione del servizio (art. 6, par. 1, lett. b e f GDPR);</li>
+        <li>pubblicare le informazioni che il richiedente ha espressamente destinato alla scheda pubblica e mantenerle aggiornate;</li>
+        <li>comunicare con il referente in merito alla richiesta e alla sua pubblicazione;</li>
+        <li>prevenire abusi, garantire la sicurezza, gestire segnalazioni e tutelare diritti del titolare o di terzi: legittimo interesse (art. 6, par. 1, lett. f GDPR);</li>
+        <li>adempiere a eventuali obblighi di legge o richieste dell'autorità competente (art. 6, par. 1, lett. c GDPR).</li>
+      </ul>
+      <p>SPORT V non utilizza i dati raccolti tramite questi moduli per inviare newsletter o comunicazioni commerciali non richieste.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>4. Conferimento dei dati</h3>
+      <p>I campi contrassegnati come obbligatori sono necessari per valutare e gestire la richiesta. I recapiti indicati come pubblici e gli altri campi facoltativi possono essere omessi. Se una persona inserisce dati riferiti a terzi, deve essere autorizzata a comunicarli e, quando ne chiede la pubblicazione, a renderli pubblici.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>5. Destinatari e fornitori tecnici</h3>
+      <p>I dati possono essere trattati, nei limiti necessari al servizio, dai fornitori tecnici utilizzati da SPORT V:</p>
+      <ul>
+        <li><strong>GitHub Pages / GitHub</strong>, per l'hosting del sito; GitHub dichiara che, durante la visita a un sito GitHub Pages, l'indirizzo IP del visitatore viene registrato per finalità di sicurezza;</li>
+        <li><strong>Supabase</strong>, per database, storage e funzioni server; i dati del progetto sono conservati principalmente nella regione configurata per il progetto e possono essere trattati da sub-responsabili secondo il relativo DPA;</li>
+        <li><strong>Resend</strong>, per notifiche email tecniche e amministrative; il servizio dichiara di conservare dati negli Stati Uniti e di prevedere garanzie per i trasferimenti internazionali nel proprio DPA;</li>
+        <li><strong>OpenStreetMap Foundation</strong>, per la fornitura delle mappe: quando il browser richiede le tessere cartografiche, OSMF riceve dati tecnici della richiesta, incluso l'indirizzo IP, operando per tali trattamenti come titolare autonomo;</li>
+        <li><strong>jsDelivr</strong>, utilizzato come CDN tecnico per caricare librerie software necessarie al funzionamento del sito;</li>
+        <li>il provider di posta elettronica utilizzato dal titolare, quando l'utente invia email o segnalazioni.</li>
+      </ul>
+      <p>I dati possono inoltre essere comunicati a soggetti pubblici o privati quando ciò sia necessario per adempiere a obblighi di legge, richieste dell'autorità o per la tutela di diritti in sede competente.</p>
+      <div class="legal-links">
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">Privacy GitHub</a>
+        <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Supabase</a>
+        <a href="https://supabase.com/legal/dpa" target="_blank" rel="noopener noreferrer">DPA Supabase</a>
+        <a href="https://resend.com/legal/dpa" target="_blank" rel="noopener noreferrer">DPA Resend</a>
+        <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">Privacy OpenStreetMap</a>
+        <a href="https://www.jsdelivr.com/terms/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy jsDelivr</a>
+      </div>
+    </div>
+
+    <div class="legal-section">
+      <h3>6. Trasferimenti internazionali</h3>
+      <p>Alcuni fornitori operano anche al di fuori dello Spazio Economico Europeo. I trasferimenti, quando presenti, avvengono secondo le garanzie previste dalla normativa applicabile e dai documenti contrattuali dei fornitori, incluse, ove applicabili, decisioni di adeguatezza, Data Privacy Framework e clausole contrattuali standard. Per Resend, il fornitore dichiara che i dati sono conservati negli Stati Uniti e che il DPA include clausole contrattuali standard.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>7. Tempi di conservazione</h3>
+      <ul>
+        <li>dati del referente di una ASD pubblicata: per il tempo in cui la scheda resta attiva e fino a 12 mesi dopo la sua rimozione;</li>
+        <li>dati del referente di un evento pubblicato: fino a 12 mesi dopo la conclusione dell'evento;</li>
+        <li>richieste rifiutate, incomplete o non pubblicate: fino a 90 giorni dalla chiusura della verifica, salvo necessità di tutela;</li>
+        <li>file relativi a richieste definitivamente rifiutate: cancellazione prevista entro 30 giorni dalla chiusura della verifica;</li>
+        <li>segnalazioni e richieste di tutela: fino a 12 mesi dalla chiusura, salvo necessità di conservazione ulteriore per obblighi di legge o tutela di diritti;</li>
+        <li>log tecnici dei fornitori: secondo i rispettivi tempi di conservazione e le rispettive privacy policy.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>8. Minori e dati particolari</h3>
+      <p>I moduli di pubblicazione sono destinati a referenti maggiorenni o comunque autorizzati a rappresentare la realtà segnalata. Non devono essere trasmessi dati sanitari, documenti o altri dati particolari non necessari. Materiali che ritraggono minori possono essere inviati solo quando chi li trasmette dispone delle autorizzazioni necessarie.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>9. Diritti dell'interessato</h3>
+      <p>Nei casi previsti dal GDPR è possibile chiedere accesso, rettifica, cancellazione, limitazione del trattamento, opposizione e, quando applicabile, portabilità dei dati. È inoltre possibile chiedere l'aggiornamento o la rimozione di dati pubblicati su SPORT V.</p>
+      <p>Le richieste possono essere inviate a <a href="mailto:mariogalli1983@gmail.com?subject=Esercizio%20diritti%20privacy%20SPORT%20V">mariogalli1983@gmail.com</a>. Resta fermo il diritto di proporre reclamo al <a href="https://www.garanteprivacy.it/" target="_blank" rel="noopener noreferrer">Garante per la protezione dei dati personali</a>.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>10. Sicurezza e aggiornamenti</h3>
+      <p>SPORT V adotta misure tecniche e organizzative proporzionate alle caratteristiche del progetto e mantiene la pubblicazione dei contenuti subordinata a moderazione. Questa informativa potrà essere aggiornata quando cambiano funzionalità, fornitori o modalità di trattamento.</p>
+    </div>
+
+    <div class="legal-note">Questa informativa descrive il funzionamento attuale di SPORT V. L'aggiunta futura di analytics, pubblicità, newsletter, login utenti o altri strumenti di tracciamento richiederà una nuova valutazione e, quando necessario, l'aggiornamento delle informative e dei consensi.</div>
+  </div>
+</div>
+
+
+<!-- ========================================================
+     COOKIE E STRUMENTI TECNICI
+     ======================================================== -->
+
+<div id="cookiesModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="cookiesTitle">
+    <button type="button" class="modal-close" id="closeCookiesButton" aria-label="Chiudi">×</button>
+    <div class="eyebrow event-eyebrow">Cookie e tecnologie</div>
+    <h2 id="cookiesTitle">Cookie e strumenti tecnici</h2>
+    <div class="legal-meta">Versione del 20 agosto 2026</div>
+
+    <div class="legal-section">
+      <h3>Configurazione attuale</h3>
+      <p>SPORT V non utilizza propri cookie di profilazione, pubblicità comportamentale o strumenti di web analytics. Il contatore pubblico mostra il numero complessivo di <strong>visualizzazioni della pagina</strong> registrate dal server e non utilizza localStorage o cookie per riconoscere il browser. Per questo una ricarica della pagina può essere conteggiata come una nuova visualizzazione.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Servizi tecnici di terzi</h3>
+      <p>Per mostrare il sito, leggere i dati e visualizzare la mappa, il browser effettua richieste tecniche a GitHub Pages, Supabase, OpenStreetMap e jsDelivr. Tali soggetti possono ricevere dati tecnici, come l'indirizzo IP e le informazioni necessarie a consegnare la risorsa richiesta. Questi trattamenti sono descritti più nel dettaglio nell'Informativa privacy.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Strumenti facoltativi</h3>
+      <p>Nella configurazione attuale SPORT V non attiva propri strumenti facoltativi di profilazione o analytics che richiedano un consenso preventivo. Se in futuro verranno aggiunti servizi non strettamente tecnici, saranno valutati prima dell'attivazione e, quando previsto, verrà richiesto il consenso dell'utente.</p>
+    </div>
+
+    <div class="contact-grid">
+      <button type="button" class="btn btn-blue" data-open-privacy>🔒 Informativa privacy</button>
+      <a class="btn btn-soft" href="https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/9677876" target="_blank" rel="noopener noreferrer">Linee guida del Garante</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========================================================
+     SEGNALA CONTENUTO
+     ======================================================== -->
+
+<div id="reportModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <button type="button" class="modal-close" id="closeReportButton" aria-label="Chiudi">×</button>
+    <div class="eyebrow event-eyebrow">Verifica e tutela</div>
+    <h2 id="reportTitle">Segnala un contenuto</h2>
+    <p class="modal-intro">Usa questo modulo per indicare informazioni errate, contenuti potenzialmente illeciti, violazioni di privacy o diritti su immagini e materiali. La segnalazione verrà preparata come email indirizzata al curatore di SPORT V.</p>
+    <div class="report-context" id="reportContext">SPORT V</div>
+
+    <form id="reportForm" class="report-form">
+      <label>Motivo *
+        <select id="reportReason" required>
+          <option value="" selected disabled>Seleziona il motivo</option>
+          <option value="Informazioni errate o non aggiornate">Informazioni errate o non aggiornate</option>
+          <option value="Contenuto potenzialmente illecito">Contenuto potenzialmente illecito</option>
+          <option value="Privacy o dati personali">Privacy o dati personali</option>
+          <option value="Immagini o diritti della persona">Immagini o diritti della persona</option>
+          <option value="Copyright o altri diritti sui materiali">Copyright o altri diritti sui materiali</option>
+          <option value="Altro">Altro</option>
+        </select>
+      </label>
+
+      <label>Spiega con precisione la segnalazione *
+        <textarea id="reportDetails" required placeholder="Indica cosa va verificato e, se possibile, gli elementi utili per identificarlo."></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label>Nome<input type="text" id="reportName"></label>
+        <label>Email per eventuali chiarimenti *<input type="email" id="reportEmail" required></label>
+      </div>
+
+      <label class="privacy-check">
+        <input type="checkbox" id="reportGoodFaith" required>
+        <span>Dichiaro di effettuare la segnalazione in buona fede e che le informazioni fornite sono, per quanto a mia conoscenza, corrette. Ho letto l'Informativa privacy.</span>
+      </label>
+
+      <div class="legal-note">Premendo “Prepara email” verrà aperto il programma di posta del dispositivo. I dati non vengono trasmessi a SPORT V finché non invii effettivamente l'email.</div>
+      <button type="submit" class="btn btn-primary form-submit">✉️ Prepara email</button>
+    </form>
+  </div>
 </div>
 
 
@@ -5804,20 +5869,11 @@
           Il progetto
         </button>
 
-        <button
-          type="button"
-          class="footer-button"
-          data-open-rules
-        >
-          Regole
-        </button>
-
-        <a
-          href="mailto:mariogalli1983@gmail.com"
-          class="footer-button"
-        >
-          Contatti
-        </a>
+        <button type="button" class="footer-button" data-open-rules>Regole</button>
+        <button type="button" class="footer-button" data-open-privacy>Privacy</button>
+        <button type="button" class="footer-button" data-open-cookies>Cookie e strumenti tecnici</button>
+        <button type="button" class="footer-button" data-open-report>Segnala contenuto</button>
+        <a href="mailto:mariogalli1983@gmail.com" class="footer-button">Contatti</a>
 
       </div>
 
@@ -5826,14 +5882,13 @@
 
     <div class="footer-small">
 
-      SPORT V non è il sito istituzionale
+      SPORT V è un progetto informativo indipendente
+      curato da Mario Galli e non è il sito istituzionale
       del Municipio Roma V.
 
-      Le informazioni pubblicate
-      provengono dalle associazioni
-      e dalle segnalazioni ricevute
-      e vengono verificate
-      prima della pubblicazione.
+      Le informazioni pubblicate provengono dalle associazioni
+      e dalle segnalazioni ricevute, vengono sottoposte a verifica
+      e possono essere aggiornate o rimosse su segnalazione.
 
       <div
         class="visit-counter"
@@ -5842,7 +5897,7 @@
       >
         👀
         <strong id="visitCount">—</strong>
-        visite a SPORT V
+        visualizzazioni di SPORT V
       </div>
 
     </div>
@@ -5858,7 +5913,7 @@
 
 
 <script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
   crossorigin="">
 </script>
@@ -6851,6 +6906,33 @@ function buildMailto(
     encodeURIComponent(body)
   );
 
+}
+
+
+let currentReportContext = { type: "sito", title: "SPORT V", url: "" };
+
+function openReportModal(context = {}) {
+  currentReportContext = {
+    type: context.type || "sito",
+    title: context.title || "SPORT V",
+    url: context.url || window.location.href
+  };
+
+  const contextElement = document.getElementById("reportContext");
+  if (contextElement) {
+    contextElement.textContent = `${currentReportContext.title} — ${currentReportContext.url}`;
+  }
+
+  const form = document.getElementById("reportForm");
+  if (form) {
+    form.reset();
+  }
+
+  showModal("reportModal");
+}
+
+function closeReportModal() {
+  hideModal("reportModal");
 }
 
 
@@ -9814,14 +9896,11 @@ function openEventDetail(
       "click",
       () => {
 
-        window.location.href =
-          buildMailto(
-
-            `Segnalazione evento SPORT V: ${evento.titolo}`,
-
-            `Ciao Mario,\n\nvorrei segnalare un'informazione da verificare relativa all'evento "${evento.titolo}" di ${evento.asd_nome || "ASD"}.\n\nSegnalazione:\n\n\nLink evento:\n${shareUrl}`
-
-          );
+        openReportModal({
+          type: "evento",
+          title: `Evento: ${evento.titolo}`,
+          url: shareUrl
+        });
 
       }
     );
@@ -10700,14 +10779,11 @@ function openAsdDetail(
       "click",
       () => {
 
-        window.location.href =
-          buildMailto(
-
-            `Segnalazione scheda SPORT V: ${asd.name}`,
-
-            `Ciao Mario,\n\nvorrei segnalare un'informazione da verificare relativa alla scheda "${asd.name}".\n\nSegnalazione:\n\n\nLink scheda:\n${shareUrl}`
-
-          );
+        openReportModal({
+          type: "asd",
+          title: `ASD: ${asd.name}`,
+          url: shareUrl
+        });
 
       }
     );
@@ -13138,6 +13214,11 @@ document
   );
 
 
+document.getElementById("closePrivacyButton").addEventListener("click", () => hideModal("privacyModal"));
+document.getElementById("closeCookiesButton").addEventListener("click", () => hideModal("cookiesModal"));
+document.getElementById("closeReportButton").addEventListener("click", closeReportModal);
+
+
 document
   .querySelectorAll(
     "[data-open-project]"
@@ -13172,6 +13253,48 @@ document
     );
 
   });
+
+
+document.querySelectorAll("[data-open-privacy]").forEach(button => {
+  button.addEventListener("click", () => showModal("privacyModal"));
+});
+
+document.querySelectorAll("[data-open-cookies]").forEach(button => {
+  button.addEventListener("click", () => showModal("cookiesModal"));
+});
+
+document.querySelectorAll("[data-open-report]").forEach(button => {
+  button.addEventListener("click", () => openReportModal({ type: "sito", title: "SPORT V", url: window.location.href }));
+});
+
+document.getElementById("reportForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const reason = document.getElementById("reportReason").value;
+  const details = document.getElementById("reportDetails").value.trim();
+  const name = document.getElementById("reportName").value.trim();
+  const email = document.getElementById("reportEmail").value.trim();
+
+  const body = [
+    "Ciao Mario,",
+    "",
+    "ti invio una segnalazione relativa a un contenuto pubblicato o proposto su SPORT V.",
+    "",
+    `Contenuto: ${currentReportContext.title}`,
+    `Tipo: ${currentReportContext.type}`,
+    `Link: ${currentReportContext.url}`,
+    `Motivo: ${reason}`,
+    "",
+    "Dettagli:",
+    details,
+    "",
+    `Segnalante: ${name || "Non indicato"}`,
+    `Email: ${email}`,
+    "",
+    "Dichiaro di effettuare la segnalazione in buona fede e che le informazioni fornite sono, per quanto a mia conoscenza, corrette."
+  ].join("\n");
+
+  window.location.href = buildMailto(`Segnalazione contenuto SPORT V — ${reason}`, body);
+});
 
 
 /* ==========================================================
@@ -13353,7 +13476,10 @@ document.addEventListener(
 
     [
       "projectModal",
-      "rulesModal"
+      "rulesModal",
+      "privacyModal",
+      "cookiesModal",
+      "reportModal"
     ]
     .forEach(id => {
 
@@ -13380,127 +13506,30 @@ function formatVisitCount(value) {
 
 
 async function updateVisitCounter() {
+  const counter = document.getElementById("visitCounter");
+  const countElement = document.getElementById("visitCount");
 
-  const counter =
-    document.getElementById(
-      "visitCounter"
-    );
-
-  const countElement =
-    document.getElementById(
-      "visitCount"
-    );
-
-
-  if (
-    !counter
-    ||
-    !countElement
-  ) {
+  if (!counter || !countElement) {
     return;
   }
 
-
-  const now =
-    new Date();
-
-  const today =
-    [
-      now.getFullYear(),
-      String(now.getMonth() + 1)
-        .padStart(2,"0"),
-      String(now.getDate())
-        .padStart(2,"0")
-    ].join("-");
-
-  const storageKey =
-    "sportv_last_counted_visit_day";
-
-  let alreadyCounted =
-    false;
-
-
   try {
-
-    alreadyCounted =
-      window.localStorage
-        .getItem(storageKey)
-      ===
-      today;
-
-  }
-  catch (_) {}
-
-
-  try {
-
-    const rpcName =
-      alreadyCounted
-        ?
-        "get_site_visit_count"
-        :
-        "increment_site_visit";
-
-
-    const {
-      data,
-      error
-    } =
-      await db.rpc(
-        rpcName
-      );
-
-
+    const { data, error } = await db.rpc("increment_site_visit");
     if (error) {
       throw error;
     }
 
-
-    const total =
-      Number(data);
-
-
-    if (
-      !Number.isFinite(total)
-      ||
-      total < 0
-    ) {
+    const total = Number(data);
+    if (!Number.isFinite(total) || total < 0) {
       return;
     }
 
-
-    countElement.textContent =
-      formatVisitCount(total);
-
-    counter.hidden =
-      false;
-
-
-    if (!alreadyCounted) {
-
-      try {
-
-        window.localStorage
-          .setItem(
-            storageKey,
-            today
-          );
-
-      }
-      catch (_) {}
-
-    }
-
+    countElement.textContent = formatVisitCount(total);
+    counter.hidden = false;
   }
   catch (error) {
-
-    console.warn(
-      "Contatore visite non disponibile:",
-      error
-    );
-
+    console.warn("Contatore visualizzazioni non disponibile:", error);
   }
-
 }
 
 
