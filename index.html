@@ -660,64 +660,107 @@
        ====================================================== */
 
 
-    .filters {
+    .map-filter-panel {
 
       display:
-        flex;
+        grid;
 
-      flex-wrap:
-        wrap;
+      grid-template-columns:
+        1fr 1fr auto;
 
       gap:
-        8px;
+        14px;
+
+      align-items:
+        end;
 
       margin-bottom:
         24px;
 
-    }
+      padding:
+        16px;
 
-
-    .filter {
+      background:
+        #f7f9fb;
 
       border:
         1px solid
         var(--bordo);
 
-      background:
-        white;
-
-      padding:
-        9px 14px;
-
       border-radius:
-        999px;
-
-      cursor:
-        pointer;
-
-      font-weight:
-        700;
-
-      font-size:
         14px;
-
-      color:
-        #46515c;
 
     }
 
 
-    .filter:hover,
-    .filter.active {
+    .map-filter-panel label {
 
-      background:
-        var(--blu);
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        6px;
+
+    }
+
+
+    .map-filter-panel label span {
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+
+      text-transform:
+        uppercase;
 
       color:
+        var(--grigio);
+
+    }
+
+
+    .map-filter-panel select {
+
+      min-height:
+        46px;
+
+      width:
+        100%;
+
+      border:
+        1px solid
+        var(--bordo);
+
+      border-radius:
+        10px;
+
+      padding:
+        10px 12px;
+
+      background:
         white;
 
-      border-color:
-        var(--blu);
+      color:
+        var(--testo);
+
+      font-size:
+        15px;
+
+    }
+
+
+    .map-filter-reset {
+
+      min-height:
+        46px;
+
+      white-space:
+        nowrap;
 
     }
 
@@ -1158,6 +1201,84 @@
 
       background:
         white;
+
+    }
+
+
+    .event-period-filters {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:
+        14px;
+
+      margin-bottom:
+        14px;
+
+    }
+
+
+    .event-period-filters label {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        6px;
+
+    }
+
+
+    .event-period-filters label span {
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+
+      text-transform:
+        uppercase;
+
+      color:
+        var(--grigio);
+
+    }
+
+
+    .event-period-filters input {
+
+      min-height:
+        46px;
+
+      width:
+        100%;
+
+      border:
+        1px solid
+        var(--bordo);
+
+      border-radius:
+        10px;
+
+      padding:
+        10px 12px;
+
+      background:
+        white;
+
+      color:
+        var(--testo);
+
+      font-size:
+        15px;
 
     }
 
@@ -3197,8 +3318,15 @@
 
     @media (max-width: 750px) {
 
+      .map-filter-panel,
+      .event-period-filters,
       .event-select-filters {
         grid-template-columns: 1fr;
+      }
+
+
+      .map-filter-reset {
+        width: 100%;
       }
 
 
@@ -3591,62 +3719,64 @@
     </div>
 
 
-    <div class="filters">
+    <div class="map-filter-panel">
+
+      <label>
+        <span>Filtra per sport</span>
+        <select id="mapSportFilter">
+          <option value="Tutti" selected>Tutti gli sport</option>
+          <option value="Arti marziali">Arti marziali</option>
+          <option value="Atletica leggera">Atletica leggera</option>
+          <option value="Basket">Basket</option>
+          <option value="Boxe / Pugilato">Boxe / Pugilato</option>
+          <option value="Calcio">Calcio</option>
+          <option value="Calcio a 5 / Futsal">Calcio a 5 / Futsal</option>
+          <option value="Danza">Danza</option>
+          <option value="Fitness / Ginnastica">Fitness / Ginnastica</option>
+          <option value="Ginnastica artistica">Ginnastica artistica</option>
+          <option value="Judo">Judo</option>
+          <option value="Karate">Karate</option>
+          <option value="Kickboxing">Kickboxing</option>
+          <option value="Multisport / Polisportiva">Multisport / Polisportiva</option>
+          <option value="Pallavolo">Pallavolo</option>
+          <option value="Pattinaggio">Pattinaggio</option>
+          <option value="Rugby">Rugby</option>
+          <option value="Tennis">Tennis</option>
+          <option value="Tennistavolo">Tennistavolo</option>
+          <option value="Yoga / Pilates">Yoga / Pilates</option>
+          <option value="Altro">Altro sport</option>
+        </select>
+      </label>
+
+      <label>
+        <span>Filtra per quartiere</span>
+        <select id="mapQuartiereFilter">
+          <option value="Tutti" selected>Tutti i quartieri</option>
+          <option value="Alessandrino">Alessandrino</option>
+          <option value="Casilino 23">Casilino 23</option>
+          <option value="Centocelle">Centocelle</option>
+          <option value="Collatino">Collatino</option>
+          <option value="Gordiani">Gordiani</option>
+          <option value="La Rustica">La Rustica</option>
+          <option value="Marranella">Marranella</option>
+          <option value="Pigneto">Pigneto</option>
+          <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+          <option value="Quarticciolo">Quarticciolo</option>
+          <option value="Tor Pignattara">Tor Pignattara</option>
+          <option value="Tor Sapienza">Tor Sapienza</option>
+          <option value="Tor Tre Teste">Tor Tre Teste</option>
+          <option value="Villa De Sanctis">Villa De Sanctis</option>
+          <option value="Villa Gordiani">Villa Gordiani</option>
+          <option value="Altro">Altro quartiere del Municipio V</option>
+        </select>
+      </label>
 
       <button
         type="button"
-        class="filter active"
-        data-sport="Tutti"
+        class="btn btn-soft map-filter-reset"
+        id="mapFilterReset"
       >
-        Tutti
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Calcio"
-      >
-        ⚽ Calcio
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Judo"
-      >
-        🥋 Judo
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Basket"
-      >
-        🏀 Basket
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Danza"
-      >
-        💃 Danza
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Tennis"
-      >
-        🎾 Tennis
-      </button>
-
-      <button
-        type="button"
-        class="filter"
-        data-sport="Altro"
-      >
-        🏃 Altro
+        Azzera filtri
       </button>
 
     </div>
@@ -3770,6 +3900,40 @@
           id="eventSearchInput"
           placeholder="Cerca evento, ASD, sport o luogo..."
         >
+
+      </div>
+
+
+      <div class="event-period-filters">
+
+        <label>
+
+          <span>
+            Dal
+          </span>
+
+          <input
+            type="date"
+            id="eventDateFrom"
+            aria-label="Eventi dal giorno"
+          >
+
+        </label>
+
+
+        <label>
+
+          <span>
+            Al
+          </span>
+
+          <input
+            type="date"
+            id="eventDateTo"
+            aria-label="Eventi fino al giorno"
+          >
+
+        </label>
 
       </div>
 
@@ -4113,7 +4277,8 @@
           puoi cercare per parola chiave
           e utilizzare i filtri
           Oggi, Questo weekend, Bambini,
-          Gratuito, disciplina e quartiere.
+          Gratuito, disciplina, quartiere
+          e intervallo di date.
 
         </div>
 
@@ -4398,13 +4563,51 @@
 
       <label>
 
-        Disciplina o discipline *
+        Sport / disciplina *
+
+        <select
+          id="asdDiscipline"
+          required
+        >
+          <option value="" selected disabled>
+            Seleziona lo sport
+          </option>
+          <option value="Arti marziali">Arti marziali</option>
+          <option value="Atletica leggera">Atletica leggera</option>
+          <option value="Basket">Basket</option>
+          <option value="Boxe / Pugilato">Boxe / Pugilato</option>
+          <option value="Calcio">Calcio</option>
+          <option value="Calcio a 5 / Futsal">Calcio a 5 / Futsal</option>
+          <option value="Danza">Danza</option>
+          <option value="Fitness / Ginnastica">Fitness / Ginnastica</option>
+          <option value="Ginnastica artistica">Ginnastica artistica</option>
+          <option value="Judo">Judo</option>
+          <option value="Karate">Karate</option>
+          <option value="Kickboxing">Kickboxing</option>
+          <option value="Multisport / Polisportiva">Multisport / Polisportiva</option>
+          <option value="Pallavolo">Pallavolo</option>
+          <option value="Pattinaggio">Pattinaggio</option>
+          <option value="Rugby">Rugby</option>
+          <option value="Tennis">Tennis</option>
+          <option value="Tennistavolo">Tennistavolo</option>
+          <option value="Yoga / Pilates">Yoga / Pilates</option>
+          <option value="Altro">Altro sport</option>
+        </select>
+
+      </label>
+
+
+      <label
+        id="asdDisciplineAltroLabel"
+        hidden
+      >
+
+        Specifica lo sport *
 
         <input
           type="text"
-          id="asdDiscipline"
-          required
-          placeholder="Es. Calcio, calcio a 5"
+          id="asdDisciplineAltro"
+          placeholder="Es. Scherma"
         >
 
       </label>
@@ -4414,11 +4617,45 @@
 
         Quartiere *
 
-        <input
-          type="text"
+        <select
           id="asdQuartiere"
           required
-          placeholder="Es. Centocelle"
+        >
+          <option value="" selected disabled>
+            Seleziona il quartiere
+          </option>
+          <option value="Alessandrino">Alessandrino</option>
+          <option value="Casilino 23">Casilino 23</option>
+          <option value="Centocelle">Centocelle</option>
+          <option value="Collatino">Collatino</option>
+          <option value="Gordiani">Gordiani</option>
+          <option value="La Rustica">La Rustica</option>
+          <option value="Marranella">Marranella</option>
+          <option value="Pigneto">Pigneto</option>
+          <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+          <option value="Quarticciolo">Quarticciolo</option>
+          <option value="Tor Pignattara">Tor Pignattara</option>
+          <option value="Tor Sapienza">Tor Sapienza</option>
+          <option value="Tor Tre Teste">Tor Tre Teste</option>
+          <option value="Villa De Sanctis">Villa De Sanctis</option>
+          <option value="Villa Gordiani">Villa Gordiani</option>
+          <option value="Altro">Altro quartiere del Municipio V</option>
+        </select>
+
+      </label>
+
+
+      <label
+        id="asdQuartiereAltroLabel"
+        hidden
+      >
+
+        Specifica il quartiere *
+
+        <input
+          type="text"
+          id="asdQuartiereAltro"
+          placeholder="Inserisci il quartiere"
         >
 
       </label>
@@ -5668,6 +5905,9 @@ function getEventPosterUrls(evento) {
 let selectedSport =
   "Tutti";
 
+let selectedQuartiere =
+  "Tutti";
+
 let markers =
   [];
 
@@ -5708,6 +5948,12 @@ const eventFilters = {
     "",
 
   quartier:
+    "",
+
+  dateFrom:
+    "",
+
+  dateTo:
     "",
 
   search:
@@ -7301,6 +7547,218 @@ function renderCards(data) {
 }
 
 
+function mapSportMatches(
+  sportValue,
+  selectedValue
+) {
+
+  if (
+    selectedValue === "Tutti"
+  ) {
+    return true;
+  }
+
+
+  const sportText =
+    normalizeFilterText(
+      sportValue
+    );
+
+
+  const aliases = {
+
+    "Arti marziali": [
+      "arti marziali"
+    ],
+
+    "Atletica leggera": [
+      "atletica"
+    ],
+
+    "Basket": [
+      "basket",
+      "basketball"
+    ],
+
+    "Boxe / Pugilato": [
+      "boxe",
+      "boxing",
+      "pugilat"
+    ],
+
+    "Calcio": [
+      "calcio"
+    ],
+
+    "Calcio a 5 / Futsal": [
+      "calcio a 5",
+      "futsal"
+    ],
+
+    "Danza": [
+      "danza",
+      "dance"
+    ],
+
+    "Fitness / Ginnastica": [
+      "fitness",
+      "ginnastica"
+    ],
+
+    "Ginnastica artistica": [
+      "ginnastica artistica"
+    ],
+
+    "Judo": [
+      "judo"
+    ],
+
+    "Karate": [
+      "karate"
+    ],
+
+    "Kickboxing": [
+      "kickboxing",
+      "kick boxing"
+    ],
+
+    "Multisport / Polisportiva": [
+      "multisport",
+      "polisportiva"
+    ],
+
+    "Pallavolo": [
+      "pallavolo",
+      "volley"
+    ],
+
+    "Pattinaggio": [
+      "pattinaggio"
+    ],
+
+    "Rugby": [
+      "rugby"
+    ],
+
+    "Tennis": [
+      "tennis"
+    ],
+
+    "Tennistavolo": [
+      "tennistavolo",
+      "tennis tavolo",
+      "ping pong"
+    ],
+
+    "Yoga / Pilates": [
+      "yoga",
+      "pilates"
+    ]
+
+  };
+
+
+  if (
+    selectedValue === "Altro"
+  ) {
+
+    return !Object.values(
+      aliases
+    )
+      .flat()
+      .some(
+        alias =>
+          sportText.includes(
+            alias
+          )
+      );
+
+  }
+
+
+  return (
+    aliases[selectedValue]
+    || [
+      normalizeFilterText(
+        selectedValue
+      )
+    ]
+  )
+    .some(
+      alias =>
+        sportText.includes(
+          normalizeFilterText(
+            alias
+          )
+        )
+    );
+
+}
+
+
+function mapQuartiereMatches(
+  quartiereValue,
+  selectedValue
+) {
+
+  if (
+    selectedValue === "Tutti"
+  ) {
+    return true;
+  }
+
+
+  const quartiereText =
+    normalizeFilterText(
+      quartiereValue
+    );
+
+
+  const standardQuartieri = [
+    "Alessandrino",
+    "Casilino 23",
+    "Centocelle",
+    "Collatino",
+    "Gordiani",
+    "La Rustica",
+    "Marranella",
+    "Pigneto",
+    "Prenestino-Labicano",
+    "Quarticciolo",
+    "Tor Pignattara",
+    "Tor Sapienza",
+    "Tor Tre Teste",
+    "Villa De Sanctis",
+    "Villa Gordiani"
+  ];
+
+
+  if (
+    selectedValue === "Altro"
+  ) {
+
+    return !standardQuartieri
+      .some(
+        quartiere =>
+          quartiereText.includes(
+            normalizeFilterText(
+              quartiere
+            )
+          )
+      );
+
+  }
+
+
+  return quartiereText.includes(
+    normalizeFilterText(
+      selectedValue
+    )
+  );
+
+}
+
+
 function applyFilters() {
 
   const search =
@@ -7317,48 +7775,17 @@ function applyFilters() {
     asdData.filter(asd => {
 
 
-      const sportText =
-        normalizeFilterText(
-          asd.sport
+      const sportMatch =
+        mapSportMatches(
+          asd.sport,
+          selectedSport
         );
 
 
-      const sportMatch =
-
-        selectedSport ===
-          "Tutti"
-
-        ||
-
-        (
-
-          selectedSport ===
-            "Altro"
-
-          ?
-
-          ![
-            "calcio",
-            "judo",
-            "basket",
-            "danza",
-            "tennis"
-          ]
-
-          .some(
-            sport =>
-              sportText.includes(
-                sport
-              )
-          )
-
-          :
-
-          sportText.includes(
-            selectedSport
-              .toLowerCase()
-          )
-
+      const quartiereMatch =
+        mapQuartiereMatches(
+          asd.quartier,
+          selectedQuartiere
         );
 
 
@@ -7386,6 +7813,8 @@ function applyFilters() {
 
       return (
         sportMatch
+        &&
+        quartiereMatch
         &&
         searchMatch
       );
@@ -7828,6 +8257,159 @@ function eventMatchesSearch(evento) {
 }
 
 
+function parseEventFilterDate(
+  value,
+  endOfDay = false
+) {
+
+  if (!value) {
+    return null;
+  }
+
+
+  const parts =
+    String(value)
+      .split("-")
+      .map(Number);
+
+
+  if (
+    parts.length !== 3
+    ||
+    parts.some(
+      part =>
+        !Number.isFinite(part)
+    )
+  ) {
+
+    return null;
+
+  }
+
+
+  const date =
+    new Date(
+      parts[0],
+      parts[1] - 1,
+      parts[2]
+    );
+
+
+  if (endOfDay) {
+
+    date.setHours(
+      23,59,59,999
+    );
+
+  }
+
+  else {
+
+    date.setHours(
+      0,0,0,0
+    );
+
+  }
+
+
+  return date;
+
+}
+
+
+function formatEventFilterDate(value) {
+
+  const date =
+    parseEventFilterDate(value);
+
+
+  if (!date) {
+    return value || "";
+  }
+
+
+  return new Intl.DateTimeFormat(
+    "it-IT",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  ).format(date);
+
+}
+
+
+function eventMatchesPeriod(evento) {
+
+  if (
+    !eventFilters.dateFrom
+    &&
+    !eventFilters.dateTo
+  ) {
+
+    return true;
+
+  }
+
+
+  const eventStart =
+    getEventStart(evento);
+
+  const eventEnd =
+    getEventEnd(evento);
+
+
+  if (
+    !eventStart
+    ||
+    !eventEnd
+  ) {
+
+    return false;
+
+  }
+
+
+  const from =
+    parseEventFilterDate(
+      eventFilters.dateFrom
+    );
+
+  const to =
+    parseEventFilterDate(
+      eventFilters.dateTo,
+      true
+    );
+
+
+  if (
+    from
+    &&
+    eventEnd < from
+  ) {
+
+    return false;
+
+  }
+
+
+  if (
+    to
+    &&
+    eventStart > to
+  ) {
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
 function applyEventFilters() {
 
   const filtered =
@@ -7883,6 +8465,15 @@ function applyEventFilters() {
           eventFilters.new
           &&
           !eventIsNew(evento)
+        ) {
+
+          return false;
+
+        }
+
+
+        if (
+          !eventMatchesPeriod(evento)
         ) {
 
           return false;
@@ -8022,6 +8613,39 @@ function updateEventResultsInfo(count) {
 
 
   if (
+    eventFilters.dateFrom
+    &&
+    eventFilters.dateTo
+  ) {
+
+    active.push(
+      `dal ${formatEventFilterDate(eventFilters.dateFrom)} al ${formatEventFilterDate(eventFilters.dateTo)}`
+    );
+
+  }
+
+  else if (
+    eventFilters.dateFrom
+  ) {
+
+    active.push(
+      `dal ${formatEventFilterDate(eventFilters.dateFrom)}`
+    );
+
+  }
+
+  else if (
+    eventFilters.dateTo
+  ) {
+
+    active.push(
+      `fino al ${formatEventFilterDate(eventFilters.dateTo)}`
+    );
+
+  }
+
+
+  if (
     eventFilters.search
   ) {
 
@@ -8122,6 +8746,12 @@ function resetEventFilters() {
   eventFilters.quartier =
     "";
 
+  eventFilters.dateFrom =
+    "";
+
+  eventFilters.dateTo =
+    "";
+
   eventFilters.search =
     "";
 
@@ -8159,6 +8789,28 @@ function resetEventFilters() {
     )
     .value =
       "";
+
+
+  document
+    .getElementById(
+      "eventDateFrom"
+    )
+    .value =
+      "";
+
+
+  const eventDateTo =
+    document
+      .getElementById(
+        "eventDateTo"
+      );
+
+  eventDateTo.value =
+    "";
+
+  eventDateTo.removeAttribute(
+    "min"
+  );
 
 
   document
@@ -11070,6 +11722,148 @@ async function uploadAsdLogo(
 
 }
 /* ==========================================================
+   CAMPI PREIMPOSTATI ASD
+   ========================================================== */
+
+
+function syncAsdCustomFields() {
+
+  const sportSelect =
+    document.getElementById(
+      "asdDiscipline"
+    );
+
+  const sportOtherLabel =
+    document.getElementById(
+      "asdDisciplineAltroLabel"
+    );
+
+  const sportOtherInput =
+    document.getElementById(
+      "asdDisciplineAltro"
+    );
+
+  const quartierSelect =
+    document.getElementById(
+      "asdQuartiere"
+    );
+
+  const quartierOtherLabel =
+    document.getElementById(
+      "asdQuartiereAltroLabel"
+    );
+
+  const quartierOtherInput =
+    document.getElementById(
+      "asdQuartiereAltro"
+    );
+
+
+  const customSport =
+    sportSelect.value ===
+      "Altro";
+
+  sportOtherLabel.hidden =
+    !customSport;
+
+  sportOtherInput.required =
+    customSport;
+
+  if (!customSport) {
+    sportOtherInput.value =
+      "";
+  }
+
+
+  const customQuartier =
+    quartierSelect.value ===
+      "Altro";
+
+  quartierOtherLabel.hidden =
+    !customQuartier;
+
+  quartierOtherInput.required =
+    customQuartier;
+
+  if (!customQuartier) {
+    quartierOtherInput.value =
+      "";
+  }
+
+}
+
+
+document
+  .getElementById(
+    "asdDiscipline"
+  )
+  .addEventListener(
+    "change",
+    syncAsdCustomFields
+  );
+
+
+document
+  .getElementById(
+    "asdQuartiere"
+  )
+  .addEventListener(
+    "change",
+    syncAsdCustomFields
+  );
+
+
+function getAsdSelectedSport() {
+
+  const selected =
+    document
+      .getElementById(
+        "asdDiscipline"
+      )
+      .value;
+
+  if (selected === "Altro") {
+
+    return document
+      .getElementById(
+        "asdDisciplineAltro"
+      )
+      .value
+      .trim();
+
+  }
+
+  return selected.trim();
+
+}
+
+
+function getAsdSelectedQuartier() {
+
+  const selected =
+    document
+      .getElementById(
+        "asdQuartiere"
+      )
+      .value;
+
+  if (selected === "Altro") {
+
+    return document
+      .getElementById(
+        "asdQuartiereAltro"
+      )
+      .value
+      .trim();
+
+  }
+
+  return selected.trim();
+
+}
+
+
+/* ==========================================================
    INVIO ASD
    ========================================================== */
 
@@ -11226,21 +12020,11 @@ const nuovaAsd = {
 
 
         discipline:
-          document
-            .getElementById(
-              "asdDiscipline"
-            )
-            .value
-            .trim(),
+          getAsdSelectedSport(),
 
 
         quartiere:
-          document
-            .getElementById(
-              "asdQuartiere"
-            )
-            .value
-            .trim(),
+          getAsdSelectedQuartier(),
 
 
         indirizzo:
@@ -11407,7 +12191,9 @@ logo_url:
           "asdForm"
         )
         .reset();
-resetAsdLogoPreview();
+
+      syncAsdCustomFields();
+      resetAsdLogoPreview();
 
       if (
         pickerMarker
@@ -11848,44 +12634,78 @@ document
 
 
 document
-  .querySelectorAll(
-    ".filter"
+  .getElementById(
+    "mapSportFilter"
   )
-  .forEach(button => {
+  .addEventListener(
+    "change",
+    event => {
+
+      selectedSport =
+        event.target.value;
+
+      applyFilters();
+
+    }
+  );
 
 
-    button.addEventListener(
-      "click",
-      () => {
+document
+  .getElementById(
+    "mapQuartiereFilter"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      selectedQuartiere =
+        event.target.value;
+
+      applyFilters();
+
+    }
+  );
 
 
-        document
-          .querySelectorAll(
-            ".filter"
-          )
-          .forEach(
-            btn =>
-              btn.classList.remove(
-                "active"
-              )
-          );
+document
+  .getElementById(
+    "mapFilterReset"
+  )
+  .addEventListener(
+    "click",
+    () => {
 
+      selectedSport =
+        "Tutti";
 
-        button.classList.add(
-          "active"
-        );
+      selectedQuartiere =
+        "Tutti";
 
+      document
+        .getElementById(
+          "mapSportFilter"
+        )
+        .value =
+          "Tutti";
 
-        selectedSport =
-          button.dataset.sport;
+      document
+        .getElementById(
+          "mapQuartiereFilter"
+        )
+        .value =
+          "Tutti";
 
+      document
+        .getElementById(
+          "searchInput"
+        )
+        .value =
+          "";
 
-        applyFilters();
+      applyFilters();
 
-      }
-    );
-
-  });
+    }
+  );
 
 
 function runAsdSearch() {
@@ -12039,6 +12859,100 @@ document
 
     }
   );
+
+
+document
+  .getElementById(
+    "eventDateFrom"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+
+      eventFilters.dateFrom =
+        event.target.value;
+
+
+      const toInput =
+        document
+          .getElementById(
+            "eventDateTo"
+          );
+
+
+      if (
+        eventFilters.dateFrom
+      ) {
+
+        toInput.min =
+          eventFilters.dateFrom;
+
+
+        if (
+          toInput.value
+          &&
+          toInput.value < eventFilters.dateFrom
+        ) {
+
+          toInput.value =
+            eventFilters.dateFrom;
+
+          eventFilters.dateTo =
+            eventFilters.dateFrom;
+
+        }
+
+      }
+
+      else {
+
+        toInput.removeAttribute(
+          "min"
+        );
+
+      }
+
+
+      applyEventFilters();
+
+    }
+  );
+
+
+
+document
+  .getElementById(
+    "eventDateTo"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+
+      if (
+        event.target.value
+        &&
+        eventFilters.dateFrom
+        &&
+        event.target.value < eventFilters.dateFrom
+      ) {
+
+        event.target.value =
+          eventFilters.dateFrom;
+
+      }
+
+
+      eventFilters.dateTo =
+        event.target.value;
+
+
+      applyEventFilters();
+
+    }
+  );
+
 
 
 document
