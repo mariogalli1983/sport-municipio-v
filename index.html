@@ -2347,13 +2347,30 @@
        ====================================================== */
 
 
-    .poster-preview {
+    .poster-preview-grid {
 
       width:
         100%;
 
-      max-width:
-        360px;
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(auto-fit,minmax(120px,1fr));
+
+      gap:
+        10px;
+
+    }
+
+
+    .poster-preview-item {
+
+      position:
+        relative;
+
+      aspect-ratio:
+        1 / 1;
 
       border:
         1px solid
@@ -2371,7 +2388,7 @@
     }
 
 
-    .poster-preview img {
+    .poster-preview-item img {
 
       display:
         block;
@@ -2380,7 +2397,122 @@
         100%;
 
       height:
-        auto;
+        100%;
+
+      object-fit:
+        contain;
+
+    }
+
+
+    .poster-preview-number {
+
+      position:
+        absolute;
+
+      top:
+        7px;
+
+      right:
+        7px;
+
+      min-width:
+        26px;
+
+      height:
+        26px;
+
+      padding:
+        0 7px;
+
+      border-radius:
+        999px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      background:
+        rgba(9,29,49,.86);
+
+      color:
+        white;
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+
+    }
+
+
+    .event-gallery-thumbs {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap:
+        7px;
+
+      margin-top:
+        9px;
+
+    }
+
+
+    .event-gallery-thumb {
+
+      border:
+        2px solid transparent;
+
+      border-radius:
+        9px;
+
+      padding:
+        0;
+
+      overflow:
+        hidden;
+
+      background:
+        #f1f3f5;
+
+      aspect-ratio:
+        1 / 1;
+
+      cursor:
+        pointer;
+
+    }
+
+
+    .event-gallery-thumb.active {
+      border-color: var(--blu);
+    }
+
+
+    .event-gallery-thumb img {
+
+      display:
+        block;
+
+      width:
+        100%;
+
+      height:
+        100%;
+
+      object-fit:
+        cover;
 
     }
 
@@ -4783,12 +4915,13 @@
 
       <label>
 
-        Locandina dell'evento
+        Locandine dell'evento
 
         <input
           type="file"
           id="eventLocandina"
           accept="image/jpeg,image/png,image/webp"
+          multiple
         >
 
       </label>
@@ -4796,25 +4929,19 @@
 
       <p class="form-note">
 
-        Facoltativa.
-        JPG, PNG o WebP,
-        massimo 5 MB.
+        Facoltative. Puoi selezionare più immagini insieme.
+        JPG, PNG o WebP, massimo 5 MB per file,
+        fino a 5 locandine per evento.
 
       </p>
 
 
       <div
         id="eventPosterPreview"
-        class="poster-preview"
+        class="poster-preview-grid"
         style="display:none;"
-      >
-
-        <img
-          id="eventPosterPreviewImage"
-          alt="Anteprima della locandina"
-        >
-
-      </div>
+        aria-label="Anteprima delle locandine selezionate"
+      ></div>
 
 
       <hr class="form-divider">
@@ -5430,6 +5557,67 @@ let asdData = [];
 
 let eventData = [];
 
+
+function getEventPosterUrls(evento) {
+
+  const urls = [];
+
+
+  if (
+    evento
+    &&
+    Array.isArray(
+      evento.locandine_urls
+    )
+  ) {
+
+    evento.locandine_urls
+      .forEach(url => {
+
+        const safeUrl =
+          safeHttpUrl(url);
+
+        if (
+          safeUrl
+          &&
+          !urls.includes(safeUrl)
+        ) {
+
+          urls.push(safeUrl);
+
+        }
+
+      });
+
+  }
+
+
+  const legacyUrl =
+    evento
+      ?
+      safeHttpUrl(
+        evento.locandina_url
+      )
+      :
+      null;
+
+
+  if (
+    legacyUrl
+    &&
+    !urls.includes(legacyUrl)
+  ) {
+
+    urls.unshift(legacyUrl);
+
+  }
+
+
+  return urls;
+
+}
+
+
 let selectedSport =
   "Tutti";
 
@@ -5445,8 +5633,8 @@ let pickerMarker =
 let asdLogoPreviewUrl =
   null;
 
-let eventPosterPreviewUrl =
-  null;
+let eventPosterPreviewUrls =
+  [];
 
 let siteReady =
   false;
@@ -7954,9 +8142,11 @@ function renderEvents(events) {
 
 
     const posterUrl =
-      safeHttpUrl(
-        evento.locandina_url
-      );
+      getEventPosterUrls(
+        evento
+      )[0]
+      ||
+      null;
 
 
     const meta =
@@ -8256,10 +8446,16 @@ function openEventDetail(
     );
 
 
-  const posterUrl =
-    safeHttpUrl(
-      evento.locandina_url
+  const posterUrls =
+    getEventPosterUrls(
+      evento
     );
+
+
+  const posterUrl =
+    posterUrls[0]
+    ||
+    null;
 
 
   const infoLink =
@@ -8296,11 +8492,48 @@ function openEventDetail(
                 <div class="detail-media">
 
                   <img
+                    id="eventMainPoster"
                     src="${escapeHtml(posterUrl)}"
                     alt="Locandina: ${escapeHtml(evento.titolo)}"
                   >
 
                 </div>
+
+                ${
+                  posterUrls.length > 1
+                    ?
+                    `
+
+                      <div class="event-gallery-thumbs">
+
+                        ${posterUrls.map(
+                          (url,index) =>
+                            `
+
+                              <button
+                                type="button"
+                                class="event-gallery-thumb ${index === 0 ? "active" : ""}"
+                                data-event-poster="${escapeHtml(url)}"
+                                aria-label="Mostra locandina ${index + 1}"
+                              >
+
+                                <img
+                                  src="${escapeHtml(url)}"
+                                  alt="Anteprima locandina ${index + 1}"
+                                  loading="lazy"
+                                >
+
+                              </button>
+
+                            `
+                        ).join("")}
+
+                      </div>
+
+                    `
+                    :
+                    ""
+                }
 
               `
               :
@@ -8621,6 +8854,52 @@ function openEventDetail(
   showModal(
     "eventDetailModal"
   );
+
+
+  const mainPoster =
+    document.getElementById(
+      "eventMainPoster"
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-event-poster]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          if (!mainPoster) {
+            return;
+          }
+
+
+          mainPoster.src =
+            button.dataset.eventPoster;
+
+
+          document
+            .querySelectorAll(
+              "[data-event-poster]"
+            )
+            .forEach(item =>
+              item.classList.remove(
+                "active"
+              )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+        }
+      );
+
+    });
 
 
   if (updateUrl) {
@@ -9972,36 +10251,28 @@ function closeEventModal() {
 
 function resetPosterPreview() {
 
-  if (
-    eventPosterPreviewUrl
-  ) {
-
-    URL.revokeObjectURL(
-      eventPosterPreviewUrl
+  eventPosterPreviewUrls
+    .forEach(url =>
+      URL.revokeObjectURL(url)
     );
 
 
-    eventPosterPreviewUrl =
-      null;
-
-  }
+  eventPosterPreviewUrls =
+    [];
 
 
-  document
-    .getElementById(
+  const preview =
+    document.getElementById(
       "eventPosterPreview"
-    )
-    .style.display =
-      "none";
-
-
-  document
-    .getElementById(
-      "eventPosterPreviewImage"
-    )
-    .removeAttribute(
-      "src"
     );
+
+
+  preview.innerHTML =
+    "";
+
+
+  preview.style.display =
+    "none";
 
 }
 
@@ -10015,8 +10286,12 @@ document
     event => {
 
 
-      const file =
-        event.target.files[0];
+      const files =
+        Array.from(
+          event.target.files
+          ||
+          []
+        );
 
 
       const message =
@@ -10037,8 +10312,31 @@ document
       resetPosterPreview();
 
 
-      if (!file) {
+      if (
+        files.length === 0
+      ) {
         return;
+      }
+
+
+      if (
+        files.length > 5
+      ) {
+
+        event.target.value =
+          "";
+
+
+        message.className =
+          "form-message error";
+
+
+        message.textContent =
+          "Puoi caricare al massimo 5 locandine per evento.";
+
+
+        return;
+
       }
 
 
@@ -10050,72 +10348,132 @@ document
         ];
 
 
-      if (
-        !tipiConsentiti.includes(
-          file.type
-        )
-      ) {
-
-        event.target.value =
-          "";
-
-
-        message.className =
-          "form-message error";
-
-
-        message.textContent =
-          "La locandina deve essere in formato JPG, PNG o WebP.";
-
-
-        return;
-
-      }
-
-
-      if (
-        file.size
-        >
-        5 * 1024 * 1024
-      ) {
-
-        event.target.value =
-          "";
-
-
-        message.className =
-          "form-message error";
-
-
-        message.textContent =
-          "La locandina non può superare 5 MB.";
-
-
-        return;
-
-      }
-
-
-      eventPosterPreviewUrl =
-        URL.createObjectURL(
-          file
+      const fileNonValido =
+        files.find(file =>
+          !tipiConsentiti.includes(
+            file.type
+          )
         );
 
 
-      document
-        .getElementById(
-          "eventPosterPreviewImage"
-        )
-        .src =
-          eventPosterPreviewUrl;
+      if (
+        fileNonValido
+      ) {
+
+        event.target.value =
+          "";
 
 
-      document
-        .getElementById(
+        message.className =
+          "form-message error";
+
+
+        message.textContent =
+          "Le locandine devono essere in formato JPG, PNG o WebP.";
+
+
+        return;
+
+      }
+
+
+      const fileTroppoGrande =
+        files.find(file =>
+          file.size
+          >
+          5 * 1024 * 1024
+        );
+
+
+      if (
+        fileTroppoGrande
+      ) {
+
+        event.target.value =
+          "";
+
+
+        message.className =
+          "form-message error";
+
+
+        message.textContent =
+          `La locandina "${fileTroppoGrande.name}" supera 5 MB.`;
+
+
+        return;
+
+      }
+
+
+      const preview =
+        document.getElementById(
           "eventPosterPreview"
-        )
-        .style.display =
-          "block";
+        );
+
+
+      files.forEach(
+        (file,index) => {
+
+          const previewUrl =
+            URL.createObjectURL(
+              file
+            );
+
+
+          eventPosterPreviewUrls.push(
+            previewUrl
+          );
+
+
+          const item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.className =
+            "poster-preview-item";
+
+
+          const image =
+            document.createElement(
+              "img"
+            );
+
+
+          image.src =
+            previewUrl;
+
+
+          image.alt =
+            `Anteprima locandina ${index + 1}`;
+
+
+          const number =
+            document.createElement(
+              "span"
+            );
+
+
+          number.className =
+            "poster-preview-number";
+
+
+          number.textContent =
+            String(index + 1);
+
+
+          item.appendChild(image);
+          item.appendChild(number);
+          preview.appendChild(item);
+
+        }
+      );
+
+
+      preview.style.display =
+        "grid";
 
     }
   );
@@ -11033,39 +11391,60 @@ document
         "Invio in corso...";
 
 
-      let locandinaUrl =
-        null;
+      let locandineUrls =
+        [];
 
 
-      const locandinaFile =
-        document
-          .getElementById(
-            "eventLocandina"
-          )
-          .files[0];
+      const locandinaFiles =
+        Array.from(
+          document
+            .getElementById(
+              "eventLocandina"
+            )
+            .files
+          ||
+          []
+        );
 
 
       if (
-        locandinaFile
+        locandinaFiles.length > 0
       ) {
-
-
-        submitButton.textContent =
-          "Caricamento locandina...";
 
 
         try {
 
+          for (
+            let index = 0;
+            index < locandinaFiles.length;
+            index++
+          ) {
 
-          locandinaUrl =
-            await uploadEventPoster(
-              locandinaFile
-            );
+            submitButton.textContent =
+              `Caricamento locandina ${index + 1} di ${locandinaFiles.length}...`;
 
+
+            const url =
+              await uploadEventPoster(
+                locandinaFiles[index]
+              );
+
+
+            if (url) {
+              locandineUrls.push(url);
+            }
+
+          }
 
         }
 
         catch (error) {
+
+
+          console.error(
+            "Errore caricamento locandine:",
+            error
+          );
 
 
           message.className =
@@ -11073,7 +11452,7 @@ document
 
 
           message.textContent =
-            "Non è stato possibile caricare la locandina. Controlla formato e dimensione e riprova.";
+            "Non è stato possibile caricare una o più locandine. Controlla formato e dimensione e riprova.";
 
 
           submitButton.disabled =
@@ -11089,6 +11468,12 @@ document
         }
 
       }
+
+
+      const locandinaUrl =
+        locandineUrls[0]
+        ||
+        null;
 
 
       submitButton.textContent =
@@ -11210,6 +11595,10 @@ document
 
         locandina_url:
           locandinaUrl,
+
+
+        locandine_urls:
+          locandineUrls,
 
 
         nome_referente:
