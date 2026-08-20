@@ -1905,6 +1905,53 @@
     }
 
 
+    @keyframes modalShake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      18% {
+        transform: translateX(-10px);
+      }
+
+      36% {
+        transform: translateX(9px);
+      }
+
+      54% {
+        transform: translateX(-7px);
+      }
+
+      72% {
+        transform: translateX(5px);
+      }
+
+      88% {
+        transform: translateX(-2px);
+      }
+
+    }
+
+
+    .modal-box.modal-shake {
+
+      animation:
+        modalShake .38s ease;
+
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .modal-box.modal-shake {
+        animation: none;
+      }
+
+    }
+
+
     .modal-box {
 
       position:
@@ -6731,6 +6778,51 @@ function hideModal(id) {
 
 
   syncBodyModalState();
+
+}
+
+
+function shakeModal(modal) {
+
+  if (!modal) {
+    return;
+  }
+
+
+  const box =
+    modal.querySelector(
+      ".modal-box"
+    );
+
+
+  if (!box) {
+    return;
+  }
+
+
+  box.classList.remove(
+    "modal-shake"
+  );
+
+
+  void box.offsetWidth;
+
+
+  box.classList.add(
+    "modal-shake"
+  );
+
+
+  window.setTimeout(
+    () => {
+
+      box.classList.remove(
+        "modal-shake"
+      );
+
+    },
+    450
+  );
 
 }
 
@@ -12082,6 +12174,23 @@ document
 
         if (
           modal.id ===
+          "asdModal"
+          ||
+          modal.id ===
+          "eventModal"
+        ) {
+
+          shakeModal(
+            modal
+          );
+
+          return;
+
+        }
+
+
+        if (
+          modal.id ===
           "eventDetailModal"
         ) {
 
@@ -12134,6 +12243,52 @@ document.addEventListener(
     }
 
 
+    const asdFormModal =
+      document.getElementById(
+        "asdModal"
+      );
+
+
+    const eventFormModal =
+      document.getElementById(
+        "eventModal"
+      );
+
+
+    if (
+      asdFormModal
+      &&
+      asdFormModal.classList.contains(
+        "open"
+      )
+    ) {
+
+      shakeModal(
+        asdFormModal
+      );
+
+      return;
+
+    }
+
+
+    if (
+      eventFormModal
+      &&
+      eventFormModal.classList.contains(
+        "open"
+      )
+    ) {
+
+      shakeModal(
+        eventFormModal
+      );
+
+      return;
+
+    }
+
+
     if (
       document
         .getElementById(
@@ -12169,8 +12324,6 @@ document.addEventListener(
 
 
     [
-      "asdModal",
-      "eventModal",
       "projectModal",
       "rulesModal"
     ]
