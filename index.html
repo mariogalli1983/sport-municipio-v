@@ -3490,7 +3490,10 @@
 
     <a
       class="logo"
-      href="#"
+      id="siteLogoRefresh"
+      href="./"
+      title="Aggiorna SPORT V"
+      aria-label="Aggiorna SPORT V"
     >
       SPORT <span>V</span>
     </a>
@@ -13401,6 +13404,90 @@ window.addEventListener(
   "popstate",
   handleUrlState
 );
+
+
+/* ==========================================================
+   AGGIORNA IL SITO CLICCANDO SUL LOGO
+   ========================================================== */
+
+
+const siteLogoRefresh =
+  document.getElementById(
+    "siteLogoRefresh"
+  );
+
+
+if (siteLogoRefresh) {
+
+  siteLogoRefresh.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+
+      const url =
+        new URL(
+          window.location.href
+        );
+
+
+      /*
+       * Torna alla home e aggiunge un parametro sempre diverso.
+       * In questo modo il browser richiede una copia nuova
+       * dell'HTML invece di riutilizzare quella in cache.
+       */
+      url.search = "";
+      url.hash = "";
+
+      url.searchParams.set(
+        "_refresh",
+        String(Date.now())
+      );
+
+
+      window.location.replace(
+        url.toString()
+      );
+
+    }
+  );
+
+}
+
+
+/*
+ * Dopo il caricamento rimuove il parametro tecnico dalla barra
+ * degli indirizzi senza eseguire un secondo reload.
+ */
+const refreshUrl =
+  new URL(
+    window.location.href
+  );
+
+
+if (
+  refreshUrl.searchParams.has(
+    "_refresh"
+  )
+) {
+
+  refreshUrl.searchParams.delete(
+    "_refresh"
+  );
+
+
+  history.replaceState(
+    {},
+    "",
+    refreshUrl.pathname
+    +
+    refreshUrl.search
+    +
+    refreshUrl.hash
+  );
+
+}
 
 
 /* ==========================================================
