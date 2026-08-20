@@ -698,6 +698,127 @@
     }
 
 
+    .map-near-row {
+
+      grid-column:
+        1 / -1;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      padding-bottom:
+        14px;
+
+      border-bottom:
+        1px solid
+        var(--bordo);
+
+    }
+
+
+    .map-near-row .btn {
+
+      flex:
+        0 0 auto;
+
+    }
+
+
+    .map-near-note {
+
+      color:
+        var(--grigio);
+
+      font-size:
+        13px;
+
+      line-height:
+        1.4;
+
+    }
+
+
+    .near-me-status {
+
+      grid-column:
+        1 / -1;
+
+      margin-top:
+        -2px;
+
+      padding:
+        10px 12px;
+
+      border-radius:
+        10px;
+
+      background:
+        #eaf3ff;
+
+      color:
+        #123c69;
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .near-me-status.error {
+
+      background:
+        #fff1f0;
+
+      color:
+        #9d2a23;
+
+    }
+
+
+    .near-distance {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      width:
+        fit-content;
+
+      margin:
+        8px 0 2px;
+
+      padding:
+        5px 8px;
+
+      border-radius:
+        999px;
+
+      background:
+        #eaf3ff;
+
+      color:
+        #123c69;
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+
+    }
+
+
     .map-filter-panel label {
 
       display:
@@ -3394,6 +3515,13 @@
       }
 
 
+      .map-near-row {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+
+      .map-near-row .btn,
       .map-filter-reset {
         width: 100%;
       }
@@ -3792,6 +3920,30 @@
 
 
     <div class="map-filter-panel">
+
+      <div class="map-near-row">
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="nearMeButton"
+        >
+          📍 Cosa c'è vicino a me
+        </button>
+
+        <div class="map-near-note">
+          Usa la posizione del dispositivo per ordinare le ASD dalla più vicina.
+          La distanza è indicativa e calcolata in linea d'aria. La posizione non viene salvata da SPORT V.
+        </div>
+
+      </div>
+
+      <div
+        class="near-me-status"
+        id="nearMeStatus"
+        aria-live="polite"
+        hidden
+      ></div>
 
       <label>
         <span>Filtra per sport</span>
@@ -5648,7 +5800,8 @@
         <li>nome ed email del referente, utilizzati per verificare e gestire la richiesta e non mostrati nella scheda pubblica;</li>
         <li>loghi, locandine e altri materiali caricati volontariamente;</li>
         <li>dati contenuti nelle richieste di modifica, nelle segnalazioni e nelle comunicazioni inviate al titolare;</li>
-        <li>dati tecnici necessari al funzionamento del sito, come indirizzo IP, tipo di browser, data e ora delle richieste e log di sicurezza, trattati anche dai fornitori tecnici indicati sotto.</li>
+        <li>dati tecnici necessari al funzionamento del sito, come indirizzo IP, tipo di browser, data e ora delle richieste e log di sicurezza, trattati anche dai fornitori tecnici indicati sotto;</li>
+        <li>se l'utente attiva volontariamente la funzione <strong>“Cosa c'è vicino a me”</strong>, le coordinate fornite dal browser vengono utilizzate esclusivamente sul dispositivo per calcolare la distanza dalle ASD; SPORT V non le salva nel database né le associa all'utente.</li>
       </ul>
     </div>
 
@@ -6042,6 +6195,16 @@ let siteReady =
   false;
 
 
+let nearMeActive =
+  false;
+
+let userLocation =
+  null;
+
+let userLocationMarker =
+  null;
+
+
 const eventFilters = {
 
   today:
@@ -6220,6 +6383,53 @@ function safePhone(value) {
       /[^\d+]/g,
       ""
     );
+
+
+  return phone;
+
+}
+
+
+function toWhatsAppPhone(value) {
+
+  let phone =
+    safePhone(value)
+      .replace(/\D/g, "");
+
+
+  if (!phone) {
+    return "";
+  }
+
+
+  if (
+    phone.startsWith(
+      "00"
+    )
+  ) {
+
+    phone =
+      phone.slice(2);
+
+  }
+
+
+  if (
+    !phone.startsWith(
+      "39"
+    )
+    &&
+    (
+      phone.startsWith("3")
+      ||
+      phone.startsWith("0")
+    )
+  ) {
+
+    phone =
+      `39${phone}`;
+
+  }
 
 
   return phone;
@@ -7334,6 +7544,328 @@ async function loadAsd() {
 
 
 /* ==========================================================
+   VICINO A ME
+   ========================================================== */
+
+
+function distanceKm(
+  lat1,
+  lng1,
+  lat2,
+  lng2
+) {
+
+  const toRad =
+    value =>
+      value * Math.PI / 180;
+
+  const earthRadiusKm =
+    6371;
+
+  const dLat =
+    toRad(lat2 - lat1);
+
+  const dLng =
+    toRad(lng2 - lng1);
+
+  const a =
+    Math.sin(dLat / 2) ** 2
+    +
+    Math.cos(toRad(lat1))
+    * Math.cos(toRad(lat2))
+    * Math.sin(dLng / 2) ** 2;
+
+  const c =
+    2 * Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    );
+
+  return earthRadiusKm * c;
+
+}
+
+
+function distanceFromUserKm(asd) {
+
+  if (
+    !nearMeActive
+    ||
+    !userLocation
+    ||
+    !validCoordinates(asd)
+  ) {
+    return null;
+  }
+
+  return distanceKm(
+    userLocation.lat,
+    userLocation.lng,
+    asd.lat,
+    asd.lng
+  );
+
+}
+
+
+function formatDistance(km) {
+
+  if (
+    km === null
+    ||
+    !Number.isFinite(km)
+  ) {
+    return "";
+  }
+
+  if (km < 1) {
+    return `${Math.max(1, Math.round(km * 1000))} m`;
+  }
+
+  if (km < 10) {
+    return `${km.toFixed(1).replace(".", ",")} km`;
+  }
+
+  return `${Math.round(km)} km`;
+
+}
+
+
+function setNearMeStatus(
+  message,
+  isError = false
+) {
+
+  const status =
+    document.getElementById(
+      "nearMeStatus"
+    );
+
+  status.textContent =
+    message || "";
+
+  status.hidden =
+    !message;
+
+  status.classList.toggle(
+    "error",
+    Boolean(isError)
+  );
+
+}
+
+
+function clearNearMe(
+  recenterMap = true
+) {
+
+  nearMeActive =
+    false;
+
+  userLocation =
+    null;
+
+  if (userLocationMarker) {
+    map.removeLayer(
+      userLocationMarker
+    );
+
+    userLocationMarker =
+      null;
+  }
+
+  const button =
+    document.getElementById(
+      "nearMeButton"
+    );
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "📍 Cosa c'è vicino a me";
+
+  button.classList.remove(
+    "btn-soft"
+  );
+
+  button.classList.add(
+    "btn-primary"
+  );
+
+  setNearMeStatus("");
+
+  if (recenterMap) {
+    map.setView(
+      [41.879, 12.557],
+      13
+    );
+  }
+
+}
+
+
+function activateNearMe() {
+
+  if (nearMeActive) {
+
+    clearNearMe();
+    applyFilters();
+    return;
+
+  }
+
+  const button =
+    document.getElementById(
+      "nearMeButton"
+    );
+
+  if (
+    !navigator.geolocation
+  ) {
+
+    setNearMeStatus(
+      "Il browser non supporta la geolocalizzazione.",
+      true
+    );
+
+    return;
+  }
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "📍 Cerco la tua posizione...";
+
+  setNearMeStatus(
+    "Consenti l'accesso alla posizione quando il browser te lo chiede. SPORT V la usa solo per calcolare le distanze sul dispositivo."
+  );
+
+  navigator.geolocation
+    .getCurrentPosition(
+      position => {
+
+        userLocation = {
+          lat:
+            position.coords.latitude,
+          lng:
+            position.coords.longitude
+        };
+
+        nearMeActive =
+          true;
+
+        if (userLocationMarker) {
+          map.removeLayer(
+            userLocationMarker
+          );
+        }
+
+        userLocationMarker =
+          L.circleMarker(
+            [
+              userLocation.lat,
+              userLocation.lng
+            ],
+            {
+              radius: 9,
+              color: "#ffffff",
+              weight: 3,
+              fillColor: "#0f6bdc",
+              fillOpacity: 1
+            }
+          )
+          .addTo(map)
+          .bindPopup(
+            "📍 Sei qui"
+          );
+
+        map.setView(
+          [
+            userLocation.lat,
+            userLocation.lng
+          ],
+          14
+        );
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "✓ ASD ordinate per distanza";
+
+        button.classList.remove(
+          "btn-primary"
+        );
+
+        button.classList.add(
+          "btn-soft"
+        );
+
+        setNearMeStatus(
+          "Posizione rilevata. Le ASD sono ora ordinate dalla più vicina; puoi continuare a usare i filtri per sport e quartiere."
+        );
+
+        applyFilters();
+
+      },
+      error => {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "📍 Cosa c'è vicino a me";
+
+        let message =
+          "Non è stato possibile rilevare la posizione.";
+
+        if (
+          error
+          &&
+          error.code === 1
+        ) {
+          message =
+            "Accesso alla posizione non consentito. Per usare questa funzione abilita la posizione nelle impostazioni del browser e riprova.";
+        }
+        else if (
+          error
+          &&
+          error.code === 2
+        ) {
+          message =
+            "Posizione non disponibile in questo momento. Riprova tra poco.";
+        }
+        else if (
+          error
+          &&
+          error.code === 3
+        ) {
+          message =
+            "La ricerca della posizione ha impiegato troppo tempo. Riprova.";
+        }
+
+        setNearMeStatus(
+          message,
+          true
+        );
+
+      },
+      {
+        enableHighAccuracy:
+          true,
+        timeout:
+          10000,
+        maximumAge:
+          300000
+      }
+    );
+
+}
+
+
+/* ==========================================================
    MAPPA E CARD ASD
    ========================================================== */
 
@@ -7381,6 +7913,19 @@ function renderMarkers(data) {
             <span>
               ${escapeHtml(asd.sport)}
             </span>
+
+            ${
+              distanceFromUserKm(asd) !== null
+                ?
+                `
+                  <br><br>
+                  <strong style="color:#123c69">
+                    📍 ${escapeHtml(formatDistance(distanceFromUserKm(asd)))} da te
+                  </strong>
+                `
+                :
+                ""
+            }
 
             <br><br>
 
@@ -7501,7 +8046,7 @@ function renderCards(data) {
 
 
   info.textContent =
-    `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.`;
+    `${data.length} associazion${data.length === 1 ? "e" : "i"} trovat${data.length === 1 ? "a" : "e"}.${nearMeActive ? " Ordinate dalla più vicina." : ""}`;
 
 
   if (
@@ -7585,6 +8130,19 @@ function renderCards(data) {
                     )
                   )}
                 </p>
+              `
+              :
+              ""
+          }
+
+
+          ${
+            distanceFromUserKm(asd) !== null
+              ?
+              `
+                <div class="near-distance">
+                  📍 ${escapeHtml(formatDistance(distanceFromUserKm(asd)))} da te
+                </div>
               `
               :
               ""
@@ -7913,7 +8471,7 @@ function applyFilters() {
     );
 
 
-  const filtered =
+  let filtered =
     asdData.filter(asd => {
 
 
@@ -7962,6 +8520,39 @@ function applyFilters() {
       );
 
     });
+
+
+  if (
+    nearMeActive
+    &&
+    userLocation
+  ) {
+
+    filtered =
+      [...filtered]
+        .sort(
+          (a, b) => {
+
+            const distanceA =
+              distanceFromUserKm(a);
+
+            const distanceB =
+              distanceFromUserKm(b);
+
+            if (distanceA === null) {
+              return 1;
+            }
+
+            if (distanceB === null) {
+              return -1;
+            }
+
+            return distanceA - distanceB;
+
+          }
+        );
+
+  }
 
 
   renderMarkers(
@@ -9350,6 +9941,27 @@ function openEventDetail(
     );
 
 
+  const organizerAsd =
+    asdData.find(
+      asd =>
+        Number(asd.id)
+        ===
+        Number(evento.asd_id)
+    )
+    ||
+    null;
+
+
+  const organizerWhatsApp =
+    organizerAsd
+      ?
+      toWhatsAppPhone(
+        organizerAsd.telefono
+      )
+      :
+      "";
+
+
   const luogo =
     [
       evento.luogo,
@@ -9675,12 +10287,31 @@ function openEventDetail(
             }
 
 
+            ${
+              organizerWhatsApp
+                ?
+                `
+
+                  <button
+                    type="button"
+                    class="btn btn-green"
+                    id="eventContactAsd"
+                  >
+                    📲 Chiedi info alla ASD
+                  </button>
+
+                `
+                :
+                ""
+            }
+
+
             <button
               type="button"
               class="btn btn-blue"
               id="eventWhatsAppShare"
             >
-              💬 WhatsApp
+              📤 Condividi su WhatsApp
             </button>
 
 
@@ -9807,6 +10438,39 @@ function openEventDetail(
       "evento",
       evento.id
     );
+
+
+  const eventContactAsd =
+    document.getElementById(
+      "eventContactAsd"
+    );
+
+
+  if (
+    eventContactAsd
+    &&
+    organizerWhatsApp
+  ) {
+
+    eventContactAsd
+      .addEventListener(
+        "click",
+        () => {
+
+          const message =
+            `Ciao, vi contatto tramite SPORT V per avere informazioni sull'evento "${evento.titolo}". Grazie!`;
+
+
+          window.open(
+            `https://wa.me/${organizerWhatsApp}?text=${encodeURIComponent(message)}`,
+            "_blank",
+            "noopener"
+          );
+
+        }
+      );
+
+  }
 
 
   document
@@ -10699,39 +11363,10 @@ function openAsdDetail(
         "click",
         () => {
 
-          let whatsappPhone =
-            String(telefono)
-              .replace(/\D/g, "");
-
-
-          if (
-            whatsappPhone.startsWith(
-              "00"
-            )
-          ) {
-
-            whatsappPhone =
-              whatsappPhone.slice(2);
-
-          }
-
-
-          if (
-            !whatsappPhone.startsWith(
-              "39"
-            )
-            &&
-            (
-              whatsappPhone.startsWith("3")
-              ||
-              whatsappPhone.startsWith("0")
-            )
-          ) {
-
-            whatsappPhone =
-              `39${whatsappPhone}`;
-
-          }
+          const whatsappPhone =
+            toWhatsAppPhone(
+              telefono
+            );
 
 
           const message =
@@ -12771,6 +13406,16 @@ document
 
 document
   .getElementById(
+    "nearMeButton"
+  )
+  .addEventListener(
+    "click",
+    activateNearMe
+  );
+
+
+document
+  .getElementById(
     "mapSportFilter"
   )
   .addEventListener(
@@ -12837,6 +13482,8 @@ document
         )
         .value =
           "";
+
+      clearNearMe();
 
       applyFilters();
 
