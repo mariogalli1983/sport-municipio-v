@@ -2290,7 +2290,58 @@
 
     }
 
+/* ======================================================
+   LOGO ASD
+   ====================================================== */
 
+.logo-preview {
+
+  display:
+    none;
+
+  width:
+    150px;
+
+  height:
+    150px;
+
+  border:
+    1px solid
+    var(--bordo);
+
+  border-radius:
+    14px;
+
+  overflow:
+    hidden;
+
+  background:
+    white;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+}
+
+
+.logo-preview img {
+
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+}
     /* ======================================================
        LOCANDINA
        ====================================================== */
@@ -4331,7 +4382,40 @@
 
       </div>
 
+<label>
 
+  Logo dell'associazione
+
+  <input
+    type="file"
+    id="asdLogo"
+    accept="image/jpeg,image/png,image/webp"
+  >
+
+</label>
+
+
+<p class="form-note">
+
+  Facoltativo.
+  Carica il logo ufficiale dell'associazione.
+  JPG, PNG o WebP,
+  massimo 2 MB.
+
+</p>
+
+
+<div
+  id="asdLogoPreview"
+  class="logo-preview"
+>
+
+  <img
+    id="asdLogoPreviewImage"
+    alt="Anteprima logo associazione"
+  >
+
+</div>
       <hr class="form-divider">
 
 
@@ -5356,6 +5440,9 @@ let pickerMap =
   null;
 
 let pickerMarker =
+  null;
+
+let asdLogoPreviewUrl =
   null;
 
 let eventPosterPreviewUrl =
@@ -10178,7 +10265,306 @@ async function uploadEventPoster(file) {
 
 }
 
+/* ==========================================================
+   LOGO ASD
+   ========================================================== */
 
+
+function resetAsdLogoPreview() {
+
+  if (
+    asdLogoPreviewUrl
+  ) {
+
+    URL.revokeObjectURL(
+      asdLogoPreviewUrl
+    );
+
+    asdLogoPreviewUrl =
+      null;
+
+  }
+
+
+  const preview =
+    document.getElementById(
+      "asdLogoPreview"
+    );
+
+
+  const image =
+    document.getElementById(
+      "asdLogoPreviewImage"
+    );
+
+
+  preview.style.display =
+    "none";
+
+
+  image.removeAttribute(
+    "src"
+  );
+
+}
+
+
+document
+  .getElementById(
+    "asdLogo"
+  )
+  .addEventListener(
+    "change",
+    event => {
+
+      const file =
+        event.target.files[0];
+
+
+      const message =
+        document.getElementById(
+          "asdFormMessage"
+        );
+
+
+      message.className =
+        "form-message";
+
+
+      message.textContent =
+        "";
+
+
+      resetAsdLogoPreview();
+
+
+      if (!file) {
+        return;
+      }
+
+
+      const tipiConsentiti =
+        [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ];
+
+
+      if (
+        !tipiConsentiti.includes(
+          file.type
+        )
+      ) {
+
+        event.target.value =
+          "";
+
+
+        message.className =
+          "form-message error";
+
+
+        message.textContent =
+          "Il logo deve essere in formato JPG, PNG o WebP.";
+
+
+        return;
+
+      }
+
+
+      if (
+        file.size
+        >
+        2 * 1024 * 1024
+      ) {
+
+        event.target.value =
+          "";
+
+
+        message.className =
+          "form-message error";
+
+
+        message.textContent =
+          "Il logo non può superare 2 MB.";
+
+
+        return;
+
+      }
+
+
+      asdLogoPreviewUrl =
+        URL.createObjectURL(
+          file
+        );
+
+
+      document
+        .getElementById(
+          "asdLogoPreviewImage"
+        )
+        .src =
+          asdLogoPreviewUrl;
+
+
+      document
+        .getElementById(
+          "asdLogoPreview"
+        )
+        .style.display =
+          "flex";
+
+    }
+  );
+
+
+async function uploadAsdLogo(
+  file
+) {
+
+  if (!file) {
+    return null;
+  }
+
+
+  const extensions = {
+
+    "image/jpeg":
+      "jpg",
+
+    "image/png":
+      "png",
+
+    "image/webp":
+      "webp"
+
+  };
+
+
+  const extension =
+    extensions[
+      file.type
+    ];
+
+
+  if (!extension) {
+
+    throw new Error(
+      "Formato logo non valido."
+    );
+
+  }
+
+
+  if (
+    file.size
+    >
+    2 * 1024 * 1024
+  ) {
+
+    throw new Error(
+      "Il logo supera 2 MB."
+    );
+
+  }
+
+
+  const randomPart =
+
+    (
+      typeof crypto !==
+        "undefined"
+      &&
+      crypto.randomUUID
+    )
+
+    ?
+
+    crypto.randomUUID()
+
+    :
+
+    Math.random()
+      .toString(36)
+      .slice(2);
+
+
+  const filePath =
+    `asd/${Date.now()}-${randomPart}.${extension}`;
+
+
+  const {
+    error
+  } =
+    await db
+      .storage
+      .from(
+        "loghi-asd"
+      )
+      .upload(
+        filePath,
+        file,
+        {
+
+          cacheControl:
+            "3600",
+
+          upsert:
+            false,
+
+          contentType:
+            file.type
+
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "Errore upload logo ASD:",
+      error
+    );
+
+
+    throw error;
+
+  }
+
+
+  const {
+    data
+  } =
+    db
+      .storage
+      .from(
+        "loghi-asd"
+      )
+      .getPublicUrl(
+        filePath
+      );
+
+
+  if (
+    !data
+    ||
+    !data.publicUrl
+  ) {
+
+    throw new Error(
+      "URL pubblico del logo non disponibile."
+    );
+
+  }
+
+
+  return data.publicUrl;
+
+}
 /* ==========================================================
    INVIO ASD
    ========================================================== */
@@ -10258,11 +10644,73 @@ document
 
 
       submitButton.textContent =
-        "Invio in corso...";
+  "Invio in corso...";
 
 
-      const nuovaAsd = {
+let logoUrl =
+  null;
 
+
+const logoFile =
+  document
+    .getElementById(
+      "asdLogo"
+    )
+    .files[0];
+
+
+if (
+  logoFile
+) {
+
+  submitButton.textContent =
+    "Caricamento logo...";
+
+
+  try {
+
+    logoUrl =
+      await uploadAsdLogo(
+        logoFile
+      );
+
+  }
+  catch (error) {
+
+    console.error(
+      "Errore caricamento logo:",
+      error
+    );
+
+
+    message.className =
+      "form-message error";
+
+
+    message.textContent =
+      "Non è stato possibile caricare il logo. Controlla formato e dimensione e riprova.";
+
+
+    submitButton.disabled =
+      false;
+
+
+    submitButton.textContent =
+      "Invia la segnalazione";
+
+
+    return;
+
+  }
+
+}
+
+
+submitButton.textContent =
+  "Invio ASD...";
+
+
+const nuovaAsd = {
 
         nome:
           document
@@ -10368,14 +10816,21 @@ document
 
 
         instagram:
-          document
-            .getElementById(
-              "asdInstagram"
-            )
-            .value
-            .trim()
-          ||
-          null,
+  document
+    .getElementById(
+      "asdInstagram"
+    )
+    .value
+    .trim()
+  ||
+  null,
+
+
+logo_url:
+  logoUrl,
+
+
+nome_referente:
 
 
         nome_referente:
@@ -10451,7 +10906,7 @@ document
           "asdForm"
         )
         .reset();
-
+resetAsdLogoPreview();
 
       if (
         pickerMarker
