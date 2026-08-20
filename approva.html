@@ -238,6 +238,32 @@
       cursor: wait;
     }
 
+    .notify-box {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid #cfe6da;
+      border-radius: 12px;
+      background: #f1faf6;
+      color: #176044;
+    }
+
+    .notify-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #176044;
+    }
+
+    .notify-box p {
+      margin: 0 0 12px;
+      color: #46695a;
+      font-size: 14px;
+    }
+
+    .btn-notify {
+      background: #123c69;
+      color: white;
+    }
+
     .hidden { display: none !important; }
 
     @media (max-width: 700px) {
@@ -293,6 +319,16 @@
               Apri SPORT V
             </a>
           </div>
+
+          <div id="notifyBox" class="notify-box hidden">
+            <strong>Pubblicazione completata</strong>
+            <p id="notifyText">
+              Puoi avvisare via email il referente che ha inviato la richiesta.
+            </p>
+            <button id="notifyButton" class="btn btn-notify" type="button">
+              ✉️ NOTIFICA IL REFERENTE
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -321,6 +357,8 @@
 
     const API_URL =
       `${SUPABASE_URL}/functions/v1/approve-submission?${apiParams.toString()}`;
+
+    let currentRecord = null;
 
     const labels = {
       id: "ID",
@@ -544,6 +582,77 @@
       `;
     }
 
+    function safeEmail(value) {
+      const email = String(value || "").trim();
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        ? email
+        : "";
+    }
+
+    function getPublishedUrl(record) {
+      const url = new URL(SITE_URL);
+
+      if (type === "evento") {
+        url.searchParams.set("evento", String(record.id));
+        url.hash = "eventi";
+      } else {
+        url.searchParams.set("asd", String(record.id));
+        url.hash = "mappa";
+      }
+
+      return url.href;
+    }
+
+    function buildNotificationMailto(record) {
+      const email = safeEmail(record?.email_referente);
+      if (!email) return "";
+
+      const name = String(record?.nome_referente || "").trim();
+      const title = type === "evento"
+        ? String(record?.titolo || "evento").trim()
+        : String(record?.nome || "ASD").trim();
+
+      const publishedUrl = getPublishedUrl(record);
+
+      const subject = type === "evento"
+        ? `SPORT V — Il tuo evento è stato pubblicato: ${title}`
+        : `SPORT V — La tua ASD è stata pubblicata: ${title}`;
+
+      const greeting = name ? `Ciao ${name},` : "Ciao,";
+
+      const body = type === "evento"
+        ? `${greeting}\n\nla richiesta di pubblicazione dell'evento "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`
+        : `${greeting}\n\nla richiesta di inserimento di "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nDa questo momento puoi anche proporre corsi, open day, tornei ed eventi collegati alla tua associazione.\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`;
+
+      return (
+        `mailto:${encodeURIComponent(email)}`
+        + `?subject=${encodeURIComponent(subject)}`
+        + `&body=${encodeURIComponent(body)}`
+      );
+    }
+
+    function updateNotificationArea(record, published) {
+      const box = document.getElementById("notifyBox");
+      const button = document.getElementById("notifyButton");
+      const text = document.getElementById("notifyText");
+      const email = safeEmail(record?.email_referente);
+
+      if (!published || !email) {
+        box.classList.add("hidden");
+        return;
+      }
+
+      text.textContent =
+        `Puoi avvisare ${record.nome_referente ? record.nome_referente + " " : "il referente "}all'indirizzo ${email}.`;
+
+      button.onclick = () => {
+        const mailto = buildNotificationMailto(record);
+        if (mailto) window.location.href = mailto;
+      };
+
+      box.classList.remove("hidden");
+    }
+
     function setStatus(kind, text) {
       const box = document.getElementById("statusBox");
       box.className = `status ${kind}`;
@@ -577,6 +686,7 @@
         }
 
         const record = data.record;
+        currentRecord = record;
         const isEvent = type === "evento";
 
         document.getElementById("pageTitle").textContent =
@@ -611,8 +721,10 @@
           setStatus("success", "Questa richiesta è già stata pubblicata.");
           approveButton.disabled = true;
           approveButton.textContent = "✓ GIÀ PUBBLICATO";
+          updateNotificationArea(record, true);
         } else {
           setStatus("pending", "Richiesta in attesa di approvazione.");
+          updateNotificationArea(record, false);
         }
       } catch (error) {
         console.error(error);
@@ -662,6 +774,10 @@
 
           button.textContent = "✓ PUBBLICATO";
           button.disabled = true;
+
+          if (currentRecord) {
+            updateNotificationArea(currentRecord, true);
+          }
 
           const siteLink = document.querySelector('.btn-secondary');
           if (siteLink) siteLink.href = SITE_URL;
