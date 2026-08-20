@@ -9762,13 +9762,21 @@ function openAsdDetail(
             </button>
 
 
-            <button
-              type="button"
-              class="btn btn-soft"
-              id="asdShare"
-            >
-              📤 Copia / condividi link
-            </button>
+            ${
+              telefono
+                ?
+                `
+                  <button
+                    type="button"
+                    class="btn btn-soft"
+                    id="asdContactWhatsApp"
+                  >
+                    📲 Contatta la ASD
+                  </button>
+                `
+                :
+                ""
+            }
 
 
           </div>
@@ -9883,26 +9891,72 @@ function openAsdDetail(
     );
 
 
-  document
-    .getElementById(
-      "asdShare"
-    )
-    .addEventListener(
-      "click",
-      () => {
-
-        shareContent(
-
-          asd.name,
-
-          `${asd.name} su SPORT V`,
-
-          shareUrl
-
-        );
-
-      }
+  const asdContactWhatsApp =
+    document.getElementById(
+      "asdContactWhatsApp"
     );
+
+
+  if (
+    asdContactWhatsApp
+    &&
+    telefono
+  ) {
+
+    asdContactWhatsApp
+      .addEventListener(
+        "click",
+        () => {
+
+          let whatsappPhone =
+            String(telefono)
+              .replace(/\D/g, "");
+
+
+          if (
+            whatsappPhone.startsWith(
+              "00"
+            )
+          ) {
+
+            whatsappPhone =
+              whatsappPhone.slice(2);
+
+          }
+
+
+          if (
+            !whatsappPhone.startsWith(
+              "39"
+            )
+            &&
+            (
+              whatsappPhone.startsWith("3")
+              ||
+              whatsappPhone.startsWith("0")
+            )
+          ) {
+
+            whatsappPhone =
+              `39${whatsappPhone}`;
+
+          }
+
+
+          const message =
+            `Ciao, vi contatto tramite SPORT V per avere informazioni su ${asd.name}.`;
+
+
+          window.open(
+            `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`,
+            "_blank",
+            "noopener"
+          );
+
+        }
+      );
+
+  }
 
 
   document
