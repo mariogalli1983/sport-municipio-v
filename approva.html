@@ -1,1262 +1,685 @@
 <!DOCTYPE html>
-
 <html lang="it">
-
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>
-    SPORT V — Moderazione
-  </title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moderazione | SPORT V</title>
 
   <style>
-
     :root {
-
-      --blu:
-        #123c69;
-
-      --blu-scuro:
-        #0b2949;
-
-      --verde:
-        #2b8a66;
-
-      --rosso:
-        #c83d3d;
-
-      --testo:
-        #1c2630;
-
-      --grigio:
-        #66717d;
-
-      --sfondo:
-        #f5f7f9;
-
-      --bordo:
-        #dfe5ea;
-
+      --blu: #123c69;
+      --blu-scuro: #0b2949;
+      --verde: #2b8a66;
+      --rosso: #b93838;
+      --testo: #1c2630;
+      --grigio: #66717d;
+      --sfondo: #f5f7f9;
+      --bordo: #dfe5ea;
     }
 
-
-    * {
-      box-sizing:
-        border-box;
-    }
-
+    * { box-sizing: border-box; }
 
     body {
-
-      margin:
-        0;
-
-      background:
-        var(--sfondo);
-
-      color:
-        var(--testo);
-
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      line-height:
-        1.5;
-
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--sfondo);
+      color: var(--testo);
+      line-height: 1.5;
     }
 
-
-    .page {
-
-      width:
-        min(
-          820px,
-          calc(100% - 28px)
-        );
-
-      margin:
-        30px auto 50px;
-
+    header {
+      background: var(--blu-scuro);
+      color: white;
+      padding: 20px 16px;
     }
 
-
-    .header {
-
-      background:
-        var(--blu-scuro);
-
-      color:
-        white;
-
-      padding:
-        24px;
-
-      border-radius:
-        16px 16px 0 0;
-
+    .header-inner,
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
     }
-
 
     .brand {
-
-      font-size:
-        20px;
-
-      font-weight:
-        900;
-
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.7px;
     }
 
+    .brand span { color: #75d0a7; }
 
-    .brand span {
-      color: #75d0a7;
+    .header-subtitle {
+      margin-top: 4px;
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
     }
 
+    main { padding: 32px 0 60px; }
 
-    .header p {
-
-      margin:
-        4px 0 0;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          .72
-        );
-
+    .panel {
+      background: white;
+      border: 1px solid var(--bordo);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(20,40,60,.08);
     }
 
-
-    .content {
-
-      background:
-        white;
-
-      padding:
-        28px;
-
-      border-radius:
-        0 0 16px 16px;
-
-      box-shadow:
-        0 10px 30px
-        rgba(
-          20,
-          40,
-          60,
-          .08
-        );
-
+    .panel-head {
+      padding: 24px;
+      border-bottom: 1px solid var(--bordo);
     }
-
 
     .eyebrow {
-
-      color:
-        var(--verde);
-
-      text-transform:
-        uppercase;
-
-      font-size:
-        12px;
-
-      font-weight:
-        900;
-
-      letter-spacing:
-        1px;
-
-      margin-bottom:
-        6px;
-
+      color: var(--verde);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 7px;
     }
-
 
     h1 {
-
-      margin:
-        0 0 8px;
-
-      font-size:
-        30px;
-
-      line-height:
-        1.1;
-
+      margin: 0;
+      font-size: clamp(26px, 5vw, 36px);
+      line-height: 1.1;
     }
 
-
-    .intro {
-
-      color:
-        var(--grigio);
-
-      margin-bottom:
-        25px;
-
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--grigio);
     }
 
-
-    .asd-box {
-
-      padding:
-        14px;
-
-      margin-bottom:
-        18px;
-
-      border-radius:
-        10px;
-
-      background:
-        #eaf4ff;
-
-      color:
-        var(--blu);
-
-    }
-
-
-    .data-list {
-
-      border-top:
-        1px solid
-        var(--bordo);
-
-      margin-top:
-        20px;
-
-    }
-
-
-    .row {
-
-      padding:
-        13px 0;
-
-      border-bottom:
-        1px solid
-        var(--bordo);
-
-    }
-
-
-    .label {
-
-      font-size:
-        11px;
-
-      color:
-        var(--grigio);
-
-      text-transform:
-        uppercase;
-
-      font-weight:
-        900;
-
-      letter-spacing:
-        .5px;
-
-      margin-bottom:
-        3px;
-
-    }
-
-
-    .value {
-
-      font-size:
-        15px;
-
-      word-break:
-        break-word;
-
-      white-space:
-        pre-wrap;
-
-    }
-
-
-    .poster {
-
-      margin:
-        25px 0;
-
-    }
-
-
-    .poster img {
-
-      display:
-        block;
-
-      width:
-        min(
-          100%,
-          450px
-        );
-
-      height:
-        auto;
-
-      border:
-        1px solid
-        var(--bordo);
-
-      border-radius:
-        12px;
-
-    }
-
-
-    .actions {
-
-      margin-top:
-        30px;
-
-      padding-top:
-        25px;
-
-      border-top:
-        1px solid
-        var(--bordo);
-
-    }
-
-
-    .approve {
-
-      width:
-        100%;
-
-      min-height:
-        56px;
-
-      border:
-        0;
-
-      border-radius:
-        11px;
-
-      background:
-        var(--verde);
-
-      color:
-        white;
-
-      font-size:
-        17px;
-
-      font-weight:
-        900;
-
-      cursor:
-        pointer;
-
-    }
-
-
-    .approve:hover {
-      opacity: .92;
-    }
-
-
-    .approve:disabled {
-
-      opacity:
-        .6;
-
-      cursor:
-        wait;
-
-    }
-
+    .panel-body { padding: 24px; }
 
     .status {
-
-      text-align:
-        center;
-
-      padding:
-        35px 15px;
-
+      padding: 13px 15px;
+      border-radius: 10px;
+      margin-bottom: 22px;
+      font-weight: 800;
     }
 
-
-    .status-icon {
-
-      font-size:
-        55px;
-
-      margin-bottom:
-        12px;
-
+    .status.loading {
+      background: #eaf4ff;
+      color: var(--blu);
     }
 
-
-    .success {
-
-      padding:
-        20px;
-
-      border-radius:
-        12px;
-
-      background:
-        #e5f6ee;
-
-      color:
-        #176044;
-
-      text-align:
-        center;
-
+    .status.pending {
+      background: #fff4df;
+      color: #8b5716;
     }
 
-
-    .error {
-
-      padding:
-        20px;
-
-      border-radius:
-        12px;
-
-      background:
-        #fdeaea;
-
-      color:
-        #8d2929;
-
+    .status.success {
+      background: #e6f5ee;
+      color: #176044;
     }
 
-
-    .site-link {
-
-      display:
-        inline-block;
-
-      margin-top:
-        20px;
-
-      color:
-        var(--blu);
-
-      font-weight:
-        800;
-
-      text-decoration:
-        none;
-
+    .status.error {
+      background: #fdeaea;
+      color: #8f2f2f;
     }
 
-
-    @media (
-      max-width: 600px
-    ) {
-
-      .page {
-
-        width:
-          calc(
-            100% - 16px
-          );
-
-        margin-top:
-          8px;
-
-      }
-
-
-      .content {
-
-        padding:
-          21px 17px;
-
-      }
-
-
-      .header {
-
-        padding:
-          20px 17px;
-
-      }
-
+    .asd-box {
+      background: #eaf4ff;
+      color: var(--blu);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
     }
 
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #e8edf1;
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    .data-table th {
+      width: 32%;
+      color: var(--grigio);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 30px 0 13px;
+      color: var(--blu-scuro);
+      font-size: 21px;
+    }
+
+    .poster-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .poster-card {
+      margin: 0;
+      border: 1px solid var(--bordo);
+      border-radius: 13px;
+      overflow: hidden;
+      background: #f7f8fa;
+    }
+
+    .poster-card a {
+      display: block;
+      background: #f1f3f5;
+    }
+
+    .poster-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .poster-card figcaption {
+      padding: 10px 12px;
+      color: var(--grigio);
+      font-size: 13px;
+      font-weight: 700;
+      background: white;
+    }
+
+    .logo-preview {
+      width: min(280px, 100%);
+      border: 1px solid var(--bordo);
+      border-radius: 13px;
+      padding: 12px;
+      background: white;
+    }
+
+    .logo-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      padding-top: 22px;
+      border-top: 1px solid var(--bordo);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-approve {
+      background: var(--verde);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #edf2f6;
+      color: var(--blu);
+    }
+
+    .btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 700px) {
+      .poster-grid { grid-template-columns: 1fr; }
+      .panel-head, .panel-body { padding: 19px; }
+      .data-table th { width: 38%; }
+      .actions .btn { width: 100%; }
+    }
   </style>
-
 </head>
 
-
 <body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">SPORT <span>V</span></div>
+      <div class="header-subtitle">Area di moderazione</div>
+    </div>
+  </header>
 
-
-  <main class="page">
-
-
-    <header class="header">
-
-      <div class="brand">
-
-        SPORT <span>V</span>
-
+  <main>
+    <div class="panel">
+      <div class="panel-head">
+        <div class="eyebrow">Richiesta da verificare</div>
+        <h1 id="pageTitle">Caricamento richiesta...</h1>
+        <p id="pageSubtitle" class="subtitle">
+          Controlla tutte le informazioni prima di pubblicare.
+        </p>
       </div>
 
-      <p>
-        Moderazione delle pubblicazioni
-      </p>
-
-    </header>
-
-
-    <section
-      class="content"
-      id="content"
-    >
-
-      <div class="status">
-
-        <div class="status-icon">
-          ⏳
+      <div class="panel-body">
+        <div id="statusBox" class="status loading">
+          Recupero i dati della richiesta...
         </div>
 
-        <h1>
-          Caricamento...
-        </h1>
-
-        <p>
-          Sto recuperando i dati
-          della richiesta.
-        </p>
-
-      </div>
-
-    </section>
-
-
-  </main>
-
-
-<script>
-
-
-const FUNCTION_URL =
-  "https://yordjsaevwflqakzhfdf.supabase.co/functions/v1/approve-submission";
-
-
-const SITE_URL =
-  "https://mariogalli1983.github.io/sport-municipio-v/";
-
-
-const labels = {
-
-  id:
-    "ID",
-
-  created_at:
-    "Data invio",
-
-  nome:
-    "Nome ASD",
-
-  descrizione:
-    "Descrizione",
-
-  discipline:
-    "Discipline",
-
-  indirizzo:
-    "Indirizzo",
-
-  quartiere:
-    "Quartiere",
-
-  latitudine:
-    "Latitudine",
-
-  longitudine:
-    "Longitudine",
-
-  telefono_pubblico:
-    "Telefono pubblico",
-
-  email_pubblica:
-    "Email pubblica",
-
-  sito_web:
-    "Sito web",
-
-  instagram:
-    "Instagram",
-
-  facebook:
-    "Facebook",
-
-  logo_url:
-    "Logo",
-
-  nome_referente:
-    "Nome referente",
-
-  email_referente:
-    "Email referente",
-
-  asd_id:
-    "ID ASD",
-
-  titolo:
-    "Titolo",
-
-  tipologia:
-    "Tipologia",
-
-  data_inizio:
-    "Data e ora inizio",
-
-  data_fine:
-    "Data e ora fine",
-
-  luogo:
-    "Luogo",
-
-  pubblico:
-    "Pubblico",
-
-  prezzo:
-    "Prezzo / offerta",
-
-  link_info:
-    "Link informazioni",
-
-  locandina_url:
-    "Locandina"
-
-};
-
-
-function escapeHtml(value) {
-
-  return String(
-    value ?? ""
-  )
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
-  .replaceAll(
-    '"',
-    "&quot;"
-  )
-  .replaceAll(
-    "'",
-    "&#039;"
-  );
-
-}
-
-
-function safeHttpUrl(value) {
-
-  if (!value) {
-    return "";
-  }
-
-
-  try {
-
-    const url =
-      new URL(value);
-
-
-    if (
-      url.protocol === "https:" ||
-      url.protocol === "http:"
-    ) {
-
-      return url.href;
-
-    }
-
-  }
-  catch (_) {}
-
-
-  return "";
-
-}
-
-
-function displayValue(value) {
-
-  if (
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
-
-    return "—";
-
-  }
-
-
-  if (
-    typeof value === "boolean"
-  ) {
-
-    return value
-      ?
-      "Sì"
-      :
-      "No";
-
-  }
-
-
-  return String(value);
-
-}
-
-
-function buildApiUrl() {
-
-  const pageParams =
-    new URLSearchParams(
-      window.location.search
-    );
-
-
-  const apiParams =
-    new URLSearchParams();
-
-
-  [
-    "type",
-    "id",
-    "exp",
-    "token"
-  ]
-  .forEach(key => {
-
-    const value =
-      pageParams.get(key);
-
-
-    if (value) {
-
-      apiParams.set(
-        key,
-        value
-      );
-
-    }
-
-  });
-
-
-  return (
-    FUNCTION_URL
-    +
-    "?"
-    +
-    apiParams.toString()
-  );
-
-}
-
-
-function showError(message) {
-
-  document
-    .getElementById(
-      "content"
-    )
-    .innerHTML =
-      `
-
-        <div class="error">
-
-          <h1>
-            Impossibile aprire la richiesta
-          </h1>
-
-          <p>
-            ${escapeHtml(message)}
-          </p>
-
-        </div>
-
-        <a
-          class="site-link"
-          href="${SITE_URL}"
-        >
-          ← Torna a SPORT V
-        </a>
-
-      `;
-
-}
-
-
-function renderRequest(data) {
-
-  const record =
-    data.record;
-
-
-  const type =
-    data.type;
-
-
-  const approvalField =
-    type === "asd"
-      ?
-      "approvata"
-      :
-      "approvato";
-
-
-  const title =
-    type === "asd"
-      ?
-      record.nome
-      :
-      record.titolo;
-
-
-  const typeLabel =
-    type === "asd"
-      ?
-      "Associazione sportiva"
-      :
-      "Evento";
-
-
-  let rows =
-    "";
-
-
-  Object.entries(record)
-    .forEach(
-      ([key,value]) => {
-
-
-        if (
-          key === approvalField ||
-          key === "locandina_url"
-        ) {
-
-          return;
-
-        }
-
-
-        rows +=
-          `
-
-            <div class="row">
-
-              <div class="label">
-
-                ${escapeHtml(
-                  labels[key]
-                  ||
-                  key
-                )}
-
-              </div>
-
-              <div class="value">
-
-                ${escapeHtml(
-                  displayValue(value)
-                )}
-
-              </div>
-
-            </div>
-
-          `;
-
-      }
-    );
-
-
-  let poster =
-    "";
-
-
-  if (
-    type === "evento"
-  ) {
-
-    const posterUrl =
-      safeHttpUrl(
-        record.locandina_url
-      );
-
-
-    if (posterUrl) {
-
-      poster =
-        `
-
-          <div class="poster">
-
-            <div class="label">
-              Locandina
-            </div>
-
-            <img
-              src="${escapeHtml(posterUrl)}"
-              alt="Locandina evento"
-            >
-
-          </div>
-
-        `;
-
-    }
-
-  }
-
-
-  const asdBlock =
-    (
-      type === "evento" &&
-      data.asd_name
-    )
-      ?
-      `
-
-        <div class="asd-box">
-
-          <strong>
-            ASD organizzatrice:
-          </strong>
-
-          ${escapeHtml(
-            data.asd_name
-          )}
-
-        </div>
-
-      `
-      :
-      "";
-
-
-  const action =
-    data.approved
-      ?
-      `
-
-        <div class="success">
-
-          <strong>
-            ✅ Questa richiesta
-            è già stata pubblicata.
-          </strong>
-
-        </div>
-
-      `
-      :
-      `
-
-        <div class="actions">
-
-          <button
-            type="button"
-            class="approve"
-            id="approveButton"
-          >
-            ✅ CONFERMA PUBBLICAZIONE
-          </button>
-
-          <p style="
-            text-align:center;
-            color:#66717d;
-            font-size:12px;
-          ">
-
-            Nessuna modifica
-            viene effettuata
-            finché non premi
-            questo pulsante.
-
-          </p>
-
-        </div>
-
-      `;
-
-
-  document
-    .getElementById(
-      "content"
-    )
-    .innerHTML =
-      `
-
-        <div class="eyebrow">
-          ${escapeHtml(typeLabel)}
-        </div>
-
-        <h1>
-          ${escapeHtml(title)}
-        </h1>
-
-        <p class="intro">
-
-          Controlla attentamente
-          tutti i dati prima
-          della pubblicazione.
-
-        </p>
-
-
-        ${asdBlock}
-
-
-        <div class="data-list">
-          ${rows}
-        </div>
-
-
-        ${poster}
-
-
-        ${action}
-
-
-        <a
-          class="site-link"
-          href="${SITE_URL}"
-        >
-          ← Torna a SPORT V
-        </a>
-
-      `;
-
-
-  const button =
-    document.getElementById(
-      "approveButton"
-    );
-
-
-  if (button) {
-
-    button.addEventListener(
-      "click",
-      approveRequest
-    );
-
-  }
-
-}
-
-
-async function approveRequest() {
-
-  const button =
-    document.getElementById(
-      "approveButton"
-    );
-
-
-  if (!button) {
-    return;
-  }
-
-
-  const confirmed =
-    window.confirm(
-      "Confermi la pubblicazione su SPORT V?"
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  button.disabled =
-    true;
-
-
-  button.textContent =
-    "Pubblicazione in corso...";
-
-
-  try {
-
-    const response =
-      await fetch(
-        buildApiUrl(),
-        {
-          method:
-            "POST"
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !response.ok ||
-      !data.ok
-    ) {
-
-      throw new Error(
-        data.error ||
-        "Errore durante l'approvazione."
-      );
-
-    }
-
-
-    document
-      .getElementById(
-        "content"
-      )
-      .innerHTML =
-        `
-
-          <div class="status">
-
-            <div class="status-icon">
-              ✅
-            </div>
-
-            <h1>
-              Pubblicazione approvata
-            </h1>
-
-            <p>
-
-              ${
-                escapeHtml(
-                  data.title ||
-                  "La richiesta"
-                )
-              }
-
-              è ora pubblicata
-              su SPORT V.
-
-            </p>
-
+        <div id="requestContent" class="hidden">
+          <div id="asdBox" class="asd-box hidden"></div>
+
+          <table class="data-table">
+            <tbody id="dataRows"></tbody>
+          </table>
+
+          <div id="mediaArea"></div>
+
+          <div class="actions">
+            <button id="approveButton" class="btn btn-approve" type="button">
+              ✅ CONFERMA PUBBLICAZIONE
+            </button>
 
             <a
-              class="site-link"
-              href="${SITE_URL}"
+              class="btn btn-secondary"
+              href="https://mariogalli1983.github.io/sport-municipio-v/"
             >
-              Vai a SPORT V →
+              Apri SPORT V
             </a>
-
           </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-        `;
+  <script>
+    const SUPABASE_URL =
+      "https://yordjsaevwflqakzhfdf.supabase.co";
 
+    const SITE_URL =
+      "https://mariogalli1983.github.io/sport-municipio-v/";
 
-  }
-  catch (error) {
+    const params = new URLSearchParams(window.location.search);
 
-    button.disabled =
-      false;
+    const type = params.get("type") || "";
+    const id = params.get("id") || "";
+    const exp = params.get("exp") || "";
+    const token = params.get("token") || "";
 
+    const apiParams = new URLSearchParams({
+      type,
+      id,
+      exp,
+      token
+    });
 
-    button.textContent =
-      "✅ CONFERMA PUBBLICAZIONE";
+    const API_URL =
+      `${SUPABASE_URL}/functions/v1/approve-submission?${apiParams.toString()}`;
 
+    const labels = {
+      id: "ID",
+      created_at: "Data invio",
+      nome: "Nome ASD",
+      descrizione: "Descrizione",
+      discipline: "Discipline",
+      indirizzo: "Indirizzo",
+      quartiere: "Quartiere",
+      latitudine: "Latitudine",
+      longitudine: "Longitudine",
+      telefono_pubblico: "Telefono pubblico",
+      email_pubblica: "Email pubblica",
+      sito_web: "Sito web",
+      instagram: "Instagram",
+      facebook: "Facebook",
+      nome_referente: "Nome referente",
+      email_referente: "Email referente",
+      asd_id: "ID ASD",
+      titolo: "Titolo",
+      tipologia: "Tipologia",
+      data_inizio: "Data e ora inizio",
+      data_fine: "Data e ora fine",
+      luogo: "Luogo",
+      pubblico: "Pubblico",
+      prezzo: "Prezzo / offerta",
+      link_info: "Link informazioni"
+    };
 
-    alert(
-      error.message ||
-      "Errore durante l'approvazione."
-    );
+    const eventOrder = [
+      "id",
+      "created_at",
+      "titolo",
+      "tipologia",
+      "descrizione",
+      "data_inizio",
+      "data_fine",
+      "luogo",
+      "indirizzo",
+      "pubblico",
+      "prezzo",
+      "link_info",
+      "nome_referente",
+      "email_referente",
+      "asd_id"
+    ];
 
-  }
+    const asdOrder = [
+      "id",
+      "created_at",
+      "nome",
+      "discipline",
+      "descrizione",
+      "quartiere",
+      "indirizzo",
+      "latitudine",
+      "longitudine",
+      "telefono_pubblico",
+      "email_pubblica",
+      "sito_web",
+      "instagram",
+      "facebook",
+      "nome_referente",
+      "email_referente"
+    ];
 
-}
-
-
-async function loadRequest() {
-
-  try {
-
-    const response =
-      await fetch(
-        buildApiUrl()
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !response.ok ||
-      !data.ok
-    ) {
-
-      throw new Error(
-        data.error ||
-        "Link non valido."
-      );
-
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
+    function safeHttpUrl(value) {
+      const raw = String(value || "").trim();
+      if (!raw) return "";
 
-    renderRequest(
-      data
-    );
+      try {
+        const url = new URL(raw);
+        return url.protocol === "http:" || url.protocol === "https:"
+          ? url.href
+          : "";
+      } catch (_) {
+        return "";
+      }
+    }
 
+    function formatValue(key, value) {
+      if (value === null || value === undefined || value === "") {
+        return "—";
+      }
 
-  }
-  catch (error) {
+      if (
+        key === "created_at" ||
+        key === "data_inizio" ||
+        key === "data_fine"
+      ) {
+        const date = new Date(value);
+        if (!Number.isNaN(date.getTime())) {
+          return new Intl.DateTimeFormat("it-IT", {
+            dateStyle: "medium",
+            timeStyle: "short"
+          }).format(date);
+        }
+      }
 
-    showError(
-      error.message ||
-      "Errore durante il caricamento."
-    );
+      if (typeof value === "boolean") {
+        return value ? "Sì" : "No";
+      }
 
-  }
+      return String(value);
+    }
 
-}
+    function getPosterUrls(record) {
+      const urls = [];
 
+      const add = (value) => {
+        const url = safeHttpUrl(value);
+        if (url && !urls.includes(url)) {
+          urls.push(url);
+        }
+      };
 
-loadRequest();
+      if (Array.isArray(record.locandine_urls)) {
+        record.locandine_urls.forEach(add);
+      } else if (typeof record.locandine_urls === "string") {
+        const raw = record.locandine_urls.trim();
 
+        if (raw.startsWith("[") && raw.endsWith("]")) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) parsed.forEach(add);
+          } catch (_) {}
+        } else if (raw.startsWith("{") && raw.endsWith("}")) {
+          raw
+            .slice(1, -1)
+            .split(",")
+            .map((item) => item.trim().replace(/^"|"$/g, ""))
+            .forEach(add);
+        } else {
+          add(raw);
+        }
+      }
 
-</script>
+      add(record.locandina_url);
 
+      return urls;
+    }
 
+    function renderRows(record, type) {
+      const tbody = document.getElementById("dataRows");
+      const order = type === "evento" ? eventOrder : asdOrder;
+
+      tbody.innerHTML = order
+        .filter((key) => Object.prototype.hasOwnProperty.call(record, key))
+        .map((key) => `
+          <tr>
+            <th>${escapeHtml(labels[key] || key)}</th>
+            <td>${escapeHtml(formatValue(key, record[key]))}</td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    function renderEventPosters(record) {
+      const mediaArea = document.getElementById("mediaArea");
+      const urls = getPosterUrls(record);
+
+      if (urls.length === 0) {
+        mediaArea.innerHTML = "";
+        return;
+      }
+
+      mediaArea.innerHTML = `
+        <h2 class="section-title">
+          ${urls.length === 1 ? "Locandina" : `Locandine (${urls.length})`}
+        </h2>
+
+        <div class="poster-grid">
+          ${urls.map((url, index) => `
+            <figure class="poster-card">
+              <a
+                href="${escapeHtml(url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="${escapeHtml(url)}"
+                  alt="Locandina ${index + 1}"
+                >
+              </a>
+              <figcaption>Locandina ${index + 1}</figcaption>
+            </figure>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderAsdLogo(record) {
+      const mediaArea = document.getElementById("mediaArea");
+      const logoUrl = safeHttpUrl(record.logo_url);
+
+      if (!logoUrl) {
+        mediaArea.innerHTML = "";
+        return;
+      }
+
+      mediaArea.innerHTML = `
+        <h2 class="section-title">Logo ASD</h2>
+        <div class="logo-preview">
+          <a
+            href="${escapeHtml(logoUrl)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img src="${escapeHtml(logoUrl)}" alt="Logo ASD">
+          </a>
+        </div>
+      `;
+    }
+
+    function setStatus(kind, text) {
+      const box = document.getElementById("statusBox");
+      box.className = `status ${kind}`;
+      box.textContent = text;
+    }
+
+    async function loadRequest() {
+      if (!type || !id || !exp || !token) {
+        setStatus("error", "Link di moderazione incompleto o non valido.");
+        document.getElementById("pageTitle").textContent =
+          "Impossibile aprire la richiesta";
+        return;
+      }
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "GET"
+        });
+
+        let data = {};
+        try {
+          data = await response.json();
+        } catch (_) {}
+
+        if (!response.ok || !data.ok || !data.record) {
+          const detail = data.error || data.message || "Impossibile recuperare la richiesta.";
+          setStatus("error", detail);
+          document.getElementById("pageTitle").textContent =
+            "Impossibile recuperare la richiesta";
+          return;
+        }
+
+        const record = data.record;
+        const isEvent = type === "evento";
+
+        document.getElementById("pageTitle").textContent =
+          isEvent
+            ? (record.titolo || "Evento senza titolo")
+            : (record.nome || "ASD senza nome");
+
+        document.getElementById("pageSubtitle").textContent =
+          isEvent
+            ? "Controlla dati e tutte le locandine prima di pubblicare l'evento."
+            : "Controlla i dati prima di pubblicare l'associazione.";
+
+        if (isEvent && data.asd_name) {
+          const asdBox = document.getElementById("asdBox");
+          asdBox.textContent = `ASD organizzatrice: ${data.asd_name}`;
+          asdBox.classList.remove("hidden");
+        }
+
+        renderRows(record, type);
+
+        if (isEvent) {
+          renderEventPosters(record);
+        } else {
+          renderAsdLogo(record);
+        }
+
+        document.getElementById("requestContent").classList.remove("hidden");
+
+        const approveButton = document.getElementById("approveButton");
+
+        if (data.approved) {
+          setStatus("success", "Questa richiesta è già stata pubblicata.");
+          approveButton.disabled = true;
+          approveButton.textContent = "✓ GIÀ PUBBLICATO";
+        } else {
+          setStatus("pending", "Richiesta in attesa di approvazione.");
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus("error", "Errore di rete durante il recupero della richiesta.");
+        document.getElementById("pageTitle").textContent =
+          "Errore di collegamento";
+      }
+    }
+
+    document
+      .getElementById("approveButton")
+      .addEventListener("click", async () => {
+        const confirmed = window.confirm(
+          type === "evento"
+            ? "Confermi la pubblicazione di questo evento?"
+            : "Confermi la pubblicazione di questa ASD?"
+        );
+
+        if (!confirmed) return;
+
+        const button = document.getElementById("approveButton");
+        button.disabled = true;
+        button.textContent = "Pubblicazione in corso...";
+
+        try {
+          const response = await fetch(API_URL, {
+            method: "POST"
+          });
+
+          let data = {};
+          try {
+            data = await response.json();
+          } catch (_) {}
+
+          if (!response.ok || !data.ok) {
+            throw new Error(
+              data.error || data.message || "Pubblicazione non riuscita."
+            );
+          }
+
+          setStatus(
+            "success",
+            type === "evento"
+              ? "Evento pubblicato correttamente su SPORT V."
+              : "ASD pubblicata correttamente su SPORT V."
+          );
+
+          button.textContent = "✓ PUBBLICATO";
+          button.disabled = true;
+
+          const siteLink = document.querySelector('.btn-secondary');
+          if (siteLink) siteLink.href = SITE_URL;
+        } catch (error) {
+          console.error(error);
+          setStatus(
+            "error",
+            error instanceof Error
+              ? error.message
+              : "Pubblicazione non riuscita."
+          );
+
+          button.disabled = false;
+          button.textContent = "✅ CONFERMA PUBBLICAZIONE";
+        }
+      });
+
+    loadRequest();
+  </script>
 </body>
-
 </html>
