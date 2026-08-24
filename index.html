@@ -7256,24 +7256,19 @@ function closeReportModal() {
 }
 
 
-function getShareUrl(
+const SHARE_WORKER_URL =
+  "https://share-sport-v.mariogalli1983.workers.dev/";
+
+
+function getDetailUrl(
   type,
   id
 ) {
 
   const url =
     new URL(
-      window.location.href
+      "https://mariogalli1983.github.io/sport-municipio-v/"
     );
-
-
-  url.searchParams.delete(
-    "evento"
-  );
-
-  url.searchParams.delete(
-    "asd"
-  );
 
 
   url.searchParams.set(
@@ -7295,6 +7290,38 @@ function getShareUrl(
 }
 
 
+function getShareUrl(
+  type,
+  id
+) {
+
+  const url =
+    new URL(
+      SHARE_WORKER_URL
+    );
+
+
+  url.searchParams.set(
+    "type",
+    type === "evento"
+      ?
+      "evento"
+      :
+      "asd"
+  );
+
+
+  url.searchParams.set(
+    "id",
+    String(id)
+  );
+
+
+  return url.href;
+
+}
+
+
 function setDetailUrl(
   type,
   id
@@ -7302,7 +7329,7 @@ function setDetailUrl(
 
   const url =
     new URL(
-      getShareUrl(
+      getDetailUrl(
         type,
         id
       )
@@ -10825,7 +10852,7 @@ function downloadEventIcs(evento) {
         `Organizzato da ${evento.asd_nome}`
         :
         "",
-      getShareUrl(
+      getDetailUrl(
         "evento",
         evento.id
       )
