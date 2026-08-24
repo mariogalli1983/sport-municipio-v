@@ -2439,6 +2439,31 @@
     }
 
 
+    .event-asd-signup {
+
+      margin:
+        -6px 0 18px;
+
+      font-size:
+        14px;
+
+      color:
+        var(--grigio);
+
+    }
+
+
+    .event-asd-signup .form-inline-link {
+
+      text-decoration:
+        underline;
+
+      text-underline-offset:
+        3px;
+
+    }
+
+
     .privacy-check {
 
       flex-direction:
@@ -5217,6 +5242,21 @@
         </select>
 
       </label>
+
+
+      <div class="event-asd-signup">
+
+        Non trovi la tua associazione?
+
+        <button
+          type="button"
+          class="form-inline-link"
+          id="eventRegisterAsdButton"
+        >
+          Iscriviti qui per inserire la tua ASD
+        </button>
+
+      </div>
 
 
       <div class="form-two-columns">
@@ -13800,6 +13840,21 @@ document
   .addEventListener(
     "click",
     openEventModal
+  );
+
+
+document
+  .getElementById(
+    "eventRegisterAsdButton"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      closeEventModal();
+      openAsdModal();
+
+    }
   );
 
 
