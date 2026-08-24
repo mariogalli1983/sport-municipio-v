@@ -2437,6 +2437,135 @@
     }
 
 
+    .sports-fieldset {
+
+      margin:
+        0;
+
+      padding:
+        0;
+
+      border:
+        0;
+
+      min-width:
+        0;
+
+    }
+
+
+    .sports-fieldset legend {
+
+      margin-bottom:
+        6px;
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .field-help {
+
+      margin:
+        0 0 10px;
+
+      font-size:
+        13px;
+
+      font-weight:
+        400;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .sports-multi {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        8px;
+
+    }
+
+
+    #asdForm .sport-option {
+
+      display:
+        flex;
+
+      flex-direction:
+        row;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+      padding:
+        10px 11px;
+
+      border:
+        1px solid var(--bordo);
+
+      border-radius:
+        9px;
+
+      background:
+        white;
+
+      cursor:
+        pointer;
+
+      font-size:
+        13px;
+
+      font-weight:
+        600;
+
+    }
+
+
+    #asdForm .sport-option input {
+
+      width:
+        auto;
+
+      margin:
+        0;
+
+      padding:
+        0;
+
+      flex:
+        0 0 auto;
+
+    }
+
+
+    @media (max-width: 560px) {
+
+      .sports-multi {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+    }
+
+
     .form-two-columns {
 
       display:
@@ -4880,40 +5009,40 @@
       </label>
 
 
-      <label>
+      <fieldset class="sports-fieldset">
 
-        Sport / disciplina *
+        <legend>
+          Sport / discipline *
+        </legend>
 
-        <select
-          id="asdDiscipline"
-          required
-        >
-          <option value="" selected disabled>
-            Seleziona lo sport
-          </option>
-          <option value="Arti marziali">Arti marziali</option>
-          <option value="Atletica leggera">Atletica leggera</option>
-          <option value="Basket">Basket</option>
-          <option value="Boxe / Pugilato">Boxe / Pugilato</option>
-          <option value="Calcio">Calcio</option>
-          <option value="Calcio a 5 / Futsal">Calcio a 5 / Futsal</option>
-          <option value="Danza">Danza</option>
-          <option value="Fitness / Ginnastica">Fitness / Ginnastica</option>
-          <option value="Ginnastica artistica">Ginnastica artistica</option>
-          <option value="Judo">Judo</option>
-          <option value="Karate">Karate</option>
-          <option value="Kickboxing">Kickboxing</option>
-          <option value="Multisport / Polisportiva">Multisport / Polisportiva</option>
-          <option value="Pallavolo">Pallavolo</option>
-          <option value="Pattinaggio">Pattinaggio</option>
-          <option value="Rugby">Rugby</option>
-          <option value="Tennis">Tennis</option>
-          <option value="Tennistavolo">Tennistavolo</option>
-          <option value="Yoga / Pilates">Yoga / Pilates</option>
-          <option value="Altro">Altro sport</option>
-        </select>
+        <p class="field-help">
+          Seleziona uno o più sport praticati dall'associazione.
+        </p>
 
-      </label>
+        <div class="sports-multi" id="asdDisciplineGroup">
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Arti marziali"> <span>Arti marziali</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Atletica leggera"> <span>Atletica leggera</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Basket"> <span>Basket</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Boxe / Pugilato"> <span>Boxe / Pugilato</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Calcio"> <span>Calcio</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Calcio a 5 / Futsal"> <span>Calcio a 5 / Futsal</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Danza"> <span>Danza</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Fitness / Ginnastica"> <span>Fitness / Ginnastica</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Ginnastica artistica"> <span>Ginnastica artistica</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Judo"> <span>Judo</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Karate"> <span>Karate</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Kickboxing"> <span>Kickboxing</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Multisport / Polisportiva"> <span>Multisport / Polisportiva</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Pallavolo"> <span>Pallavolo</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Pattinaggio"> <span>Pattinaggio</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Rugby"> <span>Rugby</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Tennis"> <span>Tennis</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Tennistavolo"> <span>Tennistavolo</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Yoga / Pilates"> <span>Yoga / Pilates</span></label>
+          <label class="sport-option"><input type="checkbox" name="asdDisciplineOption" value="Altro"> <span>Altro sport</span></label>
+        </div>
+
+      </fieldset>
 
 
       <label
@@ -4921,12 +5050,12 @@
         hidden
       >
 
-        Specifica lo sport *
+        Specifica altro sport / altri sport *
 
         <input
           type="text"
           id="asdDisciplineAltro"
-          placeholder="Es. Scherma"
+          placeholder="Es. Scherma, Tiro con l'arco"
         >
 
       </label>
@@ -12636,9 +12765,9 @@ async function uploadAsdLogo(
 
 function syncAsdCustomFields() {
 
-  const sportSelect =
-    document.getElementById(
-      "asdDiscipline"
+  const sportOtherCheckbox =
+    document.querySelector(
+      'input[name="asdDisciplineOption"][value="Altro"]'
     );
 
   const sportOtherLabel =
@@ -12668,8 +12797,10 @@ function syncAsdCustomFields() {
 
 
   const customSport =
-    sportSelect.value ===
-      "Altro";
+    Boolean(
+      sportOtherCheckbox
+      && sportOtherCheckbox.checked
+    );
 
   sportOtherLabel.hidden =
     !customSport;
@@ -12702,13 +12833,17 @@ function syncAsdCustomFields() {
 
 
 document
-  .getElementById(
-    "asdDiscipline"
+  .querySelectorAll(
+    'input[name="asdDisciplineOption"]'
   )
-  .addEventListener(
-    "change",
-    syncAsdCustomFields
-  );
+  .forEach(checkbox => {
+
+    checkbox.addEventListener(
+      "change",
+      syncAsdCustomFields
+    );
+
+  });
 
 
 document
@@ -12721,27 +12856,54 @@ document
   );
 
 
-function getAsdSelectedSport() {
+function getAsdSelectedSports() {
 
   const selected =
-    document
-      .getElementById(
-        "asdDiscipline"
+    Array.from(
+      document.querySelectorAll(
+        'input[name="asdDisciplineOption"]:checked'
       )
-      .value;
+    )
+    .map(checkbox =>
+      checkbox.value
+    )
+    .filter(value =>
+      value !== "Altro"
+    );
 
-  if (selected === "Altro") {
 
-    return document
-      .getElementById(
-        "asdDisciplineAltro"
-      )
-      .value
-      .trim();
+  const customSelected =
+    document.querySelector(
+      'input[name="asdDisciplineOption"][value="Altro"]:checked'
+    );
+
+  if (customSelected) {
+
+    const customSports =
+      splitDisciplines(
+        document
+          .getElementById(
+            "asdDisciplineAltro"
+          )
+          .value
+      );
+
+    selected.push(
+      ...customSports
+    );
 
   }
 
-  return selected.trim();
+
+  return Array.from(
+    new Set(
+      selected
+        .map(item =>
+          item.trim()
+        )
+        .filter(Boolean)
+    )
+  );
 
 }
 
@@ -12802,6 +12964,10 @@ document
           );
 
 
+      const selectedSports =
+        getAsdSelectedSports();
+
+
       const latitudine =
         document
           .getElementById(
@@ -12824,6 +12990,21 @@ document
 
       message.textContent =
         "";
+
+
+      if (
+        selectedSports.length === 0
+      ) {
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "Seleziona almeno uno sport praticato dall'associazione.";
+
+        return;
+
+      }
 
 
       if (
@@ -12928,7 +13109,7 @@ const nuovaAsd = {
 
 
         discipline:
-          getAsdSelectedSport(),
+          selectedSports.join(", "),
 
 
         quartiere:
