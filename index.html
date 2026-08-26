@@ -3938,6 +3938,17 @@
 
     }
 
+  
+    /* Pulsante installazione PWA: nascosto finché il browser non conferma
+       che SPORT V è realmente installabile sul dispositivo. */
+    #installAppButton {
+      display: none !important;
+    }
+
+    #installAppButton.is-visible {
+      display: inline-flex !important;
+    }
+
   </style>
 
 </head>
@@ -14868,6 +14879,14 @@ const installAppButton =
   );
 
 
+/* Stato iniziale sicuro: non mostrare mai il pulsante finché
+   il browser non conferma che l'installazione è disponibile. */
+if (installAppButton) {
+  installAppButton.hidden = true;
+  installAppButton.classList.remove("is-visible");
+}
+
+
 function sportVIsStandalone() {
 
   return (
@@ -14929,10 +14948,12 @@ function sportVIsMobileDevice() {
 }
 
 
+
 function hideSportVInstallButton() {
 
   if (installAppButton) {
     installAppButton.hidden = true;
+    installAppButton.classList.remove("is-visible");
   }
 
 }
@@ -14948,9 +14969,11 @@ function showSportVInstallButton() {
     !sportVIsStandalone()
   ) {
     installAppButton.hidden = false;
+    installAppButton.classList.add("is-visible");
   }
 
 }
+
 
 
 /*
