@@ -14890,18 +14890,78 @@ function sportVIsIOS() {
 }
 
 
+function sportVIsMobileDevice() {
+
+  /*
+   * userAgentData.mobile è il controllo migliore
+   * quando il browser lo mette a disposizione.
+   */
+  if (
+    navigator.userAgentData
+    &&
+    typeof navigator.userAgentData.mobile === "boolean"
+  ) {
+    return navigator.userAgentData.mobile;
+  }
+
+  /* Fallback per Safari/iPhone e altri browser mobili. */
+  if (
+    /android|iphone|ipad|ipod|iemobile|opera mini|mobile/i.test(
+      window.navigator.userAgent
+    )
+  ) {
+    return true;
+  }
+
+  /*
+   * Ultimo fallback per tablet / dispositivi touch
+   * che si presentano con user-agent desktop.
+   */
+  return (
+    navigator.maxTouchPoints > 1
+    &&
+    Math.min(
+      window.screen.width,
+      window.screen.height
+    ) < 900
+  );
+
+}
+
+
+function hideSportVInstallButton() {
+
+  if (installAppButton) {
+    installAppButton.hidden = true;
+  }
+
+}
+
+
 function showSportVInstallButton() {
 
   if (
     installAppButton
     &&
+    sportVIsMobileDevice()
+    &&
     !sportVIsStandalone()
   ) {
-
     installAppButton.hidden = false;
-
   }
 
+}
+
+
+/*
+ * Da computer il pulsante personalizzato non deve comparire.
+ */
+if (
+  !sportVIsMobileDevice()
+  ||
+  sportVIsStandalone()
+) {
+  hideSportVInstallButton();
 }
 
 
@@ -14910,9 +14970,18 @@ window.addEventListener(
   event => {
 
     /*
-     * Chrome/Edge/Android: conserviamo il prompt così
-     * l'installazione parte solo dopo il tocco dell'utente.
+     * Il nostro pulsante viene mostrato SOLO su smartphone/tablet.
+     * Su Android/Chrome viene mostrato soltanto quando il browser
+     * ci ha realmente consegnato il prompt nativo di installazione.
      */
+    if (
+      !sportVIsMobileDevice()
+      ||
+      sportVIsStandalone()
+    ) {
+      return;
+    }
+
     event.preventDefault();
     deferredInstallPrompt = event;
     showSportVInstallButton();
@@ -14922,6 +14991,8 @@ window.addEventListener(
 
 
 if (
+  sportVIsMobileDevice()
+  &&
   sportVIsIOS()
   &&
   !sportVIsStandalone()
@@ -14929,7 +15000,7 @@ if (
 
   /*
    * iPhone/iPad non espongono beforeinstallprompt:
-   * mostriamo comunque il pulsante con le istruzioni.
+   * qui il pulsante serve solo a spiegare il passaggio Apple.
    */
   showSportVInstallButton();
 
@@ -14942,8 +15013,22 @@ if (installAppButton) {
     "click",
     async () => {
 
+      if (
+        !sportVIsMobileDevice()
+        ||
+        sportVIsStandalone()
+      ) {
+        hideSportVInstallButton();
+        return;
+      }
+
+
       if (deferredInstallPrompt) {
 
+        /*
+         * Android/Chrome/Edge: un tocco sul pulsante SPORT V
+         * apre direttamente la finestra nativa Installa/Annulla.
+         */
         deferredInstallPrompt.prompt();
 
         const choice =
@@ -14951,15 +15036,12 @@ if (installAppButton) {
 
         deferredInstallPrompt = null;
 
-        if (
-          choice
-          &&
-          choice.outcome === "accepted"
-        ) {
-
-          installAppButton.hidden = true;
-
-        }
+        /*
+         * Dopo la scelta il prompt appena usato non è più valido.
+         * Nascondiamo quindi il pulsante anche se l'utente annulla,
+         * evitando il successivo messaggio “apri il menu”.
+         */
+        hideSportVInstallButton();
 
         return;
 
@@ -14977,9 +15059,11 @@ if (installAppButton) {
       }
 
 
-      window.alert(
-        'Apri il menu del browser e scegli “Installa app” oppure “Aggiungi alla schermata Home”.'
-      );
+      /*
+       * Su Android non mostriamo un falso pulsante di installazione
+       * se il browser non ha un prompt nativo pronto.
+       */
+      hideSportVInstallButton();
 
     }
   );
@@ -14992,10 +15076,7 @@ window.addEventListener(
   () => {
 
     deferredInstallPrompt = null;
-
-    if (installAppButton) {
-      installAppButton.hidden = true;
-    }
+    hideSportVInstallButton();
 
   }
 );
