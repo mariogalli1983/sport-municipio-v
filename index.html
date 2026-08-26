@@ -3081,6 +3081,126 @@
     }
 
 
+
+
+    /* ======================================================
+       LOCANDINA EVENTO A TUTTO SCHERMO
+       ====================================================== */
+
+    .event-main-media {
+      position: relative;
+    }
+
+    .event-main-media #eventMainPoster {
+      cursor: zoom-in;
+    }
+
+    .poster-fullscreen-button {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 2;
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(8,25,42,.88);
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.22);
+    }
+
+    .poster-fullscreen-button:hover,
+    .poster-fullscreen-button:focus-visible {
+      background: var(--blu);
+      outline: 3px solid rgba(255,255,255,.75);
+      outline-offset: 2px;
+    }
+
+    .poster-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      background: rgba(3,12,21,.96);
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .poster-lightbox.open {
+      display: flex;
+    }
+
+    .poster-lightbox-image {
+      display: block;
+      max-width: min(96vw, 1500px);
+      max-height: 92vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.5);
+    }
+
+    .poster-lightbox-close {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 20001;
+      width: 46px;
+      height: 46px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      background: rgba(8,25,42,.82);
+      color: #fff;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .poster-lightbox-close:hover,
+    .poster-lightbox-close:focus-visible {
+      background: #fff;
+      color: var(--blu);
+      outline: none;
+    }
+
+    .poster-lightbox-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      margin: 0;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(8,25,42,.72);
+      color: rgba(255,255,255,.9);
+      font-size: 12px;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    @media (max-width: 640px) {
+      .poster-lightbox {
+        padding: 10px;
+      }
+
+      .poster-lightbox-image {
+        max-width: 98vw;
+        max-height: 90vh;
+      }
+
+      .poster-fullscreen-button {
+        right: 8px;
+        bottom: 8px;
+      }
+    }
+
+
     /* ======================================================
        DETTAGLI
        ====================================================== */
@@ -6217,6 +6337,41 @@
     <div id="eventDetailContent"></div>
 
   </div>
+
+</div>
+
+<!-- ========================================================
+     LOCANDINA EVENTO A TUTTO SCHERMO
+     ======================================================== -->
+
+<div
+  id="eventPosterLightbox"
+  class="poster-lightbox"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Locandina evento a tutto schermo"
+>
+
+  <button
+    type="button"
+    class="poster-lightbox-close"
+    id="closeEventPosterLightbox"
+    aria-label="Chiudi la locandina a tutto schermo"
+  >
+    ×
+  </button>
+
+  <img
+    id="eventPosterLightboxImage"
+    class="poster-lightbox-image"
+    src=""
+    alt=""
+  >
+
+  <p class="poster-lightbox-hint">
+    Tocca fuori dall'immagine o premi Esc per chiudere
+  </p>
 
 </div>
 
@@ -10665,6 +10820,64 @@ function renderEvents(events) {
    ========================================================== */
 
 
+
+
+/* ==========================================================
+   LOCANDINA EVENTO A TUTTO SCHERMO
+   ========================================================== */
+
+function openEventPosterLightbox(url, altText = "Locandina evento") {
+
+  const safeUrl = safeHttpUrl(url);
+  const lightbox = document.getElementById("eventPosterLightbox");
+  const image = document.getElementById("eventPosterLightboxImage");
+
+  if (!safeUrl || !lightbox || !image) {
+    return;
+  }
+
+  image.src = safeUrl;
+  image.alt = altText;
+
+  lightbox.classList.add("open");
+  lightbox.setAttribute("aria-hidden", "false");
+
+  syncBodyModalState();
+
+  const closeButton = document.getElementById("closeEventPosterLightbox");
+  if (closeButton) {
+    window.setTimeout(() => closeButton.focus(), 0);
+  }
+
+}
+
+
+function closeEventPosterLightbox() {
+
+  const lightbox = document.getElementById("eventPosterLightbox");
+  const image = document.getElementById("eventPosterLightboxImage");
+
+  if (!lightbox) {
+    return;
+  }
+
+  lightbox.classList.remove("open");
+  lightbox.setAttribute("aria-hidden", "true");
+
+  if (image) {
+    image.src = "";
+    image.alt = "";
+  }
+
+  syncBodyModalState();
+
+  const mainPoster = document.getElementById("eventMainPoster");
+  if (mainPoster) {
+    mainPoster.focus();
+  }
+
+}
+
 function openEventDetail(
   id,
   updateUrl = true
@@ -10754,13 +10967,26 @@ function openEventDetail(
               ?
               `
 
-                <div class="detail-media">
+                <div class="detail-media event-main-media">
 
                   <img
                     id="eventMainPoster"
                     src="${escapeHtml(posterUrl)}"
                     alt="Locandina: ${escapeHtml(evento.titolo)}"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Apri la locandina a tutto schermo"
+                    title="Apri a tutto schermo"
                   >
+
+                  <button
+                    type="button"
+                    class="poster-fullscreen-button"
+                    id="eventPosterFullscreenButton"
+                    aria-label="Apri la locandina a tutto schermo"
+                  >
+                    ⛶ Apri
+                  </button>
 
                 </div>
 
@@ -11144,6 +11370,64 @@ function openEventDetail(
     document.getElementById(
       "eventMainPoster"
     );
+
+
+  const fullscreenButton =
+    document.getElementById(
+      "eventPosterFullscreenButton"
+    );
+
+
+  const openCurrentPosterFullscreen = () => {
+
+    if (!mainPoster) {
+      return;
+    }
+
+    openEventPosterLightbox(
+      mainPoster.currentSrc || mainPoster.src,
+      mainPoster.alt || `Locandina: ${evento.titolo}`
+    );
+
+  };
+
+
+  if (mainPoster) {
+
+    mainPoster.addEventListener(
+      "click",
+      openCurrentPosterFullscreen
+    );
+
+    mainPoster.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter"
+          ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+          openCurrentPosterFullscreen();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  if (fullscreenButton) {
+
+    fullscreenButton.addEventListener(
+      "click",
+      openCurrentPosterFullscreen
+    );
+
+  }
 
 
   document
@@ -15334,6 +15618,50 @@ document.getElementById("reportForm").addEventListener("submit", event => {
 });
 
 
+
+
+/* ==========================================================
+   CHIUSURA LOCANDINA A TUTTO SCHERMO
+   ========================================================== */
+
+const eventPosterLightbox =
+  document.getElementById(
+    "eventPosterLightbox"
+  );
+
+
+const closeEventPosterLightboxButton =
+  document.getElementById(
+    "closeEventPosterLightbox"
+  );
+
+
+if (closeEventPosterLightboxButton) {
+
+  closeEventPosterLightboxButton.addEventListener(
+    "click",
+    closeEventPosterLightbox
+  );
+
+}
+
+
+if (eventPosterLightbox) {
+
+  eventPosterLightbox.addEventListener(
+    "click",
+    event => {
+
+      if (event.target === eventPosterLightbox) {
+        closeEventPosterLightbox();
+      }
+
+    }
+  );
+
+}
+
+
 /* ==========================================================
    CLICK FUORI DAI MODALI
    ========================================================== */
@@ -15426,6 +15754,26 @@ document.addEventListener(
       "Escape"
     ) {
 
+      return;
+
+    }
+
+
+    const posterLightbox =
+      document.getElementById(
+        "eventPosterLightbox"
+      );
+
+
+    if (
+      posterLightbox
+      &&
+      posterLightbox.classList.contains(
+        "open"
+      )
+    ) {
+
+      closeEventPosterLightbox();
       return;
 
     }
