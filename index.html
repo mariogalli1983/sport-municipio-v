@@ -3949,6 +3949,116 @@
       display: inline-flex !important;
     }
 
+  
+    /* ========================================================
+       CRESCITA / USABILITÀ ASD
+       ======================================================== */
+
+    .asd-growth-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f4f7fb;
+      border: 1px solid #dfe7f1;
+      color: #3b4a5a;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .asd-list-extra-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .quick-mode-box,
+    .sede-pending-box {
+      border: 1px solid #dce5ef;
+      border-radius: 14px;
+      padding: 14px;
+      background: #f8fafc;
+      margin-bottom: 18px;
+    }
+
+    .quick-mode-box label,
+    .sede-pending-box label {
+      display: flex !important;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 0 !important;
+      cursor: pointer;
+    }
+
+    .quick-mode-box input,
+    .sede-pending-box input {
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px;
+      margin-top: 2px;
+    }
+
+    .quick-mode-box strong,
+    .sede-pending-box strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .quick-mode-box small,
+    .sede-pending-box small {
+      display: block;
+      color: #64748b;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    #asdOptionalFields[hidden],
+    #asdLocationFields[hidden] {
+      display: none !important;
+    }
+
+    .asd-pending-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #fff4d8;
+      border: 1px solid #f1d48c;
+      color: #715214;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .pending-location-banner {
+      margin: 14px 0 18px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #fff7e2;
+      border: 1px solid #eed59a;
+      color: #644c18;
+      line-height: 1.45;
+    }
+
+    .zero-result-cta {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .missing-asd-intro {
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f4f7fb;
+      color: #44556a;
+      line-height: 1.45;
+    }
+
   </style>
 
 </head>
@@ -4325,6 +4435,21 @@
       id="asdGrid"
     ></div>
 
+    <div class="asd-list-extra-actions">
+      <button
+        type="button"
+        class="btn btn-soft"
+        id="openMissingAsdButton"
+      >
+        ➕ Segnala una ASD che manca
+      </button>
+    </div>
+
+    <div class="asd-growth-note">
+      Le associazioni con sede 2026/27 ancora in definizione possono iscriversi comunque:
+      compariranno nell'elenco e saranno aggiunte alla mappa appena comunicheranno l'impianto definitivo.
+    </div>
+
   </div>
 
 </section>
@@ -4562,9 +4687,9 @@
         <p>
 
           Le associazioni sportive del Municipio V
-          possono segnalare la propria sede,
-          raccontare le attività e proporre corsi,
-          open day, tornei, offerte ed eventi.
+          possono iscriversi anche se la sede 2026/27
+          è ancora in definizione, raccontare le attività
+          e proporre corsi, open day, tornei, offerte ed eventi.
 
         </p>
 
@@ -4594,6 +4719,14 @@
           id="openEventModalButton"
         >
           📣 Pubblica corso o evento
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-soft"
+          data-open-missing-asd
+        >
+          ➕ Segnala una ASD che manca
         </button>
 
       </div>
@@ -4826,6 +4959,37 @@
           La richiesta viene verificata
           prima della pubblicazione.
 
+        </div>
+
+      </details>
+
+
+      <details class="faq-item">
+
+        <summary>
+          Non conosco ancora la sede definitiva. Posso iscrivermi?
+        </summary>
+
+        <div class="faq-answer">
+          Sì. Se l'associazione sta aspettando l'esito di un bando o
+          l'assegnazione di un impianto, può iscriversi indicando sport e quartiere
+          e selezionando “Sede / impianto 2026/27 ancora da definire”.
+          La posizione potrà essere aggiunta alla mappa in seguito.
+        </div>
+
+      </details>
+
+
+      <details class="faq-item">
+
+        <summary>
+          Conosco una ASD che manca. Posso segnalarla?
+        </summary>
+
+        <div class="faq-answer">
+          Sì. Usa “Segnala una ASD che manca”. La segnalazione serve soltanto
+          a individuare una realtà da contattare e verificare: non viene
+          pubblicata automaticamente.
         </div>
 
       </details>
@@ -5073,6 +5237,22 @@
 
     <form id="asdForm">
 
+      <div class="quick-mode-box">
+        <label>
+          <input
+            type="checkbox"
+            id="asdQuickMode"
+          >
+          <span>
+            <strong>⚡ Iscrizione rapida (circa 60 secondi)</strong>
+            <small>
+              Compila solo i dati essenziali. Potrai completare logo, descrizione,
+              contatti e social in un secondo momento.
+            </small>
+          </span>
+        </label>
+      </div>
+
 
       <label>
 
@@ -5188,6 +5368,25 @@
       </label>
 
 
+      <div class="sede-pending-box">
+        <label>
+          <input
+            type="checkbox"
+            id="asdSedeDaDefinire"
+          >
+          <span>
+            <strong>📍 Sede / impianto 2026/27 ancora da definire</strong>
+            <small>
+              Se stai aspettando l'esito di un bando o un'assegnazione, puoi iscriverti subito.
+              La sede potrà essere comunicata e aggiunta alla mappa successivamente.
+            </small>
+          </span>
+        </label>
+      </div>
+
+
+      <div id="asdLocationFields">
+
       <label>
 
         Indirizzo della sede o impianto *
@@ -5239,6 +5438,10 @@
 
       </div>
 
+      </div>
+
+
+      <div id="asdOptionalFields">
 
       <label>
 
@@ -5359,6 +5562,9 @@
   >
 
 </div>
+
+      </div>
+
       <hr class="form-divider">
 
 
@@ -5459,6 +5665,122 @@
 <!-- ========================================================
      MODALE EVENTO FORM
      ======================================================== -->
+
+
+
+<!-- ========================================================
+     SEGNALA ASD MANCANTE
+     ======================================================== -->
+
+<div
+  id="missingAsdModal"
+  class="modal-overlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="missingAsdModalTitle"
+  >
+
+    <button
+      type="button"
+      class="modal-close"
+      id="closeMissingAsdButton"
+      aria-label="Chiudi"
+    >
+      ×
+    </button>
+
+    <h2 id="missingAsdModalTitle">
+      Segnala una ASD che manca
+    </h2>
+
+    <div class="missing-asd-intro">
+      Conosci una realtà sportiva del Municipio V che non trovi su SPORT V?
+      Segnalacela: non verrà pubblicata automaticamente. La useremo come contatto
+      da verificare prima di inserirla.
+    </div>
+
+    <form id="missingAsdForm">
+
+      <label>
+        Nome dell'associazione *
+        <input
+          type="text"
+          id="missingAsdNome"
+          required
+          placeholder="Es. ASD Sport Quartiere"
+        >
+      </label>
+
+      <label>
+        Sport / attività
+        <input
+          type="text"
+          id="missingAsdSport"
+          placeholder="Es. Judo, pallavolo, danza..."
+        >
+      </label>
+
+      <label>
+        Quartiere *
+        <select id="missingAsdQuartiere" required>
+          <option value="" selected disabled>Seleziona il quartiere</option>
+          <option value="Alessandrino">Alessandrino</option>
+          <option value="Casilino 23">Casilino 23</option>
+          <option value="Centocelle">Centocelle</option>
+          <option value="Collatino">Collatino</option>
+          <option value="Gordiani">Gordiani</option>
+          <option value="La Rustica">La Rustica</option>
+          <option value="Marranella">Marranella</option>
+          <option value="Pigneto">Pigneto</option>
+          <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+          <option value="Quarticciolo">Quarticciolo</option>
+          <option value="Tor Pignattara">Tor Pignattara</option>
+          <option value="Tor Sapienza">Tor Sapienza</option>
+          <option value="Tor Tre Teste">Tor Tre Teste</option>
+          <option value="Villa De Sanctis">Villa De Sanctis</option>
+          <option value="Villa Gordiani">Villa Gordiani</option>
+          <option value="Altro quartiere del Municipio V">Altro quartiere del Municipio V</option>
+        </select>
+      </label>
+
+      <label>
+        Pagina Facebook, Instagram o sito
+        <input
+          type="text"
+          id="missingAsdLink"
+          placeholder="Se lo conosci, incolla il link"
+        >
+      </label>
+
+      <p class="form-note">
+        Inserisci soltanto informazioni pubbliche sull'associazione.
+        Non servono i tuoi dati personali.
+      </p>
+
+      <div
+        id="missingAsdMessage"
+        class="form-message"
+        aria-live="polite"
+      ></div>
+
+      <button
+        type="submit"
+        class="btn btn-primary form-submit"
+        id="missingAsdSubmit"
+      >
+        Invia segnalazione
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
 
 
 <div
@@ -8476,8 +8798,23 @@ function renderCards(data) {
 
         <div class="event-empty">
 
-          Nessuna associazione
-          corrisponde alla ricerca.
+          <strong>
+            Nessuna associazione corrisponde alla ricerca.
+          </strong>
+
+          <p>
+            Conosci una realtà sportiva che dovrebbe esserci?
+          </p>
+
+          <div class="zero-result-cta">
+            <button
+              type="button"
+              class="btn btn-soft"
+              data-open-missing-asd
+            >
+              ➕ Segnala una ASD
+            </button>
+          </div>
 
         </div>
 
@@ -8578,6 +8915,18 @@ function renderCards(data) {
             )}
 
           </p>
+
+          ${
+            !validCoordinates(asd)
+              ?
+              `
+                <div class="asd-pending-badge">
+                  📍 Sede 2026/27 in definizione
+                </div>
+              `
+              :
+              ""
+          }
 
 
           <button
@@ -11428,6 +11777,22 @@ function openAsdDetail(
 
 
           ${
+            !validCoordinates(asd)
+              ?
+              `
+                <div class="pending-location-banner">
+                  <strong>📍 Sede 2026/27 in definizione.</strong><br>
+                  L'associazione può essere già presente su SPORT V anche mentre attende
+                  l'assegnazione dell'impianto. La posizione sarà aggiunta alla mappa
+                  appena verrà comunicata.
+                </div>
+              `
+              :
+              ""
+          }
+
+
+          ${
             asd.description
               ?
               `
@@ -11468,7 +11833,20 @@ function openAsdDetail(
 
                 `
                 :
-                ""
+                (
+                  !validCoordinates(asd)
+                    ?
+                    `
+                      <div class="detail-row">
+                        <strong>
+                          Sede / impianto
+                        </strong>
+                        In definizione per la stagione 2026/27
+                      </div>
+                    `
+                    :
+                    ""
+                )
             }
 
 
@@ -11663,11 +12041,16 @@ function openAsdDetail(
 
             <button
               type="button"
-              class="text-action"
+              class="${!validCoordinates(asd) ? "btn btn-soft" : "text-action"}"
               id="asdEditRequest"
             >
-              Rappresenti questa ASD?
-              Richiedi una modifica
+              ${
+                !validCoordinates(asd)
+                  ?
+                  "📍 Hai la sede definitiva? Comunicala"
+                  :
+                  "✏️ Rappresenti questa ASD? Aggiorna la scheda"
+              }
             </button>
 
 
@@ -11816,7 +12199,11 @@ function openAsdDetail(
 
             `Richiesta modifica scheda SPORT V: ${asd.name}`,
 
-            `Ciao Mario,\n\nrappresento l'associazione "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
+            !validCoordinates(asd)
+              ?
+              `Ciao Mario,\n\nrappresento l'associazione "${asd.name}". Ora abbiamo informazioni sulla sede / impianto 2026/27 e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
+              :
+              `Ciao Mario,\n\nrappresento l'associazione "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
 
           );
 
@@ -11998,9 +12385,9 @@ function updateStats() {
   */
 
   const show =
-    asdData.length >= 3
+    asdData.length >= 20
     ||
-    events.length >= 3;
+    events.length >= 10;
 
 
   document
@@ -12081,6 +12468,9 @@ function openAsdModal() {
   showModal(
     "asdModal"
   );
+
+  syncAsdQuickMode();
+  syncAsdLocationMode();
 
 
   if (!pickerMap) {
@@ -12200,6 +12590,79 @@ function closeAsdModal() {
 
   hideModal(
     "asdModal"
+  );
+
+}
+
+
+function openMissingAsdModal() {
+
+  const form =
+    document.getElementById(
+      "missingAsdForm"
+    );
+
+  const message =
+    document.getElementById(
+      "missingAsdMessage"
+    );
+
+  form.reset();
+  message.className =
+    "form-message";
+  message.textContent =
+    "";
+
+  if (
+    selectedSport
+    &&
+    selectedSport !== "Tutti"
+  ) {
+    document
+      .getElementById(
+        "missingAsdSport"
+      )
+      .value =
+        selectedSport;
+  }
+
+  if (
+    selectedQuartiere
+    &&
+    selectedQuartiere !== "Tutti"
+  ) {
+
+    const quartierSelect =
+      document.getElementById(
+        "missingAsdQuartiere"
+      );
+
+    const matchingOption =
+      Array.from(
+        quartierSelect.options
+      )
+      .find(option =>
+        option.value === selectedQuartiere
+      );
+
+    if (matchingOption) {
+      quartierSelect.value =
+        selectedQuartiere;
+    }
+
+  }
+
+  showModal(
+    "missingAsdModal"
+  );
+
+}
+
+
+function closeMissingAsdModal() {
+
+  hideModal(
+    "missingAsdModal"
   );
 
 }
@@ -12984,6 +13447,118 @@ function syncAsdCustomFields() {
 }
 
 
+
+function syncAsdQuickMode() {
+
+  const quickMode =
+    document.getElementById(
+      "asdQuickMode"
+    );
+
+  const optionalFields =
+    document.getElementById(
+      "asdOptionalFields"
+    );
+
+  const submitButton =
+    document.getElementById(
+      "asdSubmit"
+    );
+
+  if (
+    !quickMode
+    ||
+    !optionalFields
+  ) {
+    return;
+  }
+
+  optionalFields.hidden =
+    quickMode.checked;
+
+  if (
+    submitButton
+    &&
+    !submitButton.disabled
+  ) {
+    submitButton.textContent =
+      quickMode.checked
+        ?
+        "Invia iscrizione rapida"
+        :
+        "Invia la segnalazione";
+  }
+
+}
+
+
+function syncAsdLocationMode() {
+
+  const pending =
+    document.getElementById(
+      "asdSedeDaDefinire"
+    );
+
+  const locationFields =
+    document.getElementById(
+      "asdLocationFields"
+    );
+
+  const address =
+    document.getElementById(
+      "asdIndirizzo"
+    );
+
+  if (
+    !pending
+    ||
+    !locationFields
+    ||
+    !address
+  ) {
+    return;
+  }
+
+  locationFields.hidden =
+    pending.checked;
+
+  address.required =
+    !pending.checked;
+
+  if (
+    !pending.checked
+    &&
+    pickerMap
+  ) {
+    window.setTimeout(
+      () => pickerMap.invalidateSize(),
+      100
+    );
+  }
+
+}
+
+
+document
+  .getElementById(
+    "asdQuickMode"
+  )
+  .addEventListener(
+    "change",
+    syncAsdQuickMode
+  );
+
+
+document
+  .getElementById(
+    "asdSedeDaDefinire"
+  )
+  .addEventListener(
+    "change",
+    syncAsdLocationMode
+  );
+
+
 document
   .querySelectorAll(
     'input[name="asdDisciplineOption"]'
@@ -13136,6 +13711,14 @@ document
           .value;
 
 
+      const sedeDaDefinire =
+        document
+          .getElementById(
+            "asdSedeDaDefinire"
+          )
+          .checked;
+
+
       message.className =
         "form-message";
 
@@ -13160,9 +13743,13 @@ document
 
 
       if (
-        !latitudine
-        ||
-        !longitudine
+        !sedeDaDefinire
+        &&
+        (
+          !latitudine
+          ||
+          !longitudine
+        )
       ) {
 
         message.className =
@@ -13170,7 +13757,7 @@ document
 
 
         message.textContent =
-          "Seleziona sulla mappa la posizione della sede o dell'impianto.";
+          "Seleziona sulla mappa la posizione della sede o dell'impianto, oppure indica che la sede 2026/27 è ancora da definire.";
 
 
         return;
@@ -13269,24 +13856,40 @@ const nuovaAsd = {
 
 
         indirizzo:
-          document
-            .getElementById(
-              "asdIndirizzo"
-            )
-            .value
-            .trim(),
+          sedeDaDefinire
+            ?
+            null
+            :
+            (
+              document
+                .getElementById(
+                  "asdIndirizzo"
+                )
+                .value
+                .trim()
+              ||
+              null
+            ),
 
 
         latitudine:
-          Number(
-            latitudine
-          ),
+          sedeDaDefinire
+            ?
+            null
+            :
+            Number(
+              latitudine
+            ),
 
 
         longitudine:
-          Number(
-            longitudine
-          ),
+          sedeDaDefinire
+            ?
+            null
+            :
+            Number(
+              longitudine
+            ),
 
 
         descrizione:
@@ -13434,6 +14037,8 @@ logo_url:
         .reset();
 
       syncAsdCustomFields();
+      syncAsdQuickMode();
+      syncAsdLocationMode();
       resetAsdLogoPreview();
 
       if (
@@ -13867,6 +14472,286 @@ document
 
     }
   );
+
+
+
+/* ==========================================================
+   SEGNALA ASD MANCANTE
+   ========================================================== */
+
+
+document
+  .getElementById(
+    "missingAsdForm"
+  )
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const name =
+        document
+          .getElementById(
+            "missingAsdNome"
+          )
+          .value
+          .trim();
+
+      const sport =
+        document
+          .getElementById(
+            "missingAsdSport"
+          )
+          .value
+          .trim();
+
+      const quartier =
+        document
+          .getElementById(
+            "missingAsdQuartiere"
+          )
+          .value
+          .trim();
+
+      const rawLink =
+        document
+          .getElementById(
+            "missingAsdLink"
+          )
+          .value
+          .trim();
+
+      const message =
+        document
+          .getElementById(
+            "missingAsdMessage"
+          );
+
+      const submitButton =
+        document
+          .getElementById(
+            "missingAsdSubmit"
+          );
+
+      message.className =
+        "form-message";
+
+      message.textContent =
+        "";
+
+      const alreadyPublic =
+        asdData.some(asd =>
+          normalizeFilterText(
+            asd.name
+          )
+          ===
+          normalizeFilterText(
+            name
+          )
+        );
+
+      if (alreadyPublic) {
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "Questa associazione risulta già presente su SPORT V.";
+
+        return;
+
+      }
+
+      let facebook =
+        null;
+
+      let instagram =
+        null;
+
+      let sito =
+        null;
+
+      const safeLink =
+        safeHttpUrl(
+          rawLink
+        );
+
+      if (safeLink) {
+
+        try {
+
+          const host =
+            new URL(
+              safeLink
+            )
+            .hostname
+            .toLowerCase();
+
+          if (
+            host.includes(
+              "facebook.com"
+            )
+          ) {
+            facebook =
+              safeLink;
+          }
+          else if (
+            host.includes(
+              "instagram.com"
+            )
+          ) {
+            instagram =
+              safeLink;
+          }
+          else {
+            sito =
+              safeLink;
+          }
+
+        }
+        catch (_) {}
+
+      }
+
+      submitButton.disabled =
+        true;
+
+      submitButton.textContent =
+        "Invio in corso...";
+
+      const segnalazione = {
+
+        nome:
+          name,
+
+        discipline:
+          sport
+          ||
+          null,
+
+        quartiere:
+          quartier,
+
+        indirizzo:
+          null,
+
+        latitudine:
+          null,
+
+        longitudine:
+          null,
+
+        sito_web:
+          sito,
+
+        facebook:
+          facebook,
+
+        instagram:
+          instagram,
+
+        nome_referente:
+          "SEGNALAZIONE CITTADINO — DA VERIFICARE",
+
+        email_referente:
+          null
+
+      };
+
+      const {
+        error
+      } =
+        await db
+          .from(
+            "asd"
+          )
+          .insert(
+            [segnalazione]
+          );
+
+      if (error) {
+
+        console.error(
+          "Errore segnalazione ASD mancante:",
+          error
+        );
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "Non è stato possibile inviare la segnalazione. Riprova tra poco.";
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "Invia segnalazione";
+
+        return;
+
+      }
+
+      message.className =
+        "form-message success";
+
+      message.textContent =
+        "Grazie! La segnalazione è arrivata. L'associazione non viene pubblicata automaticamente: sarà prima verificata e contattata.";
+
+      document
+        .getElementById(
+          "missingAsdForm"
+        )
+        .reset();
+
+      submitButton.disabled =
+        false;
+
+      submitButton.textContent =
+        "Invia segnalazione";
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "openMissingAsdButton"
+  )
+  .addEventListener(
+    "click",
+    openMissingAsdModal
+  );
+
+
+document
+  .getElementById(
+    "closeMissingAsdButton"
+  )
+  .addEventListener(
+    "click",
+    closeMissingAsdModal
+  );
+
+
+document.addEventListener(
+  "click",
+  event => {
+
+    const button =
+      event.target.closest(
+        "[data-open-missing-asd]"
+      );
+
+    if (!button) {
+      return;
+    }
+
+    openMissingAsdModal();
+
+  }
+);
 
 
 /* ==========================================================
@@ -14631,7 +15516,8 @@ document.addEventListener(
       "rulesModal",
       "privacyModal",
       "cookiesModal",
-      "reportModal"
+      "reportModal",
+      "missingAsdModal"
     ]
     .forEach(id => {
 
