@@ -19,6 +19,14 @@
   <link rel="icon" type="image/png" sizes="192x192" href="./android-chrome-192x192.png">
   <meta name="theme-color" content="#0b2949">
 
+  <!-- SPORT V come web app installabile (PWA) -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="application-name" content="SPORT V">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SPORT V">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
   <meta
     name="description"
     content="Scopri associazioni sportive, corsi, open day, tornei, prove gratuite ed eventi nel Municipio Roma V."
@@ -4053,6 +4061,15 @@
         📅 Trova qualcosa da fare
       </a>
 
+      <button
+        type="button"
+        class="btn btn-light"
+        id="installAppButton"
+        hidden
+      >
+        📲 Installa SPORT V
+      </button>
+
     </div>
 
 
@@ -6075,7 +6092,7 @@
     <button type="button" class="modal-close" id="closePrivacyButton" aria-label="Chiudi">×</button>
     <div class="eyebrow event-eyebrow">Protezione dei dati</div>
     <h2 id="privacyTitle">Informativa privacy</h2>
-    <div class="legal-meta">Versione del 20 agosto 2026</div>
+    <div class="legal-meta">Versione del 26 agosto 2026</div>
 
     <div class="legal-section">
       <h3>1. Titolare del trattamento</h3>
@@ -6191,6 +6208,11 @@
     <div class="legal-section">
       <h3>Servizi tecnici di terzi</h3>
       <p>Per mostrare il sito, leggere i dati e visualizzare la mappa, il browser effettua richieste tecniche a GitHub Pages, Supabase, OpenStreetMap e jsDelivr. Tali soggetti possono ricevere dati tecnici, come l'indirizzo IP e le informazioni necessarie a consegnare la risorsa richiesta. Questi trattamenti sono descritti più nel dettaglio nell'Informativa privacy.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Installazione come web app e cache tecnica</h3>
+      <p>SPORT V può essere aggiunto alla schermata Home come web app. Per consentire l'installazione e migliorare l'apertura del sito, il browser può usare una cache tecnica locale (Cache Storage) per alcuni file dell'interfaccia, come icone e pagina iniziale. Questa cache non viene usata per profilazione, pubblicità o riconoscimento dell'utente e può essere rimossa cancellando i dati del sito o disinstallando la web app.</p>
     </div>
 
     <div class="legal-section">
@@ -14829,6 +14851,176 @@ if (
     refreshUrl.search
     +
     refreshUrl.hash
+  );
+
+}
+
+
+/* ==========================================================
+   INSTALLAZIONE SPORT V COME APP (PWA)
+   ========================================================== */
+
+let deferredInstallPrompt = null;
+
+const installAppButton =
+  document.getElementById(
+    "installAppButton"
+  );
+
+
+function sportVIsStandalone() {
+
+  return (
+    window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches
+    ||
+    window.navigator.standalone === true
+  );
+
+}
+
+
+function sportVIsIOS() {
+
+  return /iphone|ipad|ipod/i.test(
+    window.navigator.userAgent
+  );
+
+}
+
+
+function showSportVInstallButton() {
+
+  if (
+    installAppButton
+    &&
+    !sportVIsStandalone()
+  ) {
+
+    installAppButton.hidden = false;
+
+  }
+
+}
+
+
+window.addEventListener(
+  "beforeinstallprompt",
+  event => {
+
+    /*
+     * Chrome/Edge/Android: conserviamo il prompt così
+     * l'installazione parte solo dopo il tocco dell'utente.
+     */
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showSportVInstallButton();
+
+  }
+);
+
+
+if (
+  sportVIsIOS()
+  &&
+  !sportVIsStandalone()
+) {
+
+  /*
+   * iPhone/iPad non espongono beforeinstallprompt:
+   * mostriamo comunque il pulsante con le istruzioni.
+   */
+  showSportVInstallButton();
+
+}
+
+
+if (installAppButton) {
+
+  installAppButton.addEventListener(
+    "click",
+    async () => {
+
+      if (deferredInstallPrompt) {
+
+        deferredInstallPrompt.prompt();
+
+        const choice =
+          await deferredInstallPrompt.userChoice;
+
+        deferredInstallPrompt = null;
+
+        if (
+          choice
+          &&
+          choice.outcome === "accepted"
+        ) {
+
+          installAppButton.hidden = true;
+
+        }
+
+        return;
+
+      }
+
+
+      if (sportVIsIOS()) {
+
+        window.alert(
+          'Per installare SPORT V su iPhone/iPad: apri il sito in Safari, tocca “Condividi” e scegli “Aggiungi alla schermata Home”.'
+        );
+
+        return;
+
+      }
+
+
+      window.alert(
+        'Apri il menu del browser e scegli “Installa app” oppure “Aggiungi alla schermata Home”.'
+      );
+
+    }
+  );
+
+}
+
+
+window.addEventListener(
+  "appinstalled",
+  () => {
+
+    deferredInstallPrompt = null;
+
+    if (installAppButton) {
+      installAppButton.hidden = true;
+    }
+
+  }
+);
+
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register("./sw.js")
+        .catch(error => {
+
+          console.warn(
+            "SPORT V: service worker non registrato",
+            error
+          );
+
+        });
+
+    }
   );
 
 }
