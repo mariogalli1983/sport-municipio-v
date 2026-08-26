@@ -999,6 +999,36 @@
     }
 
 
+    .asd-list-toggle-wrap {
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      margin-top:
+        18px;
+
+    }
+
+
+    .asd-list-toggle {
+
+      min-width:
+        240px;
+
+    }
+
+
+    .asd-grid.is-collapsed {
+
+      display:
+        none !important;
+
+    }
+
+
     /* ======================================================
        CARD
        ====================================================== */
@@ -4241,8 +4271,21 @@
     </div>
 
 
+    <div class="asd-list-toggle-wrap">
+      <button
+        type="button"
+        class="btn btn-soft asd-list-toggle"
+        id="asdListToggle"
+        aria-expanded="false"
+        aria-controls="asdGrid"
+      >
+        🏃 Vedi le associazioni (0)⌄
+      </button>
+    </div>
+
+
     <div
-      class="asd-grid"
+      class="asd-grid is-collapsed"
       id="asdGrid"
     ></div>
 
@@ -6415,6 +6458,12 @@ let selectedSport =
 let selectedQuartiere =
   "Tutti";
 
+let asdListOpen =
+  false;
+
+let currentAsdResultCount =
+  0;
+
 let markers =
   [];
 
@@ -7976,6 +8025,7 @@ function activateNearMe() {
   if (nearMeActive) {
 
     clearNearMe();
+    setAsdListOpen(true);
     applyFilters();
     return;
 
@@ -8073,6 +8123,7 @@ function activateNearMe() {
           "Posizione rilevata. Le ASD sono ora ordinate dalla più vicina; puoi continuare a usare i filtri per sport e quartiere."
         );
 
+        setAsdListOpen(true);
         applyFilters();
 
       },
@@ -8293,6 +8344,60 @@ function asdAvatarMarkup(asd) {
 }
 
 
+function updateAsdListToggle() {
+
+  const button =
+    document.getElementById(
+      "asdListToggle"
+    );
+
+  const grid =
+    document.getElementById(
+      "asdGrid"
+    );
+
+  if (
+    !button
+    ||
+    !grid
+  ) {
+    return;
+  }
+
+  button.setAttribute(
+    "aria-expanded",
+    asdListOpen
+      ?
+      "true"
+      :
+      "false"
+  );
+
+  button.textContent =
+    asdListOpen
+      ?
+      `🏃 Nascondi le associazioni (${currentAsdResultCount})⌃`
+      :
+      `🏃 Vedi le associazioni (${currentAsdResultCount})⌄`;
+
+  grid.classList.toggle(
+    "is-collapsed",
+    !asdListOpen
+  );
+
+}
+
+
+function setAsdListOpen(open) {
+
+  asdListOpen =
+    Boolean(open);
+
+  updateAsdListToggle();
+
+}
+
+
 function renderCards(data) {
 
   const grid =
@@ -8305,6 +8410,12 @@ function renderCards(data) {
     document.getElementById(
       "resultsInfo"
     );
+
+
+  currentAsdResultCount =
+    data.length;
+
+  updateAsdListToggle();
 
 
   grid.innerHTML =
@@ -13724,6 +13835,22 @@ document
 
 document
   .getElementById(
+    "asdListToggle"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      setAsdListOpen(
+        !asdListOpen
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
     "nearMeButton"
   )
   .addEventListener(
@@ -13743,6 +13870,7 @@ document
       selectedSport =
         event.target.value;
 
+      setAsdListOpen(true);
       applyFilters();
 
     }
@@ -13760,6 +13888,7 @@ document
       selectedQuartiere =
         event.target.value;
 
+      setAsdListOpen(true);
       applyFilters();
 
     }
@@ -13803,6 +13932,7 @@ document
 
       clearNearMe();
 
+      setAsdListOpen(false);
       applyFilters();
 
     }
@@ -13811,6 +13941,7 @@ document
 
 function runAsdSearch() {
 
+  setAsdListOpen(true);
   applyFilters();
 
 
