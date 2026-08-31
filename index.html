@@ -4353,7 +4353,9 @@
     }
 
     #asdOptionalFields[hidden],
-    #asdLocationFields[hidden] {
+    #asdLocationFields[hidden],
+    .asd-sede-quartiere-altro-label[hidden],
+    .edit-asd-sede-altro-label[hidden] {
       display: none !important;
     }
 
@@ -13934,7 +13936,7 @@ function createEditAsdSede(sede = null) {
       class="edit-asd-sede-altro-label"
       hidden
     >
-      Specifica il quartiere *
+      Specifica quartiere/zona *
       <input
         type="text"
         class="edit-asd-sede-altro"
@@ -14012,6 +14014,9 @@ function createEditAsdSede(sede = null) {
 
     altroInput.required =
       isAltro;
+
+    altroInput.disabled =
+      !isAltro;
 
     if (!isAltro) {
       altroInput.value = "";
@@ -15319,7 +15324,7 @@ function createAsdSede() {
         hidden
       >
 
-        Specifica il quartiere *
+        Specifica quartiere/zona *
 
         <input
           type="text"
@@ -15416,6 +15421,9 @@ function createAsdSede() {
 
         altroInput.required =
           isAltro;
+
+        altroInput.disabled =
+          !isAltro;
 
         if (!isAltro) {
           altroInput.value =
