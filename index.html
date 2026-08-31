@@ -4878,12 +4878,12 @@
         <div>
           <div class="pulse-kicker">
             <span class="pulse-dot" aria-hidden="true"></span>
-            SPORT V Pulse · ultimi 7 giorni
+            SPORT V Pulse · dal lancio
           </div>
-          <h3 class="pulse-title">Cosa sta cercando il Municipio V</h3>
+          <h3 class="pulse-title">Lo sport del Municipio V, visto dai dati</h3>
           <p class="pulse-subtitle">
-            Non semplici visite: aperture di schede, ricerche, contatti avviati
-            e segnali di domanda sportiva che oggi non trova risposta sulla piattaforma.
+            I contatori generali sommano la baseline iniziale alle interazioni misurate da Pulse.
+            I segnali di interesse qui sotto sono invece calcolati sui dati reali degli ultimi 7 giorni.
           </p>
         </div>
       </div>
@@ -4927,8 +4927,11 @@
       </div>
 
       <p class="pulse-note">
-        Pulse usa eventi tecnici minimizzati e aggregati. Non salva la posizione GPS,
-        non crea profili personali e non usa cookie o memoria persistente del browser.
+        Il simbolo ≈ indica che il totale comprende una baseline iniziale stimata di circa
+        430 esplorazioni precedenti all'attivazione di Pulse. Sport, zona, domanda non trovata
+        ed evento più esplorato derivano esclusivamente da interazioni realmente registrate.
+        Pulse non salva la posizione GPS, non crea profili personali e non usa cookie
+        o memoria persistente del browser.
       </p>
 
     </div>
@@ -7679,10 +7682,16 @@ async function loadSportVPulse() {
 
     const pulse = data || {};
 
-    document.getElementById("pulseExplorations").textContent = sportVPulseNumber(pulse.explorations);
-    document.getElementById("pulseAsdViews").textContent = sportVPulseNumber(pulse.asd_views);
-    document.getElementById("pulseEventViews").textContent = sportVPulseNumber(pulse.event_views);
-    document.getElementById("pulseContacts").textContent = sportVPulseNumber(pulse.contacts);
+    const estimatedPrefix = pulse.baseline_included ? "≈ " : "";
+
+    document.getElementById("pulseExplorations").textContent =
+      estimatedPrefix + sportVPulseNumber(pulse.explorations);
+    document.getElementById("pulseAsdViews").textContent =
+      estimatedPrefix + sportVPulseNumber(pulse.asd_views);
+    document.getElementById("pulseEventViews").textContent =
+      estimatedPrefix + sportVPulseNumber(pulse.event_views);
+    document.getElementById("pulseContacts").textContent =
+      estimatedPrefix + sportVPulseNumber(pulse.contacts);
 
     document.getElementById("pulseTopSport").textContent = pulse.top_sport || "In raccolta";
     document.getElementById("pulseTopQuartiere").textContent = pulse.top_quartiere || "In raccolta";
