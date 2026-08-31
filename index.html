@@ -4407,11 +4407,41 @@
 
     .missing-asd-intro {
       margin-bottom: 16px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border-radius: 12px;
       background: #f4f7fb;
+      border: 1px solid #dfe8f2;
       color: #44556a;
       line-height: 1.45;
+    }
+
+    .missing-asd-intro strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blu-scuro);
+    }
+
+    .form-bottom-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 7px;
+    }
+
+    .form-bottom-close {
+      border: 0;
+      background: transparent;
+      padding: 6px 10px;
+      color: var(--grigio);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .form-bottom-close:hover,
+    .form-bottom-close:focus-visible {
+      color: var(--blu-scuro);
     }
 
   </style>
@@ -5442,11 +5472,11 @@
 
         <div class="faq-answer">
 
-          In questa fase non esiste ancora
-          un'area riservata per le realtà sportive.
-          Dalla scheda dell'associazione
-          puoi però richiedere una modifica
-          direttamente al curatore di SPORT V.
+          Sì. Apri la scheda della tua realtà e premi
+          “✏️ Rappresenti questa realtà? Aggiorna la scheda”.
+          Inserisci l'email del referente usata per la registrazione,
+          modifica i dati e invia la richiesta. Le modifiche vengono
+          verificate prima di essere pubblicate.
 
         </div>
 
@@ -5935,6 +5965,10 @@
         Invia la segnalazione
       </button>
 
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="asd">Chiudi modulo</button>
+      </div>
+
 
     </form>
 
@@ -5980,9 +6014,10 @@
     </h2>
 
     <div class="missing-asd-intro">
-      Conosci una realtà sportiva del Municipio V che non trovi su SPORT V?
-      Segnalacela: non verrà pubblicata automaticamente. La useremo come contatto
-      da verificare prima di inserirla.
+      <strong>Ci dai una mano a completare la mappa?</strong>
+      Bastano il nome della realtà e il quartiere. Se conosci anche lo sport,
+      la sede o un link pubblico, aggiungili: ci aiuteranno a verificarla più velocemente.
+      La segnalazione non viene pubblicata automaticamente.
     </div>
 
     <form id="missingAsdForm">
@@ -6040,12 +6075,30 @@
       </label>
 
       <label>
+        Sede / impianto o indirizzo
+        <input
+          type="text"
+          id="missingAsdIndirizzo"
+          placeholder="Se lo conosci, indica dove svolge l'attività"
+        >
+      </label>
+
+      <label>
         Pagina Facebook, Instagram o sito
         <input
           type="text"
           id="missingAsdLink"
           placeholder="Se lo conosci, incolla il link"
         >
+      </label>
+
+      <label>
+        Informazioni utili
+        <textarea
+          id="missingAsdNote"
+          rows="3"
+          placeholder="Facoltativo: ad esempio dove l'hai vista, nome dell'impianto o altri elementi pubblici utili per trovarla."
+        ></textarea>
       </label>
 
       <p class="form-note">
@@ -6066,6 +6119,10 @@
       >
         Invia segnalazione
       </button>
+
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="missing">Chiudi modulo</button>
+      </div>
 
     </form>
 
@@ -6469,6 +6526,10 @@
       >
         Invia per approvazione
       </button>
+
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="event">Chiudi modulo</button>
+      </div>
 
 
     </form>
@@ -6928,6 +6989,9 @@
 
       <div class="legal-note">Premendo “Prepara email” verrà aperto il programma di posta del dispositivo. I dati non vengono trasmessi a SPORT V finché non invii effettivamente l'email.</div>
       <button type="submit" class="btn btn-primary form-submit">✉️ Prepara email</button>
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="report">Chiudi modulo</button>
+      </div>
     </form>
   </div>
 </div>
@@ -7026,6 +7090,10 @@
       >
         Invia richiesta di modifica
       </button>
+
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="edit">Chiudi modulo</button>
+      </div>
 
     </form>
 
@@ -8248,6 +8316,36 @@ function openReportModal(context = {}) {
 function closeReportModal() {
   hideModal("reportModal");
 }
+
+
+document.addEventListener(
+  "click",
+  event => {
+    const button =
+      event.target.closest(
+        "[data-form-close]"
+      );
+
+    if (!button) {
+      return;
+    }
+
+    const action =
+      button.dataset.formClose;
+
+    const closeActions = {
+      asd: closeAsdModal,
+      missing: closeMissingAsdModal,
+      event: closeEventModal,
+      report: closeReportModal,
+      edit: closeEditRequestModal
+    };
+
+    if (closeActions[action]) {
+      closeActions[action]();
+    }
+  }
+);
 
 
 const SHARE_WORKER_URL =
@@ -17789,10 +17887,26 @@ document
           .value
           .trim();
 
+      const address =
+        document
+          .getElementById(
+            "missingAsdIndirizzo"
+          )
+          .value
+          .trim();
+
       const rawLink =
         document
           .getElementById(
             "missingAsdLink"
+          )
+          .value
+          .trim();
+
+      const notes =
+        document
+          .getElementById(
+            "missingAsdNote"
           )
           .value
           .trim();
@@ -17832,7 +17946,7 @@ document
           "form-message error";
 
         message.textContent =
-          "Questa associazione risulta già presente su SPORT V.";
+          "Questa realtà risulta già presente su SPORT V.";
 
         return;
 
@@ -17909,6 +18023,13 @@ document
           quartier,
 
         indirizzo:
+          address
+          ||
+          null,
+
+        descrizione:
+          notes
+          ||
           null,
 
         latitudine:
@@ -17972,7 +18093,7 @@ document
         "form-message success";
 
       message.textContent =
-        "Grazie! La segnalazione è arrivata. L'associazione non viene pubblicata automaticamente: sarà prima verificata e contattata.";
+        "Grazie! La segnalazione è arrivata. La realtà non viene pubblicata automaticamente: sarà prima verificata e contattata.";
 
       document
         .getElementById(
