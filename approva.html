@@ -15,6 +15,7 @@
       --grigio: #66717d;
       --sfondo: #f5f7f9;
       --bordo: #dfe5ea;
+      --giallo: #fff4df;
     }
 
     * { box-sizing: border-box; }
@@ -35,7 +36,7 @@
 
     .header-inner,
     main {
-      width: min(960px, calc(100% - 32px));
+      width: min(1040px, calc(100% - 32px));
       margin: 0 auto;
     }
 
@@ -97,25 +98,10 @@
       font-weight: 800;
     }
 
-    .status.loading {
-      background: #eaf4ff;
-      color: var(--blu);
-    }
-
-    .status.pending {
-      background: #fff4df;
-      color: #8b5716;
-    }
-
-    .status.success {
-      background: #e6f5ee;
-      color: #176044;
-    }
-
-    .status.error {
-      background: #fdeaea;
-      color: #8f2f2f;
-    }
+    .status.loading { background: #eaf4ff; color: var(--blu); }
+    .status.pending { background: var(--giallo); color: #8b5716; }
+    .status.success { background: #e6f5ee; color: #176044; }
+    .status.error { background: #fdeaea; color: #8f2f2f; }
 
     .asd-box {
       background: #eaf4ff;
@@ -125,14 +111,17 @@
       margin-bottom: 20px;
     }
 
-    .data-table {
+    .data-table,
+    .comparison-table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
 
     .data-table th,
-    .data-table td {
+    .data-table td,
+    .comparison-table th,
+    .comparison-table td {
       padding: 11px 10px;
       border-bottom: 1px solid #e8edf1;
       text-align: left;
@@ -147,10 +136,64 @@
       text-transform: uppercase;
     }
 
+    .comparison-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--bordo);
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .comparison-table {
+      min-width: 760px;
+    }
+
+    .comparison-table thead th {
+      background: #eef3f7;
+      color: var(--blu);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .comparison-table .field-col { width: 20%; }
+    .comparison-table .before-col { width: 40%; background: #fff8f8; }
+    .comparison-table .after-col { width: 40%; background: #f4fbf7; }
+    .comparison-table tr.unchanged { opacity: .58; }
+
+    .value-block {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: inherit;
+    }
+
     .section-title {
       margin: 30px 0 13px;
       color: var(--blu-scuro);
       font-size: 21px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .meta-card {
+      padding: 12px 14px;
+      background: #f7f9fb;
+      border: 1px solid var(--bordo);
+      border-radius: 10px;
+    }
+
+    .meta-card small {
+      display: block;
+      color: var(--grigio);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .5px;
+      margin-bottom: 3px;
     }
 
     .poster-grid {
@@ -167,16 +210,8 @@
       background: #f7f8fa;
     }
 
-    .poster-card a {
-      display: block;
-      background: #f1f3f5;
-    }
-
-    .poster-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    .poster-card a { display: block; background: #f1f3f5; }
+    .poster-card img { width: 100%; height: auto; display: block; }
 
     .poster-card figcaption {
       padding: 10px 12px;
@@ -201,6 +236,40 @@
       object-fit: contain;
     }
 
+    .admin-note {
+      margin-top: 26px;
+      padding: 16px;
+      border: 1px solid var(--bordo);
+      border-radius: 12px;
+      background: #fafbfc;
+    }
+
+    .admin-note label {
+      display: block;
+      font-weight: 900;
+      color: var(--blu-scuro);
+      margin-bottom: 7px;
+    }
+
+    .admin-note textarea {
+      display: block;
+      width: 100%;
+      min-height: 82px;
+      resize: vertical;
+      border: 1px solid #cfd8df;
+      border-radius: 9px;
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--testo);
+      background: white;
+    }
+
+    .admin-note small {
+      display: block;
+      margin-top: 7px;
+      color: var(--grigio);
+    }
+
     .actions {
       display: flex;
       gap: 10px;
@@ -223,19 +292,14 @@
       justify-content: center;
     }
 
-    .btn-approve {
-      background: var(--verde);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #edf2f6;
-      color: var(--blu);
-    }
+    .btn-approve { background: var(--verde); color: white; }
+    .btn-reject { background: var(--rosso); color: white; }
+    .btn-secondary { background: #edf2f6; color: var(--blu); }
+    .btn-notify { background: var(--blu); color: white; }
 
     .btn:disabled {
       opacity: .6;
-      cursor: wait;
+      cursor: not-allowed;
     }
 
     .notify-box {
@@ -247,27 +311,13 @@
       color: #176044;
     }
 
-    .notify-box strong {
-      display: block;
-      margin-bottom: 5px;
-      color: #176044;
-    }
-
-    .notify-box p {
-      margin: 0 0 12px;
-      color: #46695a;
-      font-size: 14px;
-    }
-
-    .btn-notify {
-      background: #123c69;
-      color: white;
-    }
+    .notify-box strong { display: block; margin-bottom: 5px; }
+    .notify-box p { margin: 0 0 12px; color: #46695a; font-size: 14px; }
 
     .hidden { display: none !important; }
 
     @media (max-width: 700px) {
-      .poster-grid { grid-template-columns: 1fr; }
+      .poster-grid, .meta-grid { grid-template-columns: 1fr; }
       .panel-head, .panel-body { padding: 19px; }
       .data-table th { width: 38%; }
       .actions .btn { width: 100%; }
@@ -288,43 +338,63 @@
       <div class="panel-head">
         <div class="eyebrow">Richiesta da verificare</div>
         <h1 id="pageTitle">Caricamento richiesta...</h1>
-        <p id="pageSubtitle" class="subtitle">
-          Controlla tutte le informazioni prima di pubblicare.
-        </p>
+        <p id="pageSubtitle" class="subtitle">Controlla tutte le informazioni prima di procedere.</p>
       </div>
 
       <div class="panel-body">
-        <div id="statusBox" class="status loading">
-          Recupero i dati della richiesta...
-        </div>
+        <div id="statusBox" class="status loading">Recupero i dati della richiesta...</div>
 
         <div id="requestContent" class="hidden">
           <div id="asdBox" class="asd-box hidden"></div>
 
-          <table class="data-table">
-            <tbody id="dataRows"></tbody>
-          </table>
+          <div id="standardArea">
+            <table class="data-table">
+              <tbody id="dataRows"></tbody>
+            </table>
+            <div id="mediaArea"></div>
+          </div>
 
-          <div id="mediaArea"></div>
+          <div id="modificationArea" class="hidden">
+            <div id="modificationMeta" class="meta-grid"></div>
+
+            <h2 class="section-title">Confronto prima / proposto</h2>
+            <div class="comparison-wrap">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th class="field-col">Campo</th>
+                    <th class="before-col">Prima</th>
+                    <th class="after-col">Proposto</th>
+                  </tr>
+                </thead>
+                <tbody id="comparisonRows"></tbody>
+              </table>
+            </div>
+
+            <div id="adminNoteBox" class="admin-note">
+              <label for="adminNote">Nota amministrativa (facoltativa)</label>
+              <textarea id="adminNote" placeholder="Es. Verificata; oppure motivo del rifiuto..."></textarea>
+              <small>La nota viene salvata nella richiesta di modifica.</small>
+            </div>
+          </div>
 
           <div class="actions">
             <button id="approveButton" class="btn btn-approve" type="button">
               ✅ CONFERMA PUBBLICAZIONE
             </button>
 
-            <a
-              class="btn btn-secondary"
-              href="https://mariogalli1983.github.io/sport-municipio-v/"
-            >
+            <button id="rejectButton" class="btn btn-reject hidden" type="button">
+              ❌ RIFIUTA MODIFICA
+            </button>
+
+            <a class="btn btn-secondary" href="https://mariogalli1983.github.io/sport-municipio-v/">
               Apri SPORT V
             </a>
           </div>
 
           <div id="notifyBox" class="notify-box hidden">
-            <strong>Pubblicazione completata</strong>
-            <p id="notifyText">
-              Puoi avvisare via email il referente che ha inviato la richiesta.
-            </p>
+            <strong id="notifyTitle">Operazione completata</strong>
+            <p id="notifyText"></p>
             <button id="notifyButton" class="btn btn-notify" type="button">
               ✉️ NOTIFICA IL REFERENTE
             </button>
@@ -335,30 +405,20 @@
   </main>
 
   <script>
-    const SUPABASE_URL =
-      "https://yordjsaevwflqakzhfdf.supabase.co";
-
-    const SITE_URL =
-      "https://mariogalli1983.github.io/sport-municipio-v/";
+    const SUPABASE_URL = "https://yordjsaevwflqakzhfdf.supabase.co";
+    const SITE_URL = "https://mariogalli1983.github.io/sport-municipio-v/";
 
     const params = new URLSearchParams(window.location.search);
-
     const type = params.get("type") || "";
     const id = params.get("id") || "";
     const exp = params.get("exp") || "";
     const token = params.get("token") || "";
 
-    const apiParams = new URLSearchParams({
-      type,
-      id,
-      exp,
-      token
-    });
-
-    const API_URL =
-      `${SUPABASE_URL}/functions/v1/approve-submission?${apiParams.toString()}`;
+    const apiParams = new URLSearchParams({ type, id, exp, token });
+    const API_URL = `${SUPABASE_URL}/functions/v1/approve-submission?${apiParams.toString()}`;
 
     let currentRecord = null;
+    let currentData = null;
 
     const labels = {
       id: "ID",
@@ -385,44 +445,31 @@
       luogo: "Luogo",
       pubblico: "Pubblico",
       prezzo: "Prezzo / offerta",
-      link_info: "Link informazioni"
+      link_info: "Link informazioni",
+      azione: "Azione richiesta",
+      sede_da_definire: "Sede da definire",
+      sedi: "Sedi / impianti",
+      note: "Note del referente"
     };
 
     const eventOrder = [
-      "id",
-      "created_at",
-      "titolo",
-      "tipologia",
-      "descrizione",
-      "data_inizio",
-      "data_fine",
-      "luogo",
-      "indirizzo",
-      "pubblico",
-      "prezzo",
-      "link_info",
-      "nome_referente",
-      "email_referente",
-      "asd_id"
+      "id", "created_at", "titolo", "tipologia", "descrizione",
+      "data_inizio", "data_fine", "luogo", "indirizzo", "pubblico",
+      "prezzo", "link_info", "nome_referente", "email_referente", "asd_id"
     ];
 
     const asdOrder = [
-      "id",
-      "created_at",
-      "nome",
-      "discipline",
-      "descrizione",
-      "quartiere",
-      "indirizzo",
-      "latitudine",
-      "longitudine",
-      "telefono_pubblico",
-      "email_pubblica",
-      "sito_web",
-      "instagram",
-      "facebook",
-      "nome_referente",
-      "email_referente"
+      "id", "created_at", "nome", "discipline", "descrizione", "quartiere",
+      "indirizzo", "latitudine", "longitudine", "telefono_pubblico",
+      "email_pubblica", "sito_web", "instagram", "facebook",
+      "nome_referente", "email_referente"
+    ];
+
+    const comparisonOrder = [
+      "azione", "nome", "titolo", "discipline", "tipologia", "descrizione",
+      "data_inizio", "data_fine", "luogo", "indirizzo", "pubblico", "prezzo",
+      "link_info", "telefono_pubblico", "email_pubblica", "sito_web", "facebook",
+      "instagram", "sede_da_definire", "sedi", "note"
     ];
 
     function escapeHtml(value) {
@@ -437,38 +484,65 @@
     function safeHttpUrl(value) {
       const raw = String(value || "").trim();
       if (!raw) return "";
-
       try {
         const url = new URL(raw);
-        return url.protocol === "http:" || url.protocol === "https:"
-          ? url.href
-          : "";
+        return url.protocol === "http:" || url.protocol === "https:" ? url.href : "";
       } catch (_) {
         return "";
       }
     }
 
+    function safeEmail(value) {
+      const email = String(value || "").trim();
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : "";
+    }
+
+    function asObject(value) {
+      return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+    }
+
+    function valuesEqual(a, b) {
+      try {
+        return JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+      } catch (_) {
+        return String(a ?? "") === String(b ?? "");
+      }
+    }
+
+    function formatDate(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return null;
+      return new Intl.DateTimeFormat("it-IT", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }).format(date);
+    }
+
+    function formatSedi(value) {
+      if (!Array.isArray(value)) return "—";
+      if (value.length === 0) return "Nessuna sede";
+
+      return value.map((sede, index) => {
+        const item = asObject(sede);
+        const nome = String(item.nome_sede || `Sede ${index + 1}`);
+        const quartiere = String(item.quartiere || "");
+        const indirizzo = String(item.indirizzo || "");
+        return [nome, quartiere, indirizzo].filter(Boolean).join(" — ");
+      }).join("\n");
+    }
+
     function formatValue(key, value) {
-      if (value === null || value === undefined || value === "") {
-        return "—";
+      if (value === null || value === undefined || value === "") return "—";
+
+      if (key === "created_at" || key === "data_inizio" || key === "data_fine" || key === "gestita_at") {
+        const formatted = formatDate(value);
+        if (formatted) return formatted;
       }
 
-      if (
-        key === "created_at" ||
-        key === "data_inizio" ||
-        key === "data_fine"
-      ) {
-        const date = new Date(value);
-        if (!Number.isNaN(date.getTime())) {
-          return new Intl.DateTimeFormat("it-IT", {
-            dateStyle: "medium",
-            timeStyle: "short"
-          }).format(date);
-        }
-      }
-
-      if (typeof value === "boolean") {
-        return value ? "Sì" : "No";
+      if (key === "sedi") return formatSedi(value);
+      if (typeof value === "boolean") return value ? "Sì" : "No";
+      if (Array.isArray(value) || typeof value === "object") {
+        try { return JSON.stringify(value, null, 2); } catch (_) {}
       }
 
       return String(value);
@@ -476,43 +550,34 @@
 
     function getPosterUrls(record) {
       const urls = [];
-
       const add = (value) => {
         const url = safeHttpUrl(value);
-        if (url && !urls.includes(url)) {
-          urls.push(url);
-        }
+        if (url && !urls.includes(url)) urls.push(url);
       };
 
       if (Array.isArray(record.locandine_urls)) {
         record.locandine_urls.forEach(add);
       } else if (typeof record.locandine_urls === "string") {
         const raw = record.locandine_urls.trim();
-
         if (raw.startsWith("[") && raw.endsWith("]")) {
           try {
             const parsed = JSON.parse(raw);
             if (Array.isArray(parsed)) parsed.forEach(add);
           } catch (_) {}
         } else if (raw.startsWith("{") && raw.endsWith("}")) {
-          raw
-            .slice(1, -1)
-            .split(",")
-            .map((item) => item.trim().replace(/^"|"$/g, ""))
-            .forEach(add);
+          raw.slice(1, -1).split(",").map((item) => item.trim().replace(/^"|"$/g, "")).forEach(add);
         } else {
           add(raw);
         }
       }
 
       add(record.locandina_url);
-
       return urls;
     }
 
-    function renderRows(record, type) {
+    function renderRows(record, requestType) {
       const tbody = document.getElementById("dataRows");
-      const order = type === "evento" ? eventOrder : asdOrder;
+      const order = requestType === "evento" ? eventOrder : asdOrder;
 
       tbody.innerHTML = order
         .filter((key) => Object.prototype.hasOwnProperty.call(record, key))
@@ -528,29 +593,18 @@
     function renderEventPosters(record) {
       const mediaArea = document.getElementById("mediaArea");
       const urls = getPosterUrls(record);
-
       if (urls.length === 0) {
         mediaArea.innerHTML = "";
         return;
       }
 
       mediaArea.innerHTML = `
-        <h2 class="section-title">
-          ${urls.length === 1 ? "Locandina" : `Locandine (${urls.length})`}
-        </h2>
-
+        <h2 class="section-title">${urls.length === 1 ? "Locandina" : `Locandine (${urls.length})`}</h2>
         <div class="poster-grid">
           ${urls.map((url, index) => `
             <figure class="poster-card">
-              <a
-                href="${escapeHtml(url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="${escapeHtml(url)}"
-                  alt="Locandina ${index + 1}"
-                >
+              <a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">
+                <img src="${escapeHtml(url)}" alt="Locandina ${index + 1}">
               </a>
               <figcaption>Locandina ${index + 1}</figcaption>
             </figure>
@@ -562,7 +616,6 @@
     function renderAsdLogo(record) {
       const mediaArea = document.getElementById("mediaArea");
       const logoUrl = safeHttpUrl(record.logo_url);
-
       if (!logoUrl) {
         mediaArea.innerHTML = "";
         return;
@@ -571,86 +624,45 @@
       mediaArea.innerHTML = `
         <h2 class="section-title">Logo ASD</h2>
         <div class="logo-preview">
-          <a
-            href="${escapeHtml(logoUrl)}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href="${escapeHtml(logoUrl)}" target="_blank" rel="noopener noreferrer">
             <img src="${escapeHtml(logoUrl)}" alt="Logo ASD">
           </a>
         </div>
       `;
     }
 
-    function safeEmail(value) {
-      const email = String(value || "").trim();
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-        ? email
-        : "";
-    }
+    function renderModification(record) {
+      const original = asObject(record.dati_originali);
+      const proposed = asObject(record.dati_proposti);
+      const allKeys = new Set([...Object.keys(original), ...Object.keys(proposed)]);
+      const keys = [
+        ...comparisonOrder.filter((key) => allKeys.has(key)),
+        ...Array.from(allKeys).filter((key) => !comparisonOrder.includes(key)).sort()
+      ];
 
-    function getPublishedUrl(record) {
-      const url = new URL(SITE_URL);
+      document.getElementById("modificationMeta").innerHTML = `
+        <div class="meta-card"><small>Tipo</small>${escapeHtml(String(record.tipo || "—"))}</div>
+        <div class="meta-card"><small>Scheda / evento</small>${escapeHtml(String(record.nome_record || "—"))}</div>
+        <div class="meta-card"><small>ID record</small>${escapeHtml(String(record.record_id ?? "—"))}</div>
+        <div class="meta-card"><small>Email referente</small>${escapeHtml(String(record.email_referente || "—"))}</div>
+      `;
 
-      if (type === "evento") {
-        url.searchParams.set("evento", String(record.id));
-        url.hash = "eventi";
-      } else {
-        url.searchParams.set("asd", String(record.id));
-        url.hash = "mappa";
-      }
+      const changed = keys.filter((key) => !valuesEqual(original[key], proposed[key]));
+      const unchanged = keys.filter((key) => valuesEqual(original[key], proposed[key]));
+      const ordered = [...changed, ...unchanged];
 
-      return url.href;
-    }
-
-    function buildNotificationMailto(record) {
-      const email = safeEmail(record?.email_referente);
-      if (!email) return "";
-
-      const name = String(record?.nome_referente || "").trim();
-      const title = type === "evento"
-        ? String(record?.titolo || "evento").trim()
-        : String(record?.nome || "ASD").trim();
-
-      const publishedUrl = getPublishedUrl(record);
-
-      const subject = type === "evento"
-        ? `SPORT V — Il tuo evento è stato pubblicato: ${title}`
-        : `SPORT V — La tua ASD è stata pubblicata: ${title}`;
-
-      const greeting = name ? `Ciao ${name},` : "Ciao,";
-
-      const body = type === "evento"
-        ? `${greeting}\n\nla richiesta di pubblicazione dell'evento "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`
-        : `${greeting}\n\nla richiesta di inserimento di "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nDa questo momento puoi anche proporre corsi, open day, tornei ed eventi collegati alla tua associazione.\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`;
-
-      return (
-        `mailto:${encodeURIComponent(email)}`
-        + `?subject=${encodeURIComponent(subject)}`
-        + `&body=${encodeURIComponent(body)}`
-      );
-    }
-
-    function updateNotificationArea(record, published) {
-      const box = document.getElementById("notifyBox");
-      const button = document.getElementById("notifyButton");
-      const text = document.getElementById("notifyText");
-      const email = safeEmail(record?.email_referente);
-
-      if (!published || !email) {
-        box.classList.add("hidden");
-        return;
-      }
-
-      text.textContent =
-        `Puoi avvisare ${record.nome_referente ? record.nome_referente + " " : "il referente "}all'indirizzo ${email}.`;
-
-      button.onclick = () => {
-        const mailto = buildNotificationMailto(record);
-        if (mailto) window.location.href = mailto;
-      };
-
-      box.classList.remove("hidden");
+      document.getElementById("comparisonRows").innerHTML = ordered.length
+        ? ordered.map((key) => {
+            const same = valuesEqual(original[key], proposed[key]);
+            return `
+              <tr class="${same ? "unchanged" : ""}">
+                <th class="field-col">${escapeHtml(labels[key] || key)}</th>
+                <td class="before-col"><div class="value-block">${escapeHtml(formatValue(key, original[key]))}</div></td>
+                <td class="after-col"><div class="value-block">${escapeHtml(formatValue(key, proposed[key]))}</div></td>
+              </tr>
+            `;
+          }).join("")
+        : `<tr><td colspan="3">Nessun dato da confrontare.</td></tr>`;
     }
 
     function setStatus(kind, text) {
@@ -659,45 +671,160 @@
       box.textContent = text;
     }
 
+    function getPublishedUrl(record, recordType = type) {
+      const url = new URL(SITE_URL);
+      if (recordType === "evento") {
+        url.searchParams.set("evento", String(record.id));
+        url.hash = "eventi";
+      } else {
+        url.searchParams.set("asd", String(record.id));
+        url.hash = "mappa";
+      }
+      return url.href;
+    }
+
+    function buildNotificationMailto(record, handledStatus = "") {
+      const email = safeEmail(record?.email_referente);
+      if (!email) return "";
+
+      if (type === "modifica") {
+        const title = String(record?.nome_record || "scheda").trim();
+        const approved = handledStatus === "approvata";
+        const subject = approved
+          ? `SPORT V — La tua richiesta di modifica è stata approvata: ${title}`
+          : `SPORT V — Aggiornamento sulla tua richiesta di modifica: ${title}`;
+
+        const body = approved
+          ? `Ciao,\n\nla richiesta di modifica relativa a "${title}" è stata verificata e approvata su SPORT V.\n\nGrazie per aver contribuito a mantenere aggiornate le informazioni.\n\nMario Galli\nSPORT V`
+          : `Ciao,\n\nla richiesta di modifica relativa a "${title}" è stata verificata ma non è stata approvata.\n\nPer eventuali chiarimenti puoi rispondere a questa email.\n\nMario Galli\nSPORT V`;
+
+        return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
+
+      const name = String(record?.nome_referente || "").trim();
+      const title = type === "evento"
+        ? String(record?.titolo || "evento").trim()
+        : String(record?.nome || "ASD").trim();
+      const publishedUrl = getPublishedUrl(record);
+      const subject = type === "evento"
+        ? `SPORT V — Il tuo evento è stato pubblicato: ${title}`
+        : `SPORT V — La tua ASD è stata pubblicata: ${title}`;
+      const greeting = name ? `Ciao ${name},` : "Ciao,";
+      const body = type === "evento"
+        ? `${greeting}\n\nla richiesta di pubblicazione dell'evento "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`
+        : `${greeting}\n\nla richiesta di inserimento di "${title}" è stata verificata e pubblicata su SPORT V.\n\nPuoi vedere la scheda qui:\n${publishedUrl}\n\nDa questo momento puoi anche proporre corsi, open day, tornei ed eventi collegati alla tua associazione.\n\nGrazie per aver contribuito a SPORT V.\n\nMario Galli\nSPORT V`;
+
+      return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function updateNotificationArea(record, show, handledStatus = "") {
+      const box = document.getElementById("notifyBox");
+      const button = document.getElementById("notifyButton");
+      const text = document.getElementById("notifyText");
+      const title = document.getElementById("notifyTitle");
+      const email = safeEmail(record?.email_referente);
+
+      if (!show || !email) {
+        box.classList.add("hidden");
+        return;
+      }
+
+      title.textContent = type === "modifica" ? "Richiesta gestita" : "Pubblicazione completata";
+      text.textContent = `Puoi avvisare il referente all'indirizzo ${email}.`;
+      button.onclick = () => {
+        const mailto = buildNotificationMailto(record, handledStatus);
+        if (mailto) window.location.href = mailto;
+      };
+      box.classList.remove("hidden");
+    }
+
+    function setModificationHandled(record, status) {
+      const approveButton = document.getElementById("approveButton");
+      const rejectButton = document.getElementById("rejectButton");
+      const note = document.getElementById("adminNote");
+
+      approveButton.disabled = true;
+      rejectButton.disabled = true;
+      if (note) note.disabled = true;
+
+      if (status === "approvata") {
+        setStatus("success", "Modifica approvata e applicata.");
+        approveButton.textContent = "✓ MODIFICA APPROVATA";
+        rejectButton.classList.add("hidden");
+      } else if (status === "rifiutata") {
+        setStatus("error", "Richiesta di modifica rifiutata.");
+        rejectButton.textContent = "✓ MODIFICA RIFIUTATA";
+        approveButton.classList.add("hidden");
+      } else {
+        setStatus("success", `Richiesta già gestita: ${status}.`);
+      }
+
+      updateNotificationArea(record, true, status);
+    }
+
     async function loadRequest() {
       if (!type || !id || !exp || !token) {
         setStatus("error", "Link di moderazione incompleto o non valido.");
-        document.getElementById("pageTitle").textContent =
-          "Impossibile aprire la richiesta";
+        document.getElementById("pageTitle").textContent = "Impossibile aprire la richiesta";
         return;
       }
 
       try {
-        const response = await fetch(API_URL, {
-          method: "GET"
-        });
-
+        const response = await fetch(API_URL, { method: "GET" });
         let data = {};
-        try {
-          data = await response.json();
-        } catch (_) {}
+        try { data = await response.json(); } catch (_) {}
 
         if (!response.ok || !data.ok || !data.record) {
           const detail = data.error || data.message || "Impossibile recuperare la richiesta.";
           setStatus("error", detail);
-          document.getElementById("pageTitle").textContent =
-            "Impossibile recuperare la richiesta";
+          document.getElementById("pageTitle").textContent = "Impossibile recuperare la richiesta";
           return;
         }
 
-        const record = data.record;
-        currentRecord = record;
+        currentData = data;
+        currentRecord = data.record;
+        document.getElementById("requestContent").classList.remove("hidden");
+
+        const approveButton = document.getElementById("approveButton");
+        const rejectButton = document.getElementById("rejectButton");
+
+        if (type === "modifica") {
+          document.getElementById("standardArea").classList.add("hidden");
+          document.getElementById("modificationArea").classList.remove("hidden");
+          rejectButton.classList.remove("hidden");
+
+          const kind = String(currentRecord.tipo || "").toLowerCase();
+          const proposed = asObject(currentRecord.dati_proposti);
+          const action = String(proposed.azione || "modifica").toLowerCase();
+          let actionLabel = "Modifica";
+          if (action === "annullamento") actionLabel = "Annullamento";
+          if (action === "rimozione") actionLabel = "Rimozione";
+
+          document.getElementById("pageTitle").textContent = `${actionLabel}: ${currentRecord.nome_record || "richiesta"}`;
+          document.getElementById("pageSubtitle").textContent =
+            kind === "evento"
+              ? "Confronta i dati dell'evento e scegli se approvare o rifiutare la richiesta."
+              : "Confronta i dati della realtà sportiva e scegli se approvare o rifiutare la richiesta.";
+
+          approveButton.textContent = "✅ APPROVA MODIFICA";
+          rejectButton.textContent = "❌ RIFIUTA MODIFICA";
+          renderModification(currentRecord);
+
+          if (data.handled) {
+            setModificationHandled(currentRecord, data.status || currentRecord.stato || "gestita");
+          } else {
+            setStatus("pending", "Richiesta di modifica in attesa di decisione.");
+          }
+          return;
+        }
+
         const isEvent = type === "evento";
-
-        document.getElementById("pageTitle").textContent =
-          isEvent
-            ? (record.titolo || "Evento senza titolo")
-            : (record.nome || "ASD senza nome");
-
-        document.getElementById("pageSubtitle").textContent =
-          isEvent
-            ? "Controlla dati e tutte le locandine prima di pubblicare l'evento."
-            : "Controlla i dati prima di pubblicare l'associazione.";
+        document.getElementById("pageTitle").textContent = isEvent
+          ? (currentRecord.titolo || "Evento senza titolo")
+          : (currentRecord.nome || "ASD senza nome");
+        document.getElementById("pageSubtitle").textContent = isEvent
+          ? "Controlla dati e tutte le locandine prima di pubblicare l'evento."
+          : "Controlla i dati prima di pubblicare l'associazione.";
 
         if (isEvent && data.asd_name) {
           const asdBox = document.getElementById("asdBox");
@@ -705,95 +832,115 @@
           asdBox.classList.remove("hidden");
         }
 
-        renderRows(record, type);
-
-        if (isEvent) {
-          renderEventPosters(record);
-        } else {
-          renderAsdLogo(record);
-        }
-
-        document.getElementById("requestContent").classList.remove("hidden");
-
-        const approveButton = document.getElementById("approveButton");
+        renderRows(currentRecord, type);
+        if (isEvent) renderEventPosters(currentRecord);
+        else renderAsdLogo(currentRecord);
 
         if (data.approved) {
           setStatus("success", "Questa richiesta è già stata pubblicata.");
           approveButton.disabled = true;
           approveButton.textContent = "✓ GIÀ PUBBLICATO";
-          updateNotificationArea(record, true);
+          updateNotificationArea(currentRecord, true);
         } else {
           setStatus("pending", "Richiesta in attesa di approvazione.");
-          updateNotificationArea(record, false);
         }
       } catch (error) {
         console.error(error);
         setStatus("error", "Errore di rete durante il recupero della richiesta.");
-        document.getElementById("pageTitle").textContent =
-          "Errore di collegamento";
+        document.getElementById("pageTitle").textContent = "Errore di collegamento";
       }
     }
 
-    document
-      .getElementById("approveButton")
-      .addEventListener("click", async () => {
-        const confirmed = window.confirm(
-          type === "evento"
-            ? "Confermi la pubblicazione di questo evento?"
-            : "Confermi la pubblicazione di questa ASD?"
-        );
+    async function handleModification(action) {
+      if (!currentRecord) return;
 
-        if (!confirmed) return;
+      const isApprove = action === "approve";
+      const question = isApprove
+        ? "Confermi l'approvazione? Le modifiche verranno applicate subito al sito."
+        : "Confermi il rifiuto di questa richiesta di modifica?";
 
-        const button = document.getElementById("approveButton");
-        button.disabled = true;
-        button.textContent = "Pubblicazione in corso...";
+      if (!window.confirm(question)) return;
 
-        try {
-          const response = await fetch(API_URL, {
-            method: "POST"
-          });
+      const approveButton = document.getElementById("approveButton");
+      const rejectButton = document.getElementById("rejectButton");
+      const noteAdmin = document.getElementById("adminNote").value.trim();
 
-          let data = {};
-          try {
-            data = await response.json();
-          } catch (_) {}
+      approveButton.disabled = true;
+      rejectButton.disabled = true;
+      approveButton.textContent = isApprove ? "Applicazione modifica..." : approveButton.textContent;
+      rejectButton.textContent = !isApprove ? "Rifiuto richiesta..." : rejectButton.textContent;
 
-          if (!response.ok || !data.ok) {
-            throw new Error(
-              data.error || data.message || "Pubblicazione non riuscita."
-            );
-          }
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action, note_admin: noteAdmin || null })
+        });
 
-          setStatus(
-            "success",
-            type === "evento"
-              ? "Evento pubblicato correttamente su SPORT V."
-              : "ASD pubblicata correttamente su SPORT V."
-          );
+        let data = {};
+        try { data = await response.json(); } catch (_) {}
 
-          button.textContent = "✓ PUBBLICATO";
-          button.disabled = true;
-
-          if (currentRecord) {
-            updateNotificationArea(currentRecord, true);
-          }
-
-          const siteLink = document.querySelector('.btn-secondary');
-          if (siteLink) siteLink.href = SITE_URL;
-        } catch (error) {
-          console.error(error);
-          setStatus(
-            "error",
-            error instanceof Error
-              ? error.message
-              : "Pubblicazione non riuscita."
-          );
-
-          button.disabled = false;
-          button.textContent = "✅ CONFERMA PUBBLICAZIONE";
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || data.message || "Operazione non riuscita.");
         }
-      });
+
+        currentData = data;
+        if (data.record) currentRecord = data.record;
+        setModificationHandled(currentRecord, data.status || (isApprove ? "approvata" : "rifiutata"));
+      } catch (error) {
+        console.error(error);
+        setStatus("error", error instanceof Error ? error.message : "Operazione non riuscita.");
+        approveButton.disabled = false;
+        rejectButton.disabled = false;
+        approveButton.textContent = "✅ APPROVA MODIFICA";
+        rejectButton.textContent = "❌ RIFIUTA MODIFICA";
+      }
+    }
+
+    document.getElementById("approveButton").addEventListener("click", async () => {
+      if (type === "modifica") {
+        await handleModification("approve");
+        return;
+      }
+
+      const confirmed = window.confirm(
+        type === "evento"
+          ? "Confermi la pubblicazione di questo evento?"
+          : "Confermi la pubblicazione di questa ASD?"
+      );
+      if (!confirmed) return;
+
+      const button = document.getElementById("approveButton");
+      button.disabled = true;
+      button.textContent = "Pubblicazione in corso...";
+
+      try {
+        const response = await fetch(API_URL, { method: "POST" });
+        let data = {};
+        try { data = await response.json(); } catch (_) {}
+
+        if (!response.ok || !data.ok) {
+          throw new Error(data.error || data.message || "Pubblicazione non riuscita.");
+        }
+
+        setStatus("success", type === "evento"
+          ? "Evento pubblicato correttamente su SPORT V."
+          : "ASD pubblicata correttamente su SPORT V."
+        );
+        button.textContent = "✓ PUBBLICATO";
+        button.disabled = true;
+        if (currentRecord) updateNotificationArea(currentRecord, true);
+      } catch (error) {
+        console.error(error);
+        setStatus("error", error instanceof Error ? error.message : "Pubblicazione non riuscita.");
+        button.disabled = false;
+        button.textContent = "✅ CONFERMA PUBBLICAZIONE";
+      }
+    });
+
+    document.getElementById("rejectButton").addEventListener("click", async () => {
+      await handleModification("reject");
+    });
 
     loadRequest();
   </script>
