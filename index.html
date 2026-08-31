@@ -3795,6 +3795,123 @@
     .report-context { margin:12px 0 18px; padding:12px 14px; border-radius:10px; background:var(--sfondo); color:var(--grigio); font-size:13px; overflow-wrap:anywhere; }
     .report-form textarea { min-height:130px; }
 
+
+
+    /* ======================================================
+       RICHIESTE DI MODIFICA
+       ====================================================== */
+
+    .edit-request-context {
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: #f4f7fb;
+      border: 1px solid #dfe7f1;
+      color: #44556a;
+      line-height: 1.45;
+    }
+
+    .edit-request-section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--bordo);
+    }
+
+    .edit-request-section h3 {
+      margin: 0;
+      color: var(--blu-scuro);
+    }
+
+    .edit-request-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .edit-request-map {
+      height: 230px;
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--bordo);
+      overflow: hidden;
+      background: #e9eef2;
+    }
+
+    .edit-asd-sede-card {
+      border: 1px solid var(--bordo);
+      border-radius: 14px;
+      padding: 14px;
+      background: #fbfcfd;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .edit-asd-sede-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .edit-asd-sede-header strong {
+      color: var(--blu-scuro);
+    }
+
+    .edit-request-note {
+      margin: 0;
+      color: var(--grigio);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    #editRequestForm {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #editRequestForm label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    #editRequestForm input,
+    #editRequestForm textarea,
+    #editRequestForm select {
+      width: 100%;
+      border: 1px solid var(--bordo);
+      border-radius: 9px;
+      padding: 12px 13px;
+      font: inherit;
+      color: var(--testo);
+      background: white;
+    }
+
+    #editRequestForm input:focus,
+    #editRequestForm textarea:focus,
+    #editRequestForm select:focus {
+      outline: 2px solid #88bce5;
+      border-color: var(--blu);
+    }
+
+    @media (max-width: 650px) {
+      .edit-request-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .edit-request-map {
+        height: 210px;
+      }
+    }
+
+
     /* ======================================================
        FOOTER
        ====================================================== */
@@ -6780,6 +6897,107 @@
 </div>
 
 
+
+<!-- ========================================================
+     RICHIESTA MODIFICA SCHEDA / EVENTO
+     ======================================================== -->
+
+<div
+  id="editRequestModal"
+  class="modal-overlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-box detail-box"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="editRequestTitle"
+  >
+
+    <button
+      type="button"
+      class="modal-close"
+      id="closeEditRequestButton"
+      aria-label="Chiudi"
+    >
+      ×
+    </button>
+
+    <div class="eyebrow event-eyebrow">
+      Aggiornamento dati
+    </div>
+
+    <h2 id="editRequestTitle">
+      Richiedi una modifica
+    </h2>
+
+    <div
+      class="edit-request-context"
+      id="editRequestContext"
+    ></div>
+
+    <form id="editRequestForm">
+
+      <input
+        type="hidden"
+        id="editRequestType"
+      >
+
+      <input
+        type="hidden"
+        id="editRequestRecordId"
+      >
+
+      <label>
+        Email del referente *
+        <input
+          type="email"
+          id="editRequestEmail"
+          required
+          autocomplete="email"
+          placeholder="L'email usata quando hai inserito la scheda o l'evento"
+        >
+      </label>
+
+      <p class="edit-request-note">
+        Per proteggere le schede, la richiesta viene accettata solo se l'email
+        corrisponde a quella del referente registrato. Le modifiche non vengono
+        pubblicate automaticamente: saranno verificate prima di andare online.
+      </p>
+
+      <div id="editRequestFields"></div>
+
+      <label>
+        Note per la verifica
+        <textarea
+          id="editRequestNotes"
+          rows="4"
+          placeholder="Aggiungi eventuali spiegazioni utili, ad esempio cambio impianto, nuovo recapito o evento annullato."
+        ></textarea>
+      </label>
+
+      <div
+        id="editRequestMessage"
+        class="form-message"
+        aria-live="polite"
+      ></div>
+
+      <button
+        type="submit"
+        class="btn btn-primary form-submit"
+        id="editRequestSubmit"
+      >
+        Invia richiesta di modifica
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
 <!-- ========================================================
      FOOTER
      ======================================================== -->
@@ -7017,6 +7235,12 @@ let asdLogoPreviewUrl =
 
 let eventPosterPreviewUrls =
   [];
+
+let editAsdSedeCounter =
+  0;
+
+const editAsdSediMaps =
+  new Map();
 
 let siteReady =
   false;
@@ -11924,6 +12148,15 @@ function openEventDetail(
             <button
               type="button"
               class="text-action"
+              id="eventEditRequest"
+            >
+              ✏️ Rappresenti l'organizzatore? Modifica l'evento
+            </button>
+
+
+            <button
+              type="button"
+              class="text-action"
               id="eventReport"
             >
               Segnala informazioni errate
@@ -12177,6 +12410,26 @@ function openEventDetail(
 
         openAsdDetail(
           evento.asd_id
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(
+      "eventEditRequest"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        closeEventDetail(
+          false
+        );
+
+        openEditRequestForEvent(
+          evento
         );
 
       }
@@ -13169,18 +13422,13 @@ function openAsdDetail(
       "click",
       () => {
 
-        window.location.href =
-          buildMailto(
+        closeAsdDetail(
+          false
+        );
 
-            `Richiesta modifica scheda SPORT V: ${asd.name}`,
-
-            !validCoordinates(asd)
-              ?
-              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}". Ora abbiamo informazioni sulla sede / impianto per la stagione corrente e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
-              :
-              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
-
-          );
+        openEditRequestForAsd(
+          asd
+        );
 
       }
     );
@@ -13443,6 +13691,1460 @@ function populateEventAsdSelect() {
     });
 
 }
+
+
+
+/* ==========================================================
+   RICHIESTE DI MODIFICA
+   ========================================================== */
+
+function editQuartiereStandard(value) {
+
+  const standard = [
+    "Alessandrino",
+    "Casilino 23",
+    "Centocelle",
+    "Collatino",
+    "Gordiani",
+    "La Rustica",
+    "Marranella",
+    "Pigneto",
+    "Prenestino-Labicano",
+    "Quarticciolo",
+    "Tor Pignattara",
+    "Tor Sapienza",
+    "Tor Tre Teste",
+    "Villa De Sanctis",
+    "Villa Gordiani"
+  ];
+
+  return standard.includes(
+    String(value || "").trim()
+  );
+
+}
+
+
+function editQuartiereOptions() {
+
+  return `
+    <option value="" disabled>Seleziona il quartiere</option>
+    <option value="Alessandrino">Alessandrino</option>
+    <option value="Casilino 23">Casilino 23</option>
+    <option value="Centocelle">Centocelle</option>
+    <option value="Collatino">Collatino</option>
+    <option value="Gordiani">Gordiani</option>
+    <option value="La Rustica">La Rustica</option>
+    <option value="Marranella">Marranella</option>
+    <option value="Pigneto">Pigneto</option>
+    <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+    <option value="Quarticciolo">Quarticciolo</option>
+    <option value="Tor Pignattara">Tor Pignattara</option>
+    <option value="Tor Sapienza">Tor Sapienza</option>
+    <option value="Tor Tre Teste">Tor Tre Teste</option>
+    <option value="Villa De Sanctis">Villa De Sanctis</option>
+    <option value="Villa Gordiani">Villa Gordiani</option>
+    <option value="Altro">Altro quartiere del Municipio V</option>
+  `;
+
+}
+
+
+function toLocalDateTimeInput(value) {
+
+  if (!value) {
+    return "";
+  }
+
+  const date =
+    new Date(value);
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return "";
+  }
+
+  const pad =
+    number =>
+      String(number)
+        .padStart(2, "0");
+
+  return (
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+    +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}`
+  );
+
+}
+
+
+function clearEditAsdSediMaps() {
+
+  editAsdSediMaps
+    .forEach(state => {
+
+      if (
+        state
+        &&
+        state.map
+      ) {
+        state.map.remove();
+      }
+
+    });
+
+  editAsdSediMaps.clear();
+
+  editAsdSedeCounter =
+    0;
+
+}
+
+
+function updateEditAsdSedeNumbers() {
+
+  const cards =
+    Array.from(
+      document.querySelectorAll(
+        ".edit-asd-sede-card"
+      )
+    );
+
+  cards.forEach(
+    (card, index) => {
+
+      const title =
+        card.querySelector(
+          ".edit-asd-sede-title"
+        );
+
+      if (title) {
+        title.textContent =
+          `📍 Sede ${index + 1}`;
+      }
+
+    }
+  );
+
+  const addButton =
+    document.getElementById(
+      "editAddAsdSedeButton"
+    );
+
+  if (addButton) {
+    addButton.hidden =
+      cards.length >= MAX_ASD_SEDI;
+  }
+
+}
+
+
+function createEditAsdSede(sede = null) {
+
+  const container =
+    document.getElementById(
+      "editAsdSediContainer"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  const count =
+    container.querySelectorAll(
+      ".edit-asd-sede-card"
+    ).length;
+
+  if (
+    count >= MAX_ASD_SEDI
+  ) {
+    return;
+  }
+
+  editAsdSedeCounter += 1;
+
+  const localId =
+    editAsdSedeCounter;
+
+  const quartiereOriginale =
+    sede
+      ?
+      String(sede.quartiere || "").trim()
+      :
+      "";
+
+  const quartiereSelectValue =
+    quartiereOriginale
+    &&
+    !editQuartiereStandard(
+      quartiereOriginale
+    )
+      ?
+      "Altro"
+      :
+      quartiereOriginale;
+
+  const card =
+    document.createElement(
+      "div"
+    );
+
+  card.className =
+    "edit-asd-sede-card";
+
+  card.dataset.editSedeId =
+    String(localId);
+
+  card.innerHTML = `
+
+    <div class="edit-asd-sede-header">
+      <strong class="edit-asd-sede-title">📍 Sede</strong>
+      <button
+        type="button"
+        class="remove-sede-button edit-remove-sede-button"
+      >
+        🗑️ Rimuovi
+      </button>
+    </div>
+
+    <label>
+      Nome della sede
+      <input
+        type="text"
+        class="edit-asd-sede-nome"
+        value="${escapeHtml(sede ? (sede.nome || "") : "")}" 
+        placeholder="Es. Sede Centocelle"
+      >
+    </label>
+
+    <label>
+      Quartiere *
+      <select
+        class="edit-asd-sede-quartiere"
+        required
+      >
+        ${editQuartiereOptions()}
+      </select>
+    </label>
+
+    <label
+      class="edit-asd-sede-altro-label"
+      hidden
+    >
+      Specifica il quartiere *
+      <input
+        type="text"
+        class="edit-asd-sede-altro"
+        value="${escapeHtml(quartiereSelectValue === "Altro" ? quartiereOriginale : "")}" 
+        placeholder="Inserisci il quartiere"
+      >
+    </label>
+
+    <label>
+      Indirizzo *
+      <input
+        type="text"
+        class="edit-asd-sede-indirizzo"
+        value="${escapeHtml(sede ? (sede.indirizzo || "") : "")}" 
+        required
+        placeholder="Via, numero civico, Roma"
+      >
+    </label>
+
+    <div class="location-picker">
+      <strong>Posizione esatta sulla mappa *</strong>
+      <p class="edit-request-note">
+        Se cambi l'indirizzo, dovrai cliccare di nuovo sulla mappa per confermare la nuova posizione.
+      </p>
+      <div
+        class="edit-request-map"
+        id="editAsdSedeMap-${localId}"
+      ></div>
+      <div class="position-message edit-asd-position-message">
+        Nessuna posizione selezionata.
+      </div>
+      <input
+        type="hidden"
+        class="edit-asd-sede-latitudine"
+        value="${sede && Number.isFinite(Number(sede.lat)) ? escapeHtml(String(sede.lat)) : ""}"
+      >
+      <input
+        type="hidden"
+        class="edit-asd-sede-longitudine"
+        value="${sede && Number.isFinite(Number(sede.lng)) ? escapeHtml(String(sede.lng)) : ""}"
+      >
+    </div>
+
+  `;
+
+  container.appendChild(
+    card
+  );
+
+  const select =
+    card.querySelector(
+      ".edit-asd-sede-quartiere"
+    );
+
+  select.value =
+    quartiereSelectValue || "";
+
+  const altroLabel =
+    card.querySelector(
+      ".edit-asd-sede-altro-label"
+    );
+
+  const altroInput =
+    card.querySelector(
+      ".edit-asd-sede-altro"
+    );
+
+  const syncAltro = () => {
+
+    const isAltro =
+      select.value === "Altro";
+
+    altroLabel.hidden =
+      !isAltro;
+
+    altroInput.required =
+      isAltro;
+
+    if (!isAltro) {
+      altroInput.value = "";
+    }
+
+  };
+
+  select.addEventListener(
+    "change",
+    syncAltro
+  );
+
+  syncAltro();
+
+  const lat =
+    sede
+      ?
+      Number(sede.lat)
+      :
+      NaN;
+
+  const lng =
+    sede
+      ?
+      Number(sede.lng)
+      :
+      NaN;
+
+  const hasCoordinates =
+    Number.isFinite(lat)
+    &&
+    Number.isFinite(lng);
+
+  const state = {
+    map: null,
+    marker: null
+  };
+
+  state.map =
+    L.map(
+      `editAsdSedeMap-${localId}`
+    )
+    .setView(
+      hasCoordinates
+        ?
+        [lat, lng]
+        :
+        [41.879, 12.557],
+      hasCoordinates
+        ?
+        16
+        :
+        13
+    );
+
+  L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap"
+    }
+  )
+  .addTo(
+    state.map
+  );
+
+  const positionMessage =
+    card.querySelector(
+      ".edit-asd-position-message"
+    );
+
+  if (hasCoordinates) {
+
+    state.marker =
+      L.marker(
+        [lat, lng]
+      )
+      .addTo(
+        state.map
+      );
+
+    positionMessage.textContent =
+      "✓ Posizione attuale caricata";
+
+    positionMessage.classList.add(
+      "selected"
+    );
+
+  }
+
+  state.map.on(
+    "click",
+    event => {
+
+      const latInput =
+        card.querySelector(
+          ".edit-asd-sede-latitudine"
+        );
+
+      const lngInput =
+        card.querySelector(
+          ".edit-asd-sede-longitudine"
+        );
+
+      latInput.value =
+        String(event.latlng.lat);
+
+      lngInput.value =
+        String(event.latlng.lng);
+
+      if (state.marker) {
+        state.marker.setLatLng(
+          event.latlng
+        );
+      }
+      else {
+        state.marker =
+          L.marker(
+            event.latlng
+          )
+          .addTo(
+            state.map
+          );
+      }
+
+      positionMessage.textContent =
+        "✓ Posizione selezionata sulla mappa";
+
+      positionMessage.classList.add(
+        "selected"
+      );
+
+    }
+  );
+
+  const addressInput =
+    card.querySelector(
+      ".edit-asd-sede-indirizzo"
+    );
+
+  const originalAddress =
+    String(
+      sede
+        ?
+        (sede.indirizzo || "")
+        :
+        ""
+    ).trim();
+
+  addressInput.addEventListener(
+    "input",
+    () => {
+
+      if (
+        addressInput.value.trim()
+        ===
+        originalAddress
+      ) {
+        return;
+      }
+
+      const latInput =
+        card.querySelector(
+          ".edit-asd-sede-latitudine"
+        );
+
+      const lngInput =
+        card.querySelector(
+          ".edit-asd-sede-longitudine"
+        );
+
+      latInput.value = "";
+      lngInput.value = "";
+
+      if (state.marker) {
+        state.map.removeLayer(
+          state.marker
+        );
+        state.marker = null;
+      }
+
+      positionMessage.textContent =
+        "Indirizzo modificato: seleziona di nuovo la posizione sulla mappa.";
+
+      positionMessage.classList.remove(
+        "selected"
+      );
+
+    }
+  );
+
+  editAsdSediMaps.set(
+    localId,
+    state
+  );
+
+  card
+    .querySelector(
+      ".edit-remove-sede-button"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        const mapState =
+          editAsdSediMaps.get(
+            localId
+          );
+
+        if (mapState) {
+          mapState.map.remove();
+          editAsdSediMaps.delete(
+            localId
+          );
+        }
+
+        card.remove();
+        updateEditAsdSedeNumbers();
+
+      }
+    );
+
+  updateEditAsdSedeNumbers();
+
+  window.setTimeout(
+    () =>
+      state.map.invalidateSize(),
+    120
+  );
+
+}
+
+
+function syncEditAsdLocationMode() {
+
+  const pending =
+    document.getElementById(
+      "editAsdSedeDaDefinire"
+    );
+
+  const wrapper =
+    document.getElementById(
+      "editAsdSediWrapper"
+    );
+
+  if (
+    !pending
+    ||
+    !wrapper
+  ) {
+    return;
+  }
+
+  wrapper.hidden =
+    pending.checked;
+
+  if (
+    !pending.checked
+    &&
+    document.querySelectorAll(
+      ".edit-asd-sede-card"
+    ).length === 0
+  ) {
+    createEditAsdSede();
+  }
+
+  if (!pending.checked) {
+    window.setTimeout(
+      () => {
+        editAsdSediMaps.forEach(
+          state =>
+            state.map.invalidateSize()
+        );
+      },
+      100
+    );
+  }
+
+}
+
+
+function collectEditAsdSedi() {
+
+  const pending =
+    document.getElementById(
+      "editAsdSedeDaDefinire"
+    );
+
+  if (
+    pending
+    &&
+    pending.checked
+  ) {
+    return [];
+  }
+
+  const cards =
+    Array.from(
+      document.querySelectorAll(
+        ".edit-asd-sede-card"
+      )
+    );
+
+  if (
+    cards.length === 0
+  ) {
+    throw new Error(
+      "Inserisci almeno una sede oppure indica che la sede per la stagione corrente è ancora da definire."
+    );
+  }
+
+  return cards.map(
+    (card, index) => {
+
+      const select =
+        card.querySelector(
+          ".edit-asd-sede-quartiere"
+        );
+
+      const altro =
+        card.querySelector(
+          ".edit-asd-sede-altro"
+        );
+
+      const quartiere =
+        select.value === "Altro"
+          ?
+          altro.value.trim()
+          :
+          select.value.trim();
+
+      const indirizzo =
+        card
+          .querySelector(
+            ".edit-asd-sede-indirizzo"
+          )
+          .value
+          .trim();
+
+      const latitudine =
+        card
+          .querySelector(
+            ".edit-asd-sede-latitudine"
+          )
+          .value;
+
+      const longitudine =
+        card
+          .querySelector(
+            ".edit-asd-sede-longitudine"
+          )
+          .value;
+
+      if (!quartiere) {
+        throw new Error(
+          `Indica il quartiere della sede ${index + 1}.`
+        );
+      }
+
+      if (!indirizzo) {
+        throw new Error(
+          `Indica l'indirizzo della sede ${index + 1}.`
+        );
+      }
+
+      if (
+        !latitudine
+        ||
+        !longitudine
+      ) {
+        throw new Error(
+          `Seleziona sulla mappa la posizione esatta della sede ${index + 1}.`
+        );
+      }
+
+      return {
+        nome_sede:
+          card
+            .querySelector(
+              ".edit-asd-sede-nome"
+            )
+            .value
+            .trim()
+          ||
+          `Sede ${index + 1}`,
+        quartiere,
+        indirizzo,
+        latitudine:
+          Number(latitudine),
+        longitudine:
+          Number(longitudine)
+      };
+
+    }
+  );
+
+}
+
+
+function openEditRequestForAsd(asd) {
+
+  clearEditAsdSediMaps();
+
+  const editMessage =
+    document.getElementById(
+      "editRequestMessage"
+    );
+
+  const editSubmit =
+    document.getElementById(
+      "editRequestSubmit"
+    );
+
+  editMessage.className =
+    "form-message";
+
+  editMessage.textContent =
+    "";
+
+  editSubmit.disabled =
+    false;
+
+  editSubmit.textContent =
+    "Invia richiesta di modifica";
+
+  const fields =
+    document.getElementById(
+      "editRequestFields"
+    );
+
+  document.getElementById(
+    "editRequestType"
+  ).value = "asd";
+
+  document.getElementById(
+    "editRequestRecordId"
+  ).value = String(asd.id);
+
+  document.getElementById(
+    "editRequestEmail"
+  ).value = "";
+
+  document.getElementById(
+    "editRequestNotes"
+  ).value = "";
+
+  document.getElementById(
+    "editRequestContext"
+  ).textContent =
+    `Stai proponendo un aggiornamento per: ${asd.name}`;
+
+  document.getElementById(
+    "editRequestTitle"
+  ).textContent =
+    "Modifica la scheda della realtà";
+
+  const noSedi =
+    !Array.isArray(asd.sedi)
+    ||
+    asd.sedi.length === 0;
+
+  fields.innerHTML = `
+
+    <div class="edit-request-section">
+      <h3>Dati della realtà</h3>
+
+      <label>
+        Nome della realtà *
+        <input
+          type="text"
+          id="editAsdNome"
+          required
+          value="${escapeHtml(asd.name)}"
+        >
+      </label>
+
+      <label>
+        Discipline *
+        <input
+          type="text"
+          id="editAsdDiscipline"
+          required
+          value="${escapeHtml(asd.sport)}"
+          placeholder="Separate da virgola"
+        >
+      </label>
+
+      <label>
+        Descrizione
+        <textarea
+          id="editAsdDescrizione"
+          rows="5"
+        >${escapeHtml(asd.description || "")}</textarea>
+      </label>
+
+      <div class="edit-request-grid">
+        <label>
+          Telefono pubblico
+          <input
+            type="tel"
+            id="editAsdTelefono"
+            value="${escapeHtml(asd.telefono || "")}"
+          >
+        </label>
+
+        <label>
+          Email pubblica
+          <input
+            type="email"
+            id="editAsdEmailPubblica"
+            value="${escapeHtml(asd.email || "")}"
+          >
+        </label>
+      </div>
+
+      <label>
+        Sito web
+        <input
+          type="url"
+          id="editAsdSito"
+          value="${escapeHtml(asd.sito || "")}"
+          placeholder="https://..."
+        >
+      </label>
+
+      <div class="edit-request-grid">
+        <label>
+          Facebook
+          <input
+            type="text"
+            id="editAsdFacebook"
+            value="${escapeHtml(asd.facebook || "")}"
+          >
+        </label>
+
+        <label>
+          Instagram
+          <input
+            type="text"
+            id="editAsdInstagram"
+            value="${escapeHtml(asd.instagram || "")}"
+          >
+        </label>
+      </div>
+
+      <p class="edit-request-note">
+        Per cambiare il logo, indicalo nelle note: in questa prima versione le immagini non vengono sostituite automaticamente.
+      </p>
+    </div>
+
+    <div class="edit-request-section">
+      <h3>Sedi e impianti</h3>
+
+      <div class="sede-pending-box">
+        <label>
+          <input
+            type="checkbox"
+            id="editAsdSedeDaDefinire"
+            ${noSedi ? "checked" : ""}
+          >
+          <span>
+            <strong>📍 Sede per la stagione corrente ancora da definire</strong>
+            <small>
+              Seleziona questa opzione solo se al momento non hai alcuna sede definitiva da mostrare.
+            </small>
+          </span>
+        </label>
+      </div>
+
+      <div
+        id="editAsdSediWrapper"
+        ${noSedi ? "hidden" : ""}
+      >
+        <div
+          id="editAsdSediContainer"
+          style="display:flex;flex-direction:column;gap:12px;"
+        ></div>
+
+        <button
+          type="button"
+          class="btn btn-soft"
+          id="editAddAsdSedeButton"
+          style="width:100%;margin-top:12px;"
+        >
+          ＋ Aggiungi un'altra sede
+        </button>
+
+        <p class="edit-request-note" style="margin-top:10px;">
+          Massimo ${MAX_ASD_SEDI} sedi. Ogni indirizzo deve avere la propria posizione esatta sulla mappa.
+        </p>
+      </div>
+    </div>
+
+  `;
+
+  const pending =
+    document.getElementById(
+      "editAsdSedeDaDefinire"
+    );
+
+  pending.addEventListener(
+    "change",
+    syncEditAsdLocationMode
+  );
+
+  document.getElementById(
+    "editAddAsdSedeButton"
+  ).addEventListener(
+    "click",
+    () =>
+      createEditAsdSede()
+  );
+
+  if (!noSedi) {
+    asd.sedi.forEach(
+      sede =>
+        createEditAsdSede(sede)
+    );
+  }
+
+  showModal(
+    "editRequestModal"
+  );
+
+  window.setTimeout(
+    () => {
+      editAsdSediMaps.forEach(
+        state =>
+          state.map.invalidateSize()
+      );
+    },
+    200
+  );
+
+}
+
+
+function openEditRequestForEvent(evento) {
+
+  clearEditAsdSediMaps();
+
+  const editMessage =
+    document.getElementById(
+      "editRequestMessage"
+    );
+
+  const editSubmit =
+    document.getElementById(
+      "editRequestSubmit"
+    );
+
+  editMessage.className =
+    "form-message";
+
+  editMessage.textContent =
+    "";
+
+  editSubmit.disabled =
+    false;
+
+  editSubmit.textContent =
+    "Invia richiesta di modifica";
+
+  document.getElementById(
+    "editRequestType"
+  ).value = "evento";
+
+  document.getElementById(
+    "editRequestRecordId"
+  ).value = String(evento.id);
+
+  document.getElementById(
+    "editRequestEmail"
+  ).value = "";
+
+  document.getElementById(
+    "editRequestNotes"
+  ).value = "";
+
+  document.getElementById(
+    "editRequestContext"
+  ).textContent =
+    `Stai proponendo un aggiornamento per l'evento: ${evento.titolo}`;
+
+  document.getElementById(
+    "editRequestTitle"
+  ).textContent =
+    "Modifica l'evento";
+
+  document.getElementById(
+    "editRequestFields"
+  ).innerHTML = `
+
+    <div class="edit-request-section">
+      <h3>Dati dell'evento</h3>
+
+      <label>
+        Tipo di richiesta *
+        <select id="editEventAzione" required>
+          <option value="modifica" selected>Modifica i dati dell'evento</option>
+          <option value="annullamento">Segnala che l'evento è annullato</option>
+          <option value="rimozione">Richiedi la rimozione dell'evento</option>
+        </select>
+      </label>
+
+      <div class="edit-request-grid">
+        <label>
+          Tipologia *
+          <select id="editEventTipologia" required>
+            <option value="Corso">Corso</option>
+            <option value="Open day">Open day</option>
+            <option value="Prova gratuita">Prova gratuita</option>
+            <option value="Torneo">Torneo</option>
+            <option value="Offerta">Offerta</option>
+            <option value="Evento">Evento</option>
+            <option value="Altro">Altro</option>
+          </select>
+        </label>
+
+        <label>
+          Titolo *
+          <input
+            type="text"
+            id="editEventTitolo"
+            required
+            value="${escapeHtml(evento.titolo || "")}"
+          >
+        </label>
+      </div>
+
+      <label>
+        Descrizione
+        <textarea
+          id="editEventDescrizione"
+          rows="5"
+        >${escapeHtml(evento.descrizione || "")}</textarea>
+      </label>
+
+      <div class="edit-request-grid">
+        <label>
+          Data e ora di inizio *
+          <input
+            type="datetime-local"
+            id="editEventDataInizio"
+            required
+            value="${escapeHtml(toLocalDateTimeInput(evento.data_inizio))}"
+          >
+        </label>
+
+        <label>
+          Data e ora di fine
+          <input
+            type="datetime-local"
+            id="editEventDataFine"
+            value="${escapeHtml(toLocalDateTimeInput(evento.data_fine))}"
+          >
+        </label>
+      </div>
+
+      <div class="edit-request-grid">
+        <label>
+          Luogo
+          <input
+            type="text"
+            id="editEventLuogo"
+            value="${escapeHtml(evento.luogo || "")}"
+          >
+        </label>
+
+        <label>
+          Indirizzo
+          <input
+            type="text"
+            id="editEventIndirizzo"
+            value="${escapeHtml(evento.indirizzo || "")}"
+          >
+        </label>
+      </div>
+
+      <div class="edit-request-grid">
+        <label>
+          A chi è rivolto
+          <select id="editEventPubblico">
+            <option value="">Non specificato</option>
+            <option value="Bambini">Bambini</option>
+            <option value="Ragazzi">Ragazzi</option>
+            <option value="Adulti">Adulti</option>
+            <option value="Famiglie">Famiglie</option>
+            <option value="Tutti">Tutti</option>
+          </select>
+        </label>
+
+        <label>
+          Prezzo / offerta
+          <input
+            type="text"
+            id="editEventPrezzo"
+            value="${escapeHtml(evento.prezzo || "")}"
+          >
+        </label>
+      </div>
+
+      <label>
+        Link informazioni o iscrizioni
+        <input
+          type="url"
+          id="editEventLinkInfo"
+          value="${escapeHtml(evento.link_info || "")}"
+          placeholder="https://..."
+        >
+      </label>
+
+      <p class="edit-request-note">
+        Per sostituire o aggiungere locandine, descrivilo nelle note. Le immagini non vengono sostituite automaticamente in questa prima versione.
+      </p>
+    </div>
+
+  `;
+
+  const tipologia =
+    document.getElementById(
+      "editEventTipologia"
+    );
+
+  if (
+    Array.from(tipologia.options)
+      .some(option =>
+        option.value === evento.tipologia
+      )
+  ) {
+    tipologia.value =
+      evento.tipologia;
+  }
+  else {
+    tipologia.value =
+      "Altro";
+  }
+
+  const pubblico =
+    document.getElementById(
+      "editEventPubblico"
+    );
+
+  if (
+    Array.from(pubblico.options)
+      .some(option =>
+        option.value === (evento.pubblico || "")
+      )
+  ) {
+    pubblico.value =
+      evento.pubblico || "";
+  }
+
+  showModal(
+    "editRequestModal"
+  );
+
+}
+
+
+function closeEditRequestModal() {
+
+  clearEditAsdSediMaps();
+
+  hideModal(
+    "editRequestModal"
+  );
+
+}
+
+
+function collectEditRequestData(type) {
+
+  const notes =
+    document.getElementById(
+      "editRequestNotes"
+    ).value.trim();
+
+  if (type === "asd") {
+
+    const sedi =
+      collectEditAsdSedi();
+
+    return {
+      nome:
+        document.getElementById(
+          "editAsdNome"
+        ).value.trim(),
+      discipline:
+        document.getElementById(
+          "editAsdDiscipline"
+        ).value.trim(),
+      descrizione:
+        document.getElementById(
+          "editAsdDescrizione"
+        ).value.trim() || null,
+      telefono_pubblico:
+        document.getElementById(
+          "editAsdTelefono"
+        ).value.trim() || null,
+      email_pubblica:
+        document.getElementById(
+          "editAsdEmailPubblica"
+        ).value.trim() || null,
+      sito_web:
+        document.getElementById(
+          "editAsdSito"
+        ).value.trim() || null,
+      facebook:
+        document.getElementById(
+          "editAsdFacebook"
+        ).value.trim() || null,
+      instagram:
+        document.getElementById(
+          "editAsdInstagram"
+        ).value.trim() || null,
+      sede_da_definire:
+        document.getElementById(
+          "editAsdSedeDaDefinire"
+        ).checked,
+      sedi,
+      note:
+        notes || null
+    };
+
+  }
+
+  const startValue =
+    document.getElementById(
+      "editEventDataInizio"
+    ).value;
+
+  const endValue =
+    document.getElementById(
+      "editEventDataFine"
+    ).value;
+
+  if (
+    endValue
+    &&
+    new Date(endValue)
+    <
+    new Date(startValue)
+  ) {
+    throw new Error(
+      "La data di fine non può precedere la data di inizio."
+    );
+  }
+
+  return {
+    azione:
+      document.getElementById(
+        "editEventAzione"
+      ).value,
+    titolo:
+      document.getElementById(
+        "editEventTitolo"
+      ).value.trim(),
+    descrizione:
+      document.getElementById(
+        "editEventDescrizione"
+      ).value.trim() || null,
+    tipologia:
+      document.getElementById(
+        "editEventTipologia"
+      ).value,
+    data_inizio:
+      new Date(startValue)
+        .toISOString(),
+    data_fine:
+      endValue
+        ?
+        new Date(endValue)
+          .toISOString()
+        :
+        null,
+    luogo:
+      document.getElementById(
+        "editEventLuogo"
+      ).value.trim() || null,
+    indirizzo:
+      document.getElementById(
+        "editEventIndirizzo"
+      ).value.trim() || null,
+    pubblico:
+      document.getElementById(
+        "editEventPubblico"
+      ).value || null,
+    prezzo:
+      document.getElementById(
+        "editEventPrezzo"
+      ).value.trim() || null,
+    link_info:
+      document.getElementById(
+        "editEventLinkInfo"
+      ).value.trim() || null,
+    note:
+      notes || null
+  };
+
+}
+
+
+document
+  .getElementById(
+    "editRequestForm"
+  )
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      const type =
+        document.getElementById(
+          "editRequestType"
+        ).value;
+
+      const recordId =
+        Number(
+          document.getElementById(
+            "editRequestRecordId"
+          ).value
+        );
+
+      const email =
+        document.getElementById(
+          "editRequestEmail"
+        ).value.trim();
+
+      const message =
+        document.getElementById(
+          "editRequestMessage"
+        );
+
+      const submitButton =
+        document.getElementById(
+          "editRequestSubmit"
+        );
+
+      message.className =
+        "form-message";
+
+      message.textContent =
+        "";
+
+      let payload;
+
+      try {
+        payload =
+          collectEditRequestData(
+            type
+          );
+      }
+      catch (error) {
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          error.message
+          ||
+          "Controlla i dati inseriti.";
+
+        return;
+      }
+
+      submitButton.disabled =
+        true;
+
+      submitButton.textContent =
+        "Invio richiesta...";
+
+      const {
+        data,
+        error
+      } =
+        await db.rpc(
+          "invia_richiesta_modifica",
+          {
+            p_tipo:
+              type,
+            p_record_id:
+              recordId,
+            p_email:
+              email,
+            p_dati:
+              payload
+          }
+        );
+
+      if (error) {
+
+        console.error(
+          "Errore richiesta modifica:",
+          error
+        );
+
+        message.className =
+          "form-message error";
+
+        message.textContent =
+          "Non è stato possibile verificare la richiesta. Controlla che l'email sia quella del referente usata per questa scheda o evento e riprova.";
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "Invia richiesta di modifica";
+
+        return;
+      }
+
+      console.log(
+        "Richiesta modifica inserita con ID:",
+        data
+      );
+
+      message.className =
+        "form-message success";
+
+      message.textContent =
+        "Richiesta inviata. I dati pubblici resteranno invariati finché la modifica non sarà verificata.";
+
+      submitButton.disabled =
+        true;
+
+      submitButton.textContent =
+        "✓ Richiesta inviata";
+
+    }
+  );
+
 
 
 /* ==========================================================
@@ -16613,6 +18315,16 @@ document
 
 document
   .getElementById(
+    "closeEditRequestButton"
+  )
+  .addEventListener(
+    "click",
+    closeEditRequestModal
+  );
+
+
+document
+  .getElementById(
     "closeProjectButton"
   )
   .addEventListener(
@@ -16831,6 +18543,18 @@ document
         }
 
 
+        if (
+          modal.id ===
+          "editRequestModal"
+        ) {
+
+          closeEditRequestModal();
+
+          return;
+
+        }
+
+
         hideModal(
           modal.id
         );
@@ -16958,6 +18682,23 @@ document.addEventListener(
 
       return;
 
+    }
+
+
+    const editRequestModal =
+      document.getElementById(
+        "editRequestModal"
+      );
+
+    if (
+      editRequestModal
+      &&
+      editRequestModal.classList.contains(
+        "open"
+      )
+    ) {
+      closeEditRequestModal();
+      return;
     }
 
 
