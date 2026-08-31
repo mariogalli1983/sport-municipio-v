@@ -4909,7 +4909,7 @@
         <p>
 
           Le associazioni sportive del Municipio V
-          possono iscriversi anche se la sede 2026/27
+          possono iscriversi anche se la sede per la stagione corrente
           è ancora in definizione, raccontare le attività
           e proporre corsi, open day, tornei, offerte ed eventi.
 
@@ -5195,7 +5195,7 @@
         <div class="faq-answer">
           Sì. Se la realtà sta aspettando l'esito di un bando o
           l'assegnazione di un impianto, può iscriversi indicando gli sport praticati
-          e selezionando “Sede / impianto 2026/27 ancora da definire”.
+          e selezionando “Sede / impianto per la stagione corrente ancora da definire”.
           La posizione potrà essere aggiunta alla mappa in seguito.
         </div>
 
@@ -5549,7 +5549,7 @@
             id="asdSedeDaDefinire"
           >
           <span>
-            <strong>📍 Sede / impianto 2026/27 ancora da definire</strong>
+            <strong>📍 Sede / impianto per la stagione corrente ancora da definire</strong>
             <small>
               Se stai aspettando l'esito di un bando o un'assegnazione, puoi iscriverti subito.
               La sede potrà essere comunicata e aggiunta alla mappa successivamente.
@@ -9364,7 +9364,7 @@ function renderCards(data) {
               ?
               `
                 <div class="asd-pending-badge">
-                  📍 Sede 2026/27 in definizione
+                  📍 Sede per la stagione corrente in definizione
                 </div>
               `
               :
@@ -12600,7 +12600,7 @@ function openAsdDetail(
               `
                 <div class="detail-row">
                   <strong>Sede / impianto</strong>
-                  In definizione per la stagione 2026/27
+                  In definizione per la stagione corrente
                 </div>
               `
               :
@@ -12750,7 +12750,7 @@ function openAsdDetail(
               ?
               `
                 <div class="pending-location-banner">
-                  <strong>📍 Sede 2026/27 in definizione.</strong><br>
+                  <strong>📍 Sede per la stagione corrente in definizione.</strong><br>
                   La realtà sportiva può essere già presente su SPORT V anche mentre attende
                   l'assegnazione dell'impianto. La posizione sarà aggiunta alla mappa
                   appena verrà comunicata.
@@ -13176,7 +13176,7 @@ function openAsdDetail(
 
             !validCoordinates(asd)
               ?
-              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}". Ora abbiamo informazioni sulla sede / impianto 2026/27 e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
+              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}". Ora abbiamo informazioni sulla sede / impianto per la stagione corrente e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
               :
               `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
 
@@ -15213,7 +15213,7 @@ document
             "form-message error";
 
           message.textContent =
-            "Inserisci almeno una sede oppure indica che la sede 2026/27 è ancora da definire.";
+            "Inserisci almeno una sede oppure indica che la sede per la stagione corrente è ancora da definire.";
 
           return;
         }
