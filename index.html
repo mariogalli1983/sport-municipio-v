@@ -4444,6 +4444,75 @@
       color: var(--blu-scuro);
     }
 
+    .contact-help-box {
+      margin: 0 0 16px;
+      padding: 14px 16px;
+      border: 1px solid #dfe8f2;
+      border-radius: 12px;
+      background: #f4f7fb;
+      color: #44556a;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .contact-help-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blu-scuro);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .contact-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      border: 1px solid var(--bordo);
+      border-radius: 9px;
+      padding: 12px 13px;
+      font: inherit;
+      color: var(--testo);
+      background: white;
+    }
+
+    .contact-form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      outline: 2px solid #88bce5;
+      border-color: var(--blu);
+    }
+
+    .contact-honeypot {
+      position: absolute !important;
+      left: -9999px !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .footer-contact-primary {
+      font-weight: 800;
+    }
+
   </style>
 
 </head>
@@ -6826,7 +6895,7 @@
         <li>dati relativi alle ASD e agli eventi inseriti nei moduli, compresi eventuali recapiti indicati espressamente come pubblici;</li>
         <li>nome ed email del referente, utilizzati per verificare e gestire la richiesta e non mostrati nella scheda pubblica;</li>
         <li>loghi, locandine e altri materiali caricati volontariamente;</li>
-        <li>dati contenuti nelle richieste di modifica, nelle segnalazioni e nelle comunicazioni inviate al titolare;</li>
+        <li>dati contenuti nelle richieste di modifica, nelle segnalazioni, nei messaggi inviati tramite il modulo “Assistenza e contatti” e nelle comunicazioni inviate al titolare;</li>
         <li>dati tecnici necessari al funzionamento del sito, come indirizzo IP, tipo di browser, data e ora delle richieste e log di sicurezza, trattati anche dai fornitori tecnici indicati sotto;</li>
         <li>se l'utente attiva volontariamente la funzione <strong>“Cosa c'è vicino a me”</strong>, le coordinate fornite dal browser vengono utilizzate esclusivamente sul dispositivo per calcolare la distanza dalle ASD; SPORT V non le salva nel database né le associa all'utente.</li>
       </ul>
@@ -6835,7 +6904,7 @@
     <div class="legal-section">
       <h3>3. Finalità e basi giuridiche</h3>
       <ul>
-        <li>ricevere, verificare e gestire richieste di pubblicazione, aggiornamento e rimozione: esecuzione di misure richieste dall'interessato, ove applicabile, e legittimo interesse del titolare alla gestione del servizio (art. 6, par. 1, lett. b e f GDPR);</li>
+        <li>ricevere, verificare e gestire richieste di pubblicazione, aggiornamento, rimozione, assistenza e contatto: esecuzione di misure richieste dall'interessato, ove applicabile, e legittimo interesse del titolare alla gestione del servizio (art. 6, par. 1, lett. b e f GDPR);</li>
         <li>pubblicare le informazioni che il richiedente ha espressamente destinato alla scheda pubblica e mantenerle aggiornate;</li>
         <li>comunicare con il referente in merito alla richiesta e alla sua pubblicazione;</li>
         <li>prevenire abusi, garantire la sicurezza, gestire segnalazioni e tutelare diritti del titolare o di terzi: legittimo interesse (art. 6, par. 1, lett. f GDPR);</li>
@@ -6996,6 +7065,82 @@
   </div>
 </div>
 
+
+
+<!-- ========================================================
+     ASSISTENZA E CONTATTI
+     ======================================================== -->
+
+<div id="contactModal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <button type="button" class="modal-close" id="closeContactButton" aria-label="Chiudi">×</button>
+
+    <div class="eyebrow event-eyebrow">Parliamo</div>
+    <h2 id="contactTitle">Assistenza e contatti</h2>
+
+    <div class="contact-help-box">
+      <strong>Dimmi di cosa hai bisogno.</strong>
+      Per modificare una scheda o un evento usa, quando possibile, il pulsante dedicato
+      presente nella relativa pagina. Per tutto il resto puoi scrivere qui.
+    </div>
+
+    <form id="contactForm" class="contact-form">
+      <label>Come posso aiutarti? *
+        <select id="contactReason" required>
+          <option value="" selected disabled>Seleziona il motivo</option>
+          <option value="assistenza">Ho bisogno di aiuto con SPORT V</option>
+          <option value="problema_tecnico">Il sito o un modulo non funziona bene</option>
+          <option value="collaborazione">Vorrei collaborare con SPORT V</option>
+          <option value="proposta">Ho una proposta per migliorare SPORT V</option>
+          <option value="informazioni">Vorrei chiedere un'informazione</option>
+          <option value="privacy">Privacy, dati personali o rimozione</option>
+          <option value="altro">Altro</option>
+        </select>
+      </label>
+
+      <label>Messaggio *
+        <textarea id="contactMessage" required maxlength="4000" placeholder="Spiega in poche righe cosa ti serve..."></textarea>
+      </label>
+
+      <div class="form-grid">
+        <label>Nome
+          <input type="text" id="contactName" maxlength="120" autocomplete="name" placeholder="Facoltativo">
+        </label>
+        <label>Email per la risposta *
+          <input type="email" id="contactEmail" required maxlength="254" autocomplete="email" placeholder="nome@email.it">
+        </label>
+      </div>
+
+      <label>Link alla scheda o all'evento
+        <input type="url" id="contactLink" maxlength="1000" placeholder="Facoltativo — incolla il link se utile">
+      </label>
+
+      <label class="contact-honeypot" aria-hidden="true">Sito web
+        <input type="text" id="contactWebsite" tabindex="-1" autocomplete="off">
+      </label>
+
+      <label class="privacy-check">
+        <input type="checkbox" id="contactPrivacy" required>
+        <span>Ho letto l'Informativa privacy e autorizzo l'uso dei dati inseriti per gestire questa richiesta.</span>
+      </label>
+
+      <div class="legal-note">
+        Il messaggio viene inviato direttamente al curatore di SPORT V.
+        La tua email serve esclusivamente per poterti rispondere.
+      </div>
+
+      <div id="contactFormMessage" class="form-message" aria-live="polite"></div>
+
+      <button type="submit" class="btn btn-primary form-submit" id="contactSubmit">
+        ✉️ Invia messaggio
+      </button>
+
+      <div class="form-bottom-actions">
+        <button type="button" class="form-bottom-close" data-form-close="contact">Chiudi modulo</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 
 <!-- ========================================================
@@ -7166,7 +7311,8 @@
         <button type="button" class="footer-button" data-open-privacy>Privacy</button>
         <button type="button" class="footer-button" data-open-cookies>Cookie e strumenti tecnici</button>
         <button type="button" class="footer-button" data-open-report>Segnala contenuto</button>
-        <a href="mailto:mariogalli1983@gmail.com" class="footer-button">Contatti</a>
+        <button type="button" class="footer-button footer-contact-primary" data-open-contact>💬 Assistenza e contatti</button>
+        <button type="button" class="footer-button" data-open-contact data-contact-reason="collaborazione">🤝 Collabora con SPORT V</button>
 
       </div>
 
@@ -8318,6 +8464,70 @@ function closeReportModal() {
 }
 
 
+function openContactModal(reason = "") {
+  const form =
+    document.getElementById(
+      "contactForm"
+    );
+
+  const message =
+    document.getElementById(
+      "contactFormMessage"
+    );
+
+  if (form) {
+    form.reset();
+  }
+
+  if (message) {
+    message.className =
+      "form-message";
+    message.textContent =
+      "";
+  }
+
+  const select =
+    document.getElementById(
+      "contactReason"
+    );
+
+  if (
+    select
+    &&
+    reason
+    &&
+    Array.from(select.options)
+      .some(option => option.value === reason)
+  ) {
+    select.value =
+      reason;
+  }
+
+  const submit =
+    document.getElementById(
+      "contactSubmit"
+    );
+
+  if (submit) {
+    submit.disabled =
+      false;
+    submit.textContent =
+      "✉️ Invia messaggio";
+  }
+
+  showModal(
+    "contactModal"
+  );
+}
+
+
+function closeContactModal() {
+  hideModal(
+    "contactModal"
+  );
+}
+
+
 document.addEventListener(
   "click",
   event => {
@@ -8338,7 +8548,8 @@ document.addEventListener(
       missing: closeMissingAsdModal,
       event: closeEventModal,
       report: closeReportModal,
-      edit: closeEditRequestModal
+      edit: closeEditRequestModal,
+      contact: closeContactModal
     };
 
     if (closeActions[action]) {
@@ -18709,6 +18920,134 @@ document.querySelectorAll("[data-open-cookies]").forEach(button => {
 document.querySelectorAll("[data-open-report]").forEach(button => {
   button.addEventListener("click", () => openReportModal({ type: "sito", title: "SPORT V", url: window.location.href }));
 });
+
+document.querySelectorAll("[data-open-contact]").forEach(button => {
+  button.addEventListener("click", () => {
+    openContactModal(
+      button.dataset.contactReason || ""
+    );
+  });
+});
+
+const closeContactButton =
+  document.getElementById(
+    "closeContactButton"
+  );
+
+if (closeContactButton) {
+  closeContactButton.addEventListener(
+    "click",
+    closeContactModal
+  );
+}
+
+const contactForm =
+  document.getElementById(
+    "contactForm"
+  );
+
+if (contactForm) {
+  contactForm.addEventListener(
+    "submit",
+    async event => {
+      event.preventDefault();
+
+      const submit =
+        document.getElementById(
+          "contactSubmit"
+        );
+
+      const messageBox =
+        document.getElementById(
+          "contactFormMessage"
+        );
+
+      const reason =
+        document.getElementById(
+          "contactReason"
+        ).value;
+
+      const text =
+        document.getElementById(
+          "contactMessage"
+        ).value.trim();
+
+      const name =
+        document.getElementById(
+          "contactName"
+        ).value.trim();
+
+      const email =
+        document.getElementById(
+          "contactEmail"
+        ).value.trim();
+
+      const link =
+        document.getElementById(
+          "contactLink"
+        ).value.trim();
+
+      const website =
+        document.getElementById(
+          "contactWebsite"
+        ).value.trim();
+
+      messageBox.className =
+        "form-message";
+      messageBox.textContent =
+        "";
+
+      submit.disabled =
+        true;
+      submit.textContent =
+        "Invio in corso...";
+
+      const { error } =
+        await db.functions.invoke(
+          "contact-sportv",
+          {
+            body: {
+              reason,
+              message: text,
+              name: name || null,
+              email,
+              link: link || null,
+              page_url: window.location.href,
+              website
+            }
+          }
+        );
+
+      if (error) {
+        console.error(
+          "Errore invio contatto SPORT V:",
+          error
+        );
+
+        messageBox.className =
+          "form-message error";
+        messageBox.textContent =
+          "Non è stato possibile inviare il messaggio. Riprova tra poco oppure usa la voce Contatti nell'Informativa privacy.";
+
+        submit.disabled =
+          false;
+        submit.textContent =
+          "✉️ Invia messaggio";
+        return;
+      }
+
+      messageBox.className =
+        "form-message success";
+      messageBox.textContent =
+        "Messaggio inviato. Grazie! Ti risponderò all'email indicata.";
+
+      submit.disabled =
+        true;
+      submit.textContent =
+        "✓ Messaggio inviato";
+    }
+  );
+}
 
 document.getElementById("reportForm").addEventListener("submit", event => {
   event.preventDefault();
