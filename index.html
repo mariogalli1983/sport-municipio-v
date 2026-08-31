@@ -3470,6 +3470,20 @@
     }
 
 
+    .detail-sede-map-button {
+
+      margin-top:
+        9px;
+
+      padding:
+        8px 11px;
+
+      font-size:
+        13px;
+
+    }
+
+
     .detail-actions {
 
       display:
@@ -4654,7 +4668,7 @@
     </div>
 
     <div class="asd-growth-note">
-      Le associazioni con sede 2026/27 ancora in definizione possono iscriversi comunque:
+      Le associazioni con sede per la stagione corrente ancora in definizione possono iscriversi comunque:
       compariranno nell'elenco e saranno aggiunte alla mappa appena comunicheranno l'impianto definitivo.
     </div>
 
@@ -9778,7 +9792,109 @@ function applyFilters() {
 }
 
 
-function focusAsd(id) {
+function ensureAllQuartieriOnMap() {
+
+  if (
+    selectedQuartiere === "Tutti"
+  ) {
+    return;
+  }
+
+  selectedQuartiere =
+    "Tutti";
+
+  const select =
+    document.getElementById(
+      "mapQuartiereFilter"
+    );
+
+  if (select) {
+    select.value =
+      "Tutti";
+  }
+
+  applyFilters();
+
+}
+
+
+function focusAsdSede(
+  asdId,
+  sedeId
+) {
+
+  const asd =
+    asdData.find(
+      item =>
+        Number(item.id) ===
+        Number(asdId)
+    );
+
+  if (!asd) {
+    return;
+  }
+
+  const sede =
+    Array.isArray(asd.sedi)
+      ?
+      asd.sedi.find(
+        item =>
+          Number(item.id) ===
+          Number(sedeId)
+      )
+      :
+      null;
+
+  if (
+    !sede
+    ||
+    !validCoordinates(sede)
+  ) {
+    focusAsd(asdId);
+    return;
+  }
+
+  /*
+   * Se la scheda è stata aperta mentre era attivo
+   * un altro quartiere, rendiamo visibili tutte le sedi
+   * prima di cercare il marker esatto.
+   */
+  ensureAllQuartieriOnMap();
+
+  map.setView(
+    [sede.lat, sede.lng],
+    17
+  );
+
+  const marker =
+    markers.find(
+      item =>
+        Number(item.__asdId) ===
+        Number(asdId)
+        &&
+        Number(item.__sedeId) ===
+        Number(sedeId)
+    );
+
+  if (marker) {
+    marker.openPopup();
+  }
+
+  document
+    .getElementById(
+      "mappa"
+    )
+    .scrollIntoView({
+      behavior:
+        "smooth",
+      block:
+        "start"
+    });
+
+}
+
+
+function focusAllAsdSedi(id) {
 
   const asd =
     asdData.find(
@@ -9787,11 +9903,9 @@ function focusAsd(id) {
         Number(id)
     );
 
-
   if (!asd) {
     return;
   }
-
 
   const sediValide =
     Array.isArray(asd.sedi)
@@ -9802,10 +9916,124 @@ function focusAsd(id) {
       :
       [];
 
+  ensureAllQuartieriOnMap();
+
+  if (
+    sediValide.length > 1
+  ) {
+
+    const bounds =
+      L.latLngBounds(
+        sediValide.map(
+          sede =>
+            [sede.lat, sede.lng]
+        )
+      );
+
+    map.fitBounds(
+      bounds,
+      {
+        padding: [45, 45],
+        maxZoom: 15
+      }
+    );
+
+  }
+
+  else if (
+    sediValide.length === 1
+  ) {
+
+    map.setView(
+      [
+        sediValide[0].lat,
+        sediValide[0].lng
+      ],
+      17
+    );
+
+    const marker =
+      markers.find(
+        item =>
+          Number(item.__asdId) ===
+          Number(id)
+          &&
+          Number(item.__sedeId) ===
+          Number(sediValide[0].id)
+      );
+
+    if (marker) {
+      marker.openPopup();
+    }
+
+  }
+
+  else if (
+    validCoordinates(asd)
+  ) {
+
+    map.setView(
+      [asd.lat, asd.lng],
+      17
+    );
+
+  }
+
+  else {
+    return;
+  }
+
+  document
+    .getElementById(
+      "mappa"
+    )
+    .scrollIntoView({
+      behavior:
+        "smooth",
+      block:
+        "start"
+    });
+
+}
+
+
+function focusAsd(id) {
+
+  const asd =
+    asdData.find(
+      item =>
+        Number(item.id) ===
+        Number(id)
+    );
+
+  if (!asd) {
+    return;
+  }
+
+  const sediValide =
+    Array.isArray(asd.sedi)
+      ?
+      asd.sedi.filter(
+        validCoordinates
+      )
+      :
+      [];
+
+  /*
+   * Senza un quartiere specifico, se la realtà ha più sedi
+   * mostriamo l'intero gruppo di punti sulla mappa.
+   */
+  if (
+    selectedQuartiere === "Tutti"
+    &&
+    sediValide.length > 1
+  ) {
+    focusAllAsdSedi(id);
+    return;
+  }
 
   let sedeTarget =
     null;
-
 
   if (
     selectedQuartiere !== "Tutti"
@@ -9824,14 +10052,12 @@ function focusAsd(id) {
 
   }
 
-
   if (!sedeTarget) {
     sedeTarget =
       sediValide[0]
       ||
       null;
   }
-
 
   const lat =
     sedeTarget
@@ -9847,7 +10073,6 @@ function focusAsd(id) {
       :
       asd.lng;
 
-
   if (
     !Number.isFinite(lat)
     ||
@@ -9856,12 +10081,10 @@ function focusAsd(id) {
     return;
   }
 
-
   map.setView(
     [lat, lng],
     16
   );
-
 
   const marker =
     markers.find(item => {
@@ -9887,11 +10110,9 @@ function focusAsd(id) {
 
     });
 
-
   if (marker) {
     marker.openPopup();
   }
-
 
   document
     .getElementById(
@@ -12283,6 +12504,111 @@ function openAsdDetail(
     );
 
 
+  const sediValide =
+    Array.isArray(asd.sedi)
+      ?
+      asd.sedi.filter(
+        validCoordinates
+      )
+      :
+      [];
+
+
+  const sediMarkup =
+    Array.isArray(asd.sedi)
+    &&
+    asd.sedi.length > 0
+      ?
+      asd.sedi
+        .map((sede, index) => {
+
+          const titoloSede =
+            sede.nome
+            ||
+            (
+              asd.sedi.length > 1
+                ?
+                `Sede ${index + 1}`
+                :
+                "Sede / impianto"
+            );
+
+          return `
+
+            <div class="detail-row">
+
+              <strong>
+                ${escapeHtml(titoloSede)}
+              </strong>
+
+              ${
+                sede.quartiere
+                  ?
+                  `<div>📍 ${escapeHtml(sede.quartiere)}</div>`
+                  :
+                  ""
+              }
+
+              ${
+                sede.indirizzo
+                  ?
+                  `<div>${escapeHtml(sede.indirizzo)}</div>`
+                  :
+                  `<div>Indirizzo non indicato</div>`
+              }
+
+              ${
+                validCoordinates(sede)
+                &&
+                sede.id !== null
+                &&
+                sede.id !== undefined
+                  ?
+                  `
+                    <button
+                      type="button"
+                      class="btn btn-soft detail-sede-map-button"
+                      data-focus-sede="${Number(sede.id)}"
+                    >
+                      📍 Vedi questa sede sulla mappa
+                    </button>
+                  `
+                  :
+                  ""
+              }
+
+            </div>
+
+          `;
+
+        })
+        .join("")
+      :
+      (
+        asd.indirizzo
+          ?
+          `
+            <div class="detail-row">
+              <strong>Sede / impianto</strong>
+              ${escapeHtml(asd.indirizzo)}
+            </div>
+          `
+          :
+          (
+            !validCoordinates(asd)
+              ?
+              `
+                <div class="detail-row">
+                  <strong>Sede / impianto</strong>
+                  In definizione per la stagione 2026/27
+                </div>
+              `
+              :
+              ""
+          )
+      );
+
+
   const upcoming =
     activeEvents()
       .filter(
@@ -12425,7 +12751,7 @@ function openAsdDetail(
               `
                 <div class="pending-location-banner">
                   <strong>📍 Sede 2026/27 in definizione.</strong><br>
-                  L'associazione può essere già presente su SPORT V anche mentre attende
+                  La realtà sportiva può essere già presente su SPORT V anche mentre attende
                   l'assegnazione dell'impianto. La posizione sarà aggiunta alla mappa
                   appena verrà comunicata.
                 </div>
@@ -12457,61 +12783,7 @@ function openAsdDetail(
           <div class="detail-info">
 
 
-            ${
-              Array.isArray(asd.sedi)
-              &&
-              asd.sedi.length > 0
-                ?
-                asd.sedi
-                  .map((sede, index) => `
-
-                    <div class="detail-row">
-
-                      <strong>
-                        ${asd.sedi.length > 1 ? `Sede ${index + 1}` : "Sede / impianto"}
-                      </strong>
-
-                      ${sede.quartiere ? `📍 ${escapeHtml(sede.quartiere)}<br>` : ""}
-                      ${escapeHtml(sede.indirizzo || "Indirizzo non indicato")}
-
-                    </div>
-
-                  `)
-                  .join("")
-                :
-                (
-                  asd.indirizzo
-                    ?
-                    `
-
-                      <div class="detail-row">
-
-                        <strong>
-                          Sede / impianto
-                        </strong>
-
-                        ${escapeHtml(asd.indirizzo)}
-
-                      </div>
-
-                    `
-                    :
-                    (
-                      !validCoordinates(asd)
-                        ?
-                        `
-                          <div class="detail-row">
-                            <strong>
-                              Sede / impianto
-                            </strong>
-                            In definizione per la stagione 2026/27
-                          </div>
-                        `
-                        :
-                        ""
-                    )
-                )
-            }
+            ${sediMarkup}
 
 
             ${
@@ -12659,7 +12931,7 @@ function openAsdDetail(
                     class="btn btn-soft"
                     id="asdMapButton"
                   >
-                    📍 Vedi sulla mappa
+                    ${sediValide.length > 1 ? "📍 Vedi tutte le sedi sulla mappa" : "📍 Vedi sulla mappa"}
                   </button>
 
                 `
@@ -12781,14 +13053,53 @@ function openAsdDetail(
         );
 
 
-        focusAsd(
-          asd.id
-        );
+        if (
+          sediValide.length > 1
+        ) {
+          focusAllAsdSedi(
+            asd.id
+          );
+        }
+        else {
+          focusAsd(
+            asd.id
+          );
+        }
 
       }
     );
 
   }
+
+
+  content
+    .querySelectorAll(
+      "[data-focus-sede]"
+    )
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const sedeId =
+            Number(
+              button.dataset.focusSede
+            );
+
+          closeAsdDetail(
+            false
+          );
+
+          focusAsdSede(
+            asd.id,
+            sedeId
+          );
+
+        }
+      );
+
+    });
 
 
   document
@@ -12865,9 +13176,9 @@ function openAsdDetail(
 
             !validCoordinates(asd)
               ?
-              `Ciao Mario,\n\nrappresento l'associazione "${asd.name}". Ora abbiamo informazioni sulla sede / impianto 2026/27 e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
+              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}". Ora abbiamo informazioni sulla sede / impianto 2026/27 e vorrei aggiornare la scheda SPORT V.\n\nNuova sede / impianto:\n\nAltre modifiche eventuali:\n\n\nLink scheda:\n${shareUrl}`
               :
-              `Ciao Mario,\n\nrappresento l'associazione "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
+              `Ciao Mario,\n\nrappresento la realtà sportiva "${asd.name}" e vorrei richiedere un aggiornamento della scheda pubblicata su SPORT V.\n\nModifiche richieste:\n\n\nLink scheda:\n${shareUrl}`
 
           );
 
@@ -12885,7 +13196,7 @@ function openAsdDetail(
 
         openReportModal({
           type: "asd",
-          title: `ASD: ${asd.name}`,
+          title: `Realtà sportiva: ${asd.name}`,
           url: shareUrl
         });
 
