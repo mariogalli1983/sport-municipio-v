@@ -8871,23 +8871,102 @@ function renderMarkers(data) {
       map.removeLayer(marker)
   );
 
-
-  markers =
-    [];
+  markers = [];
 
 
-  data
-    .filter(
-      validCoordinates
-    )
-    .forEach(asd => {
+  data.forEach(asd => {
+
+    /*
+     * Se abbiamo le nuove sedi multiple,
+     * utilizziamo quelle.
+     *
+     * Se per qualche motivo una vecchia ASD
+     * non ha ancora sedi, utilizziamo i vecchi
+     * dati come sicurezza.
+     */
+    const sedi =
+      Array.isArray(asd.sedi)
+      &&
+      asd.sedi.length
+        ?
+        asd.sedi
+        :
+        [
+          {
+            id: null,
+            nome: "",
+            indirizzo:
+              asd.indirizzo || "",
+            quartiere:
+              asd.quartier || "",
+            lat:
+              asd.lat,
+            lng:
+              asd.lng
+          }
+        ];
+
+
+    /*
+     * Se è selezionato un quartiere,
+     * mostriamo soltanto le sedi presenti
+     * in quel quartiere.
+     *
+     * Con "Tutti" mostriamo tutte le sedi.
+     */
+    const sediDaMostrare =
+      sedi.filter(sede => {
+
+        if (
+          !validCoordinates(sede)
+        ) {
+          return false;
+        }
+
+
+        if (
+          selectedQuartiere === "Tutti"
+        ) {
+          return true;
+        }
+
+
+        return mapQuartiereMatches(
+          sede.quartiere,
+          selectedQuartiere
+        );
+
+      });
+
+
+    sediDaMostrare.forEach(sede => {
+
+      let distanza =
+        null;
+
+
+      if (
+        nearMeActive
+        &&
+        userLocation
+      ) {
+
+        distanza =
+          distanceKm(
+            userLocation.lat,
+            userLocation.lng,
+            sede.lat,
+            sede.lng
+          );
+
+      }
 
 
       const marker =
         L.marker(
           [
-            asd.lat,
-            asd.lng
+            sede.lat,
+            sede.lng
           ]
         )
         .addTo(map);
@@ -8909,35 +8988,51 @@ function renderMarkers(data) {
             </span>
 
             ${
-              distanceFromUserKm(asd) !== null
+              sede.nome
                 ?
                 `
                   <br><br>
-                  <strong style="color:#123c69">
-                    📍 ${escapeHtml(formatDistance(distanceFromUserKm(asd)))} da te
+                  <strong>
+                    ${escapeHtml(sede.nome)}
                   </strong>
                 `
                 :
                 ""
             }
 
-            <br><br>
-
-            <span>
-              📍 ${escapeHtml(
-                asd.quartier
-              )}
-            </span>
+            ${
+              distanza !== null
+                ?
+                `
+                  <br><br>
+                  <strong style="color:#123c69">
+                    📍 ${escapeHtml(formatDistance(distanza))} da te
+                  </strong>
+                `
+                :
+                ""
+            }
 
             ${
-              asd.indirizzo
+              sede.quartiere
+                ?
+                `
+                  <br><br>
+                  <span>
+                    📍 ${escapeHtml(sede.quartiere)}
+                  </span>
+                `
+                :
+                ""
+            }
+
+            ${
+              sede.indirizzo
                 ?
                 `
                   <br>
                   <span>
-                    ${escapeHtml(
-                      asd.indirizzo
-                    )}
+                    ${escapeHtml(sede.indirizzo)}
                   </span>
                 `
                 :
@@ -8959,7 +9054,7 @@ function renderMarkers(data) {
                 font-weight:700;
               "
             >
-              Scopri la realtà
+              Scopri l'associazione
             </button>
 
           </div>
@@ -8971,12 +9066,17 @@ function renderMarkers(data) {
       marker.__asdId =
         asd.id;
 
+      marker.__sedeId =
+        sede.id;
+
 
       markers.push(
         marker
       );
 
     });
+
+  });
 
 }
 
