@@ -8287,103 +8287,245 @@ async function loadAsd() {
       "resultsInfo"
     );
 
-
   info.textContent =
-    "Caricamento realtà sportive...";
+    "Caricamento associazioni...";
 
 
-  const {
-    data,
-    error
-  } =
-    await db
-      .from(
-        "asd_pubbliche"
-      )
-      .select("*")
-      .order("nome");
+  const [
+    asdResponse,
+    sediResponse
+  ] =
+    await Promise.all([
+
+      db
+        .from("asd_pubbliche")
+        .select("*")
+        .order("nome"),
+
+      db
+        .from("sedi_pubbliche")
+        .select("*")
+        .order("id")
+
+    ]);
 
 
-  if (error) {
+  if (
+    asdResponse.error
+    ||
+    sediResponse.error
+  ) {
 
     console.error(
-      "Errore Supabase ASD:",
-      error
+      "Errore Supabase:",
+      asdResponse.error
+      ||
+      sediResponse.error
     );
 
-
     info.textContent =
-      "Impossibile caricare le realtà sportive in questo momento.";
-
+      "Impossibile caricare le associazioni in questo momento.";
 
     return;
-
   }
 
 
-  asdData =
-    (data || [])
-      .map(asd => ({
+  const sediByAsd =
+    new Map();
+
+
+  (sediResponse.data || [])
+    .forEach(sede => {
+
+      const asdId =
+        Number(
+          sede.asd_id
+        );
+
+      const sedeNormalizzata = {
 
         id:
-          asd.id,
+          sede.id,
 
-        name:
-          asd.nome || "",
+        nome:
+          sede.nome_sede || "",
 
-        sport:
-          asd.discipline || "Altro",
+        indirizzo:
+          sede.indirizzo || "",
 
-        quartier:
-          asd.quartiere || "",
+        quartiere:
+          sede.quartiere || "",
 
         lat:
-          asd.latitudine === null
+          sede.latitudine === null
           ||
-          asd.latitudine === undefined
+          sede.latitudine === undefined
             ?
             NaN
             :
             Number(
-              asd.latitudine
+              sede.latitudine
             ),
 
         lng:
-          asd.longitudine === null
+          sede.longitudine === null
           ||
-          asd.longitudine === undefined
+          sede.longitudine === undefined
             ?
             NaN
             :
             Number(
-              asd.longitudine
-            ),
+              sede.longitudine
+            )
 
-        description:
-          asd.descrizione || "",
+      };
 
-        indirizzo:
-          asd.indirizzo || "",
 
-        telefono:
-          asd.telefono_pubblico || "",
+      if (
+        !sediByAsd.has(asdId)
+      ) {
 
-        email:
-          asd.email_pubblica || "",
+        sediByAsd.set(
+          asdId,
+          []
+        );
 
-        sito:
-          asd.sito_web || "",
+      }
 
-        instagram:
-          asd.instagram || "",
 
-        facebook:
-          asd.facebook || "",
+      sediByAsd
+        .get(asdId)
+        .push(
+          sedeNormalizzata
+        );
 
-        logo:
-          asd.logo_url || ""
+    });
 
-      }));
+
+  asdData =
+    (asdResponse.data || [])
+      .map(asd => {
+
+        const sedi =
+          sediByAsd.get(
+            Number(asd.id)
+          )
+          ||
+          [];
+
+
+        const quartieri =
+          Array.from(
+            new Set(
+              sedi
+                .map(
+                  sede =>
+                    sede.quartiere
+                )
+                .filter(Boolean)
+            )
+          );
+
+
+        const primaSede =
+          sedi[0]
+          ||
+          null;
+
+
+        return {
+
+          id:
+            asd.id,
+
+          name:
+            asd.nome || "",
+
+          sport:
+            asd.discipline || "Altro",
+
+          quartier:
+            quartieri.length
+              ?
+              quartieri.join(" · ")
+              :
+              asd.quartiere || "",
+
+          quartieri:
+            quartieri,
+
+          sedi:
+            sedi,
+
+          lat:
+            primaSede
+            &&
+            Number.isFinite(
+              primaSede.lat
+            )
+              ?
+              primaSede.lat
+              :
+              (
+                asd.latitudine === null
+                ||
+                asd.latitudine === undefined
+                  ?
+                  NaN
+                  :
+                  Number(
+                    asd.latitudine
+                  )
+              ),
+
+          lng:
+            primaSede
+            &&
+            Number.isFinite(
+              primaSede.lng
+            )
+              ?
+              primaSede.lng
+              :
+              (
+                asd.longitudine === null
+                ||
+                asd.longitudine === undefined
+                  ?
+                  NaN
+                  :
+                  Number(
+                    asd.longitudine
+                  )
+              ),
+
+          description:
+            asd.descrizione || "",
+
+          indirizzo:
+            asd.indirizzo || "",
+
+          telefono:
+            asd.telefono_pubblico || "",
+
+          email:
+            asd.email_pubblica || "",
+
+          sito:
+            asd.sito_web || "",
+
+          instagram:
+            asd.instagram || "",
+
+          facebook:
+            asd.facebook || "",
+
+          logo:
+            asd.logo_url || ""
+
+        };
+
+      });
 
 
   applyFilters();
