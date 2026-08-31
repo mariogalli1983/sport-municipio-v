@@ -1812,6 +1812,20 @@
     }
 
 
+    .status-pill.cancelled {
+
+      background:
+        #fdeaea;
+
+      color:
+        #8f1f1f;
+
+      border:
+        1px solid #f3baba;
+
+    }
+
+
     .event-meta {
 
       display:
@@ -8107,6 +8121,23 @@ function getEventStatusMarkup(evento) {
     [];
 
 
+  if (
+    evento.annullato
+    ===
+    true
+  ) {
+
+    return (
+      `
+        <div class="status-line">
+          <span class="status-pill cancelled">Evento annullato</span>
+        </div>
+      `
+    );
+
+  }
+
+
   const now =
     new Date();
 
@@ -10413,29 +10444,36 @@ async function loadEvents() {
     "Caricamento eventi...";
 
 
-  const {
-    data,
-    error
-  } =
-    await db
-      .from(
-        "eventi_pubblici"
-      )
-      .select("*")
-      .order(
-        "data_inizio",
-        {
-          ascending:
-            true
-        }
-      );
+  const [
+    eventsResult,
+    eventStateResult
+  ] =
+    await Promise.all([
+      db
+        .from(
+          "eventi_pubblici"
+        )
+        .select("*")
+        .order(
+          "data_inizio",
+          {
+            ascending:
+              true
+          }
+        ),
+      db
+        .from(
+          "eventi_stato_pubblico"
+        )
+        .select("evento_id, annullato, rimosso")
+    ]);
 
 
-  if (error) {
+  if (eventsResult.error) {
 
     console.error(
       "Errore caricamento eventi:",
-      error
+      eventsResult.error
     );
 
 
@@ -10461,8 +10499,61 @@ async function loadEvents() {
   }
 
 
+  if (eventStateResult.error) {
+
+    console.warn(
+      "Stato eventi non disponibile; proseguo senza annullamenti/rimozioni:",
+      eventStateResult.error
+    );
+
+  }
+
+
+  const eventStateById =
+    new Map(
+      (
+        eventStateResult.data
+        ||
+        []
+      ).map(
+        state => [
+          Number(state.evento_id),
+          state
+        ]
+      )
+    );
+
+
   eventData =
-    data || [];
+    (
+      eventsResult.data
+      ||
+      []
+    )
+    .map(evento => {
+
+      const state =
+        eventStateById.get(
+          Number(evento.id)
+        );
+
+      return {
+        ...evento,
+        annullato:
+          state?.annullato
+          ===
+          true,
+        rimosso:
+          state?.rimosso
+          ===
+          true
+      };
+
+    })
+    .filter(
+      evento =>
+        !evento.rimosso
+    );
 
 
   populateEventFilters();
@@ -12104,6 +12195,8 @@ function openEventDetail(
 
             ${
               infoLink
+              &&
+              !evento.annullato
                 ?
                 `
 
@@ -12124,6 +12217,8 @@ function openEventDetail(
 
             ${
               organizerWhatsApp
+              &&
+              !evento.annullato
                 ?
                 `
 
@@ -12159,13 +12254,21 @@ function openEventDetail(
             </button>
 
 
-            <button
-              type="button"
-              class="btn btn-soft"
-              id="eventCalendar"
-            >
-              📅 Aggiungi al calendario
-            </button>
+            ${
+              !evento.annullato
+                ?
+                `
+                  <button
+                    type="button"
+                    class="btn btn-soft"
+                    id="eventCalendar"
+                  >
+                    📅 Aggiungi al calendario
+                  </button>
+                `
+                :
+                ""
+            }
 
 
             <button
@@ -12417,11 +12520,15 @@ function openEventDetail(
     );
 
 
-  document
-    .getElementById(
+  const eventCalendar =
+    document.getElementById(
       "eventCalendar"
-    )
-    .addEventListener(
+    );
+
+
+  if (eventCalendar) {
+
+    eventCalendar.addEventListener(
       "click",
       () => {
 
@@ -12431,6 +12538,8 @@ function openEventDetail(
 
       }
     );
+
+  }
 
 
   document
@@ -14777,6 +14886,10 @@ function openEditRequestForEvent(evento) {
           <option value="rimozione">Richiedi la rimozione dell'evento</option>
         </select>
       </label>
+
+      <p class="edit-request-note">
+        Le richieste non modificano subito il sito: vengono applicate solo dopo la verifica di SPORT V. Un evento annullato resta visibile con l'avviso “Evento annullato”; una richiesta di rimozione approvata lo nasconde dall'elenco pubblico.
+      </p>
 
       <div class="edit-request-grid">
         <label>
