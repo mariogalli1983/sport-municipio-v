@@ -703,6 +703,163 @@
     }
 
 
+
+
+    /* ======================================================
+       SPORT V PULSE
+       ====================================================== */
+
+    .pulse-wrap {
+      margin-top: 18px;
+      background: linear-gradient(135deg, #071d3a 0%, #0d315f 100%);
+      border-radius: 22px;
+      padding: 24px;
+      color: #fff;
+      box-shadow: var(--ombra);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pulse-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .pulse-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #b9dcff;
+      margin-bottom: 6px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #52e08b;
+      box-shadow: 0 0 0 5px rgba(82,224,139,.14);
+    }
+
+    .pulse-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.15;
+      color: #fff;
+    }
+
+    .pulse-subtitle {
+      margin: 6px 0 0;
+      color: #c9d9ec;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 720px;
+    }
+
+    .pulse-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+    }
+
+    .pulse-card {
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 104px;
+    }
+
+    .pulse-card strong {
+      display: block;
+      font-size: 27px;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .pulse-card span {
+      display: block;
+      font-size: 13px;
+      line-height: 1.35;
+      color: #c9d9ec;
+      font-weight: 700;
+    }
+
+    .pulse-signals {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .pulse-signal {
+      background: #fff;
+      color: var(--testo);
+      border-radius: 16px;
+      padding: 15px;
+      min-width: 0;
+    }
+
+    .pulse-signal small {
+      display: block;
+      color: var(--grigio);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 6px;
+    }
+
+    .pulse-signal strong {
+      display: block;
+      color: var(--blu);
+      font-size: 16px;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .pulse-note {
+      margin: 12px 2px 0;
+      color: #aac1db;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 820px) {
+      .pulse-grid,
+      .pulse-signals {
+        grid-template-columns: repeat(2,1fr);
+      }
+      .pulse-head {
+        display: block;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid,
+      .pulse-grid,
+      .pulse-signals {
+        grid-template-columns: repeat(2,1fr);
+      }
+      .pulse-wrap {
+        padding: 18px;
+        border-radius: 18px;
+      }
+      .pulse-card {
+        min-height: 96px;
+        padding: 14px;
+      }
+    }
+
+
     /* ======================================================
        SEZIONI
        ====================================================== */
@@ -4672,70 +4829,107 @@
 
 
 <!-- ========================================================
-     STATISTICHE
+     STATISTICHE + SPORT V PULSE
      ======================================================== -->
-
 
 <section
   id="statsSection"
   class="stats-section"
-  hidden
 >
 
   <div class="container">
 
+    <div class="section-title">
+      <div class="eyebrow">SPORT V in numeri</div>
+      <h2>Una fotografia dello sport del territorio.</h2>
+    </div>
+
     <div class="stats-grid">
 
       <div class="stat">
-
-        <strong id="statAsd">
-          0
-        </strong>
-
-        <span>
-          realtà sportive
-        </span>
-
+        <strong id="statAsd">0</strong>
+        <span>realtà sportive</span>
       </div>
-
 
       <div class="stat">
-
-        <strong id="statDisciplines">
-          0
-        </strong>
-
-        <span>
-          discipline
-        </span>
-
+        <strong id="statDisciplines">0</strong>
+        <span>discipline</span>
       </div>
-
 
       <div class="stat">
-
-        <strong id="statQuartieri">
-          0
-        </strong>
-
-        <span>
-          quartieri
-        </span>
-
+        <strong id="statQuartieri">0</strong>
+        <span>quartieri</span>
       </div>
-
 
       <div class="stat">
-
-        <strong id="statEvents">
-          0
-        </strong>
-
-        <span>
-          iniziative in programma
-        </span>
-
+        <strong id="statEvents">0</strong>
+        <span>iniziative in programma</span>
       </div>
+
+    </div>
+
+    <div
+      class="pulse-wrap"
+      id="pulsePanel"
+      hidden
+    >
+
+      <div class="pulse-head">
+        <div>
+          <div class="pulse-kicker">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            SPORT V Pulse · ultimi 7 giorni
+          </div>
+          <h3 class="pulse-title">Cosa sta cercando il Municipio V</h3>
+          <p class="pulse-subtitle">
+            Non semplici visite: aperture di schede, ricerche, contatti avviati
+            e segnali di domanda sportiva che oggi non trova risposta sulla piattaforma.
+          </p>
+        </div>
+      </div>
+
+      <div class="pulse-grid">
+        <div class="pulse-card">
+          <strong id="pulseExplorations">0</strong>
+          <span>esplorazioni di SPORT V</span>
+        </div>
+        <div class="pulse-card">
+          <strong id="pulseAsdViews">0</strong>
+          <span>schede sportive aperte</span>
+        </div>
+        <div class="pulse-card">
+          <strong id="pulseEventViews">0</strong>
+          <span>eventi esplorati</span>
+        </div>
+        <div class="pulse-card">
+          <strong id="pulseContacts">0</strong>
+          <span>contatti / info avviati</span>
+        </div>
+      </div>
+
+      <div class="pulse-signals">
+        <div class="pulse-signal">
+          <small>🔥 Sport con più interesse</small>
+          <strong id="pulseTopSport">In raccolta</strong>
+        </div>
+        <div class="pulse-signal">
+          <small>📍 Zona più esplorata</small>
+          <strong id="pulseTopQuartiere">In raccolta</strong>
+        </div>
+        <div class="pulse-signal">
+          <small>⚠️ Domanda non trovata</small>
+          <strong id="pulseUnmetDemand">In raccolta</strong>
+        </div>
+        <div class="pulse-signal">
+          <small>🎟 Evento più esplorato</small>
+          <strong id="pulseTopEvent">In raccolta</strong>
+        </div>
+      </div>
+
+      <p class="pulse-note">
+        Pulse usa eventi tecnici minimizzati e aggregati. Non salva la posizione GPS,
+        non crea profili personali e non usa cookie o memoria persistente del browser.
+      </p>
 
     </div>
 
@@ -6881,7 +7075,7 @@
     <button type="button" class="modal-close" id="closePrivacyButton" aria-label="Chiudi">×</button>
     <div class="eyebrow event-eyebrow">Protezione dei dati</div>
     <h2 id="privacyTitle">Informativa privacy</h2>
-    <div class="legal-meta">Versione del 26 agosto 2026</div>
+    <div class="legal-meta">Versione del 31 agosto 2026</div>
 
     <div class="legal-section">
       <h3>1. Titolare del trattamento</h3>
@@ -6898,6 +7092,7 @@
         <li>dati contenuti nelle richieste di modifica, nelle segnalazioni, nei messaggi inviati tramite il modulo “Assistenza e contatti” e nelle comunicazioni inviate al titolare;</li>
         <li>dati tecnici necessari al funzionamento del sito, come indirizzo IP, tipo di browser, data e ora delle richieste e log di sicurezza, trattati anche dai fornitori tecnici indicati sotto;</li>
         <li>se l'utente attiva volontariamente la funzione <strong>“Cosa c'è vicino a me”</strong>, le coordinate fornite dal browser vengono utilizzate esclusivamente sul dispositivo per calcolare la distanza dalle ASD; SPORT V non le salva nel database né le associa all'utente.</li>
+        <li><strong>SPORT V Pulse</strong> registra su Supabase eventi di utilizzo minimizzati (ad esempio apertura della pagina o di una scheda, filtri e ricerche effettuate, numero di risultati, avvio di un contatto e sorgente/campagna UTM). Per ogni caricamento viene generato un identificativo casuale effimero, non salvato nei cookie, nel localStorage o nel sessionStorage. Nella tabella Pulse non vengono salvati posizione GPS o indirizzo IP.</li>
       </ul>
     </div>
 
@@ -6907,6 +7102,7 @@
         <li>ricevere, verificare e gestire richieste di pubblicazione, aggiornamento, rimozione, assistenza e contatto: esecuzione di misure richieste dall'interessato, ove applicabile, e legittimo interesse del titolare alla gestione del servizio (art. 6, par. 1, lett. b e f GDPR);</li>
         <li>pubblicare le informazioni che il richiedente ha espressamente destinato alla scheda pubblica e mantenerle aggiornate;</li>
         <li>comunicare con il referente in merito alla richiesta e alla sua pubblicazione;</li>
+        <li>analizzare in forma aggregata l'utilizzo di SPORT V, comprendere quali discipline e zone generano maggiore interesse e rilevare ricerche senza risultati, con minimizzazione dei dati e senza profilazione personale: legittimo interesse al miglioramento del servizio (art. 6, par. 1, lett. f GDPR);</li>
         <li>prevenire abusi, garantire la sicurezza, gestire segnalazioni e tutelare diritti del titolare o di terzi: legittimo interesse (art. 6, par. 1, lett. f GDPR);</li>
         <li>adempiere a eventuali obblighi di legge o richieste dell'autorità competente (art. 6, par. 1, lett. c GDPR).</li>
       </ul>
@@ -6953,6 +7149,7 @@
         <li>richieste rifiutate, incomplete o non pubblicate: fino a 90 giorni dalla chiusura della verifica, salvo necessità di tutela;</li>
         <li>file relativi a richieste definitivamente rifiutate: cancellazione prevista entro 30 giorni dalla chiusura della verifica;</li>
         <li>segnalazioni e richieste di tutela: fino a 12 mesi dalla chiusura, salvo necessità di conservazione ulteriore per obblighi di legge o tutela di diritti;</li>
+        <li>eventi grezzi SPORT V Pulse: massimo 180 giorni; gli indicatori pubblici vengono esposti solo in forma aggregata;</li>
         <li>log tecnici dei fornitori: secondo i rispettivi tempi di conservazione e le rispettive privacy policy.</li>
       </ul>
     </div>
@@ -6973,7 +7170,7 @@
       <p>SPORT V adotta misure tecniche e organizzative proporzionate alle caratteristiche del progetto e mantiene la pubblicazione dei contenuti subordinata a moderazione. Questa informativa potrà essere aggiornata quando cambiano funzionalità, fornitori o modalità di trattamento.</p>
     </div>
 
-    <div class="legal-note">Questa informativa descrive il funzionamento attuale di SPORT V. L'aggiunta futura di analytics, pubblicità, newsletter, login utenti o altri strumenti di tracciamento richiederà una nuova valutazione e, quando necessario, l'aggiornamento delle informative e dei consensi.</div>
+    <div class="legal-note">Questa informativa descrive il funzionamento attuale di SPORT V, compreso SPORT V Pulse. L'aggiunta futura di pubblicità, newsletter, login utenti, strumenti di profilazione o tecnologie ulteriori richiederà una nuova valutazione e, quando necessario, l'aggiornamento delle informative e dei consensi.</div>
   </div>
 </div>
 
@@ -7384,6 +7581,130 @@ const db =
     SUPABASE_URL,
     SUPABASE_KEY
   );
+
+
+/* ==========================================================
+   SPORT V PULSE — ANALYTICS TERRITORIALI MINIMIZZATI
+   ========================================================== */
+
+const SPORTV_VISIT_ID =
+  (
+    window.crypto
+    &&
+    typeof window.crypto.randomUUID === "function"
+  )
+    ?
+    window.crypto.randomUUID()
+    :
+    `00000000-0000-4000-8000-${Math.random().toString(16).slice(2).padEnd(12,"0").slice(0,12)}`;
+
+
+function sportVAnalyticsText(value, maxLength = 100) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+}
+
+
+function sportVAttribution() {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = sportVAnalyticsText(params.get("utm_source"), 80);
+  const campaign = sportVAnalyticsText(params.get("utm_campaign"), 100);
+
+  if (utmSource) {
+    return { source: utmSource.toLowerCase(), campaign };
+  }
+
+  let host = "";
+  try {
+    host = document.referrer ? new URL(document.referrer).hostname.toLowerCase() : "";
+  }
+  catch (error) {
+    host = "";
+  }
+
+  if (!host) return { source: "direct", campaign };
+  if (host.includes("facebook.com") || host.includes("fb.com")) return { source: "facebook", campaign };
+  if (host.includes("instagram.com")) return { source: "instagram", campaign };
+  if (host.includes("google.")) return { source: "google", campaign };
+  if (host.includes("t.co") || host.includes("twitter.com") || host.includes("x.com")) return { source: "x", campaign };
+  return { source: host.slice(0,80), campaign };
+}
+
+
+const SPORTV_ATTRIBUTION = sportVAttribution();
+
+
+async function trackSportVEvent(eventName, details = {}) {
+  try {
+    const { error } = await db.rpc(
+      "track_sportv_event",
+      {
+        p_event_name: eventName,
+        p_visit_id: SPORTV_VISIT_ID,
+        p_entity_type: details.entity_type || null,
+        p_entity_id: details.entity_id ?? null,
+        p_query_term: sportVAnalyticsText(details.query_term, 100) || null,
+        p_result_count: Number.isFinite(details.result_count) ? details.result_count : null,
+        p_sport: sportVAnalyticsText(details.sport, 100) || null,
+        p_quartiere: sportVAnalyticsText(details.quartiere, 100) || null,
+        p_source: SPORTV_ATTRIBUTION.source || null,
+        p_campaign: SPORTV_ATTRIBUTION.campaign || null
+      }
+    );
+
+    if (error) {
+      console.warn("SPORT V Pulse non disponibile:", error.message || error);
+    }
+  }
+  catch (error) {
+    console.warn("SPORT V Pulse non disponibile:", error);
+  }
+}
+
+
+function sportVPulseNumber(value) {
+  return new Intl.NumberFormat("it-IT").format(Number(value) || 0);
+}
+
+
+async function loadSportVPulse() {
+  const panel = document.getElementById("pulsePanel");
+  if (!panel) return;
+
+  try {
+    const { data, error } = await db.rpc("get_sportv_pulse", { p_days: 7 });
+    if (error) throw error;
+
+    const pulse = data || {};
+
+    document.getElementById("pulseExplorations").textContent = sportVPulseNumber(pulse.explorations);
+    document.getElementById("pulseAsdViews").textContent = sportVPulseNumber(pulse.asd_views);
+    document.getElementById("pulseEventViews").textContent = sportVPulseNumber(pulse.event_views);
+    document.getElementById("pulseContacts").textContent = sportVPulseNumber(pulse.contacts);
+
+    document.getElementById("pulseTopSport").textContent = pulse.top_sport || "In raccolta";
+    document.getElementById("pulseTopQuartiere").textContent = pulse.top_quartiere || "In raccolta";
+
+    const unmet = pulse.unmet_query
+      ? `${pulse.unmet_query}${Number(pulse.unmet_query_count) > 1 ? ` · ${pulse.unmet_query_count} volte` : ""}`
+      : "Nessun segnale ancora";
+    document.getElementById("pulseUnmetDemand").textContent = unmet;
+
+    const eventId = Number(pulse.top_event_id);
+    const topEvent = Number.isFinite(eventId)
+      ? eventData.find(item => Number(item.id) === eventId)
+      : null;
+    document.getElementById("pulseTopEvent").textContent = topEvent?.titolo || "In raccolta";
+
+    panel.hidden = false;
+  }
+  catch (error) {
+    // Il sito continua a funzionare normalmente anche prima di installare le RPC Pulse.
+    console.warn("SPORT V Pulse: aggregati non disponibili", error.message || error);
+  }
+}
 
 
 /* ==========================================================
@@ -10391,6 +10712,9 @@ function applyFilters() {
     filtered
   );
 
+
+  return filtered;
+
 }
 
 
@@ -12139,6 +12463,17 @@ function openEventDetail(
   }
 
 
+  trackSportVEvent(
+    "event_view",
+    {
+      entity_type: "event",
+      entity_id: Number(evento.id),
+      sport: evento.asd_discipline || null,
+      quartiere: evento.asd_quartiere || null
+    }
+  );
+
+
   const content =
     document.getElementById(
       "eventDetailContent"
@@ -12512,6 +12847,7 @@ function openEventDetail(
                   <a
                     href="${escapeHtml(infoLink)}"
                     class="btn btn-primary"
+                    data-pulse-event-info="${evento.id}"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -12770,6 +13106,17 @@ function openEventDetail(
       .addEventListener(
         "click",
         () => {
+
+          trackSportVEvent(
+            "event_contact",
+            {
+              entity_type: "event",
+              entity_id: Number(evento.id),
+              sport: evento.asd_discipline || null,
+              quartiere: evento.asd_quartiere || null
+            }
+          );
+
 
           const message =
             `Ciao, vi contatto tramite SPORT V per avere informazioni sull'evento "${evento.titolo}". Grazie!`;
@@ -13169,6 +13516,17 @@ function openAsdDetail(
   if (!asd) {
     return;
   }
+
+
+  trackSportVEvent(
+    "asd_view",
+    {
+      entity_type: "asd",
+      entity_id: Number(asd.id),
+      sport: asd.sport || null,
+      quartiere: asd.quartier || null
+    }
+  );
 
 
   const content =
@@ -13854,6 +14212,17 @@ function openAsdDetail(
             );
 
 
+          trackSportVEvent(
+            "asd_contact",
+            {
+              entity_type: "asd",
+              entity_id: Number(asd.id),
+              sport: asd.sport || null,
+              quartiere: asd.quartier || null
+            }
+          );
+
+
           const message =
             `Ciao, vi contatto tramite SPORT V per avere informazioni su ${asd.name}.`;
 
@@ -14066,27 +14435,11 @@ function updateStats() {
       events.length;
 
 
-  /*
-    Finché ci sono solo dati di test,
-    evitiamo una sezione statistiche
-    poco significativa.
-
-    Comparirà automaticamente
-    quando la piattaforma crescerà.
-  */
-
-  const show =
-    asdData.length >= 20
-    ||
-    events.length >= 10;
-
-
   document
     .getElementById(
       "statsSection"
     )
-    .hidden =
-      !show;
+    .hidden = false;
 
 }
 
@@ -18404,7 +18757,18 @@ document
         event.target.value;
 
       setAsdListOpen(true);
-      applyFilters();
+      const filtered = applyFilters() || [];
+
+      if (selectedSport !== "Tutti") {
+        trackSportVEvent(
+          "sport_interest",
+          {
+            sport: selectedSport,
+            quartiere: selectedQuartiere !== "Tutti" ? selectedQuartiere : null,
+            result_count: filtered.length
+          }
+        );
+      }
 
     }
   );
@@ -18422,7 +18786,18 @@ document
         event.target.value;
 
       setAsdListOpen(true);
-      applyFilters();
+      const filtered = applyFilters() || [];
+
+      if (selectedQuartiere !== "Tutti") {
+        trackSportVEvent(
+          "quartiere_interest",
+          {
+            quartiere: selectedQuartiere,
+            sport: selectedSport !== "Tutti" ? selectedSport : null,
+            result_count: filtered.length
+          }
+        );
+      }
 
     }
   );
@@ -18475,7 +18850,25 @@ document
 function runAsdSearch() {
 
   setAsdListOpen(true);
-  applyFilters();
+
+  const filtered =
+    applyFilters() || [];
+
+  const query =
+    sportVAnalyticsText(
+      document.getElementById("searchInput").value,
+      100
+    );
+
+  trackSportVEvent(
+    "asd_search",
+    {
+      query_term: query || null,
+      result_count: filtered.length,
+      sport: selectedSport !== "Tutti" ? selectedSport : null,
+      quartiere: selectedQuartiere !== "Tutti" ? selectedQuartiere : null
+    }
+  );
 
 
   document
@@ -19409,6 +19802,37 @@ async function updateVisitCounter() {
 }
 
 
+
+/* ==========================================================
+   SPORT V PULSE — INTERAZIONI UTILI
+   ========================================================== */
+
+document.addEventListener(
+  "click",
+  event => {
+    const nearMe = event.target.closest("#nearMeButton");
+    if (nearMe) {
+      trackSportVEvent("near_me");
+    }
+
+    const eventInfo = event.target.closest("[data-pulse-event-info]");
+    if (eventInfo) {
+      const eventId = Number(eventInfo.dataset.pulseEventInfo);
+      const evento = eventData.find(item => Number(item.id) === eventId);
+      trackSportVEvent(
+        "event_info",
+        {
+          entity_type: "event",
+          entity_id: eventId,
+          sport: evento?.asd_discipline || null,
+          quartiere: evento?.asd_quartiere || null
+        }
+      );
+    }
+  }
+);
+
+
 /* ==========================================================
    LINK DIRETTI
    ========================================================== */
@@ -19874,6 +20298,10 @@ async function init() {
 
 
   updateStats();
+
+
+  await trackSportVEvent("page_view");
+  await loadSportVPulse();
 
 
   siteReady =
