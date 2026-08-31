@@ -4718,20 +4718,30 @@
         <select id="mapQuartiereFilter">
           <option value="Tutti" selected>Tutti i quartieri</option>
           <option value="Alessandrino">Alessandrino</option>
-          <option value="Casilino 23">Casilino 23</option>
+          <option value="Casale Caletto">Casale Caletto</option>
           <option value="Centocelle">Centocelle</option>
+          <option value="Certosa">Certosa</option>
           <option value="Collatino">Collatino</option>
-          <option value="Gordiani">Gordiani</option>
           <option value="La Rustica">La Rustica</option>
-          <option value="Marranella">Marranella</option>
+          <option value="Longoni - Maggiolino">Longoni - Maggiolino</option>
+          <option value="Nuova Gordiani">Nuova Gordiani</option>
           <option value="Pigneto">Pigneto</option>
-          <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+          <option value="Prampolini">Prampolini</option>
+          <option value="Prenestino Labicano">Prenestino Labicano</option>
+          <option value="Quadraro Vecchio">Quadraro Vecchio</option>
           <option value="Quarticciolo">Quarticciolo</option>
+          <option value="Tor De' Schiavi">Tor De' Schiavi</option>
           <option value="Tor Pignattara">Tor Pignattara</option>
           <option value="Tor Sapienza">Tor Sapienza</option>
           <option value="Tor Tre Teste">Tor Tre Teste</option>
           <option value="Villa De Sanctis">Villa De Sanctis</option>
           <option value="Villa Gordiani">Villa Gordiani</option>
+          <option value="Villini Santa Maria">Villini Santa Maria</option>
+          <option value="Aeroporto Militare Baracca">Aeroporto Militare Baracca</option>
+          <option value="Mistica">Mistica</option>
+          <option value="Omo">Omo</option>
+          <option value="Parco Di Centocelle">Parco Di Centocelle</option>
+          <option value="Torre Di Salone">Torre Di Salone</option>
           <option value="Altro">Altro quartiere del Municipio V</option>
         </select>
       </label>
@@ -5987,20 +5997,30 @@
         <select id="missingAsdQuartiere" required>
           <option value="" selected disabled>Seleziona il quartiere</option>
           <option value="Alessandrino">Alessandrino</option>
-          <option value="Casilino 23">Casilino 23</option>
+          <option value="Casale Caletto">Casale Caletto</option>
           <option value="Centocelle">Centocelle</option>
+          <option value="Certosa">Certosa</option>
           <option value="Collatino">Collatino</option>
-          <option value="Gordiani">Gordiani</option>
           <option value="La Rustica">La Rustica</option>
-          <option value="Marranella">Marranella</option>
+          <option value="Longoni - Maggiolino">Longoni - Maggiolino</option>
+          <option value="Nuova Gordiani">Nuova Gordiani</option>
           <option value="Pigneto">Pigneto</option>
-          <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+          <option value="Prampolini">Prampolini</option>
+          <option value="Prenestino Labicano">Prenestino Labicano</option>
+          <option value="Quadraro Vecchio">Quadraro Vecchio</option>
           <option value="Quarticciolo">Quarticciolo</option>
+          <option value="Tor De' Schiavi">Tor De' Schiavi</option>
           <option value="Tor Pignattara">Tor Pignattara</option>
           <option value="Tor Sapienza">Tor Sapienza</option>
           <option value="Tor Tre Teste">Tor Tre Teste</option>
           <option value="Villa De Sanctis">Villa De Sanctis</option>
           <option value="Villa Gordiani">Villa Gordiani</option>
+          <option value="Villini Santa Maria">Villini Santa Maria</option>
+          <option value="Aeroporto Militare Baracca">Aeroporto Militare Baracca</option>
+          <option value="Mistica">Mistica</option>
+          <option value="Omo">Omo</option>
+          <option value="Parco Di Centocelle">Parco Di Centocelle</option>
+          <option value="Torre Di Salone">Torre Di Salone</option>
           <option value="Altro quartiere del Municipio V">Altro quartiere del Municipio V</option>
         </select>
       </label>
@@ -9843,55 +9863,71 @@ function mapQuartiereMatches(
     return true;
   }
 
-
-  const quartiereText =
-    normalizeFilterText(
-      quartiereValue
-    );
-
-
   const standardQuartieri = [
     "Alessandrino",
-    "Casilino 23",
+    "Casale Caletto",
     "Centocelle",
+    "Certosa",
     "Collatino",
-    "Gordiani",
     "La Rustica",
-    "Marranella",
+    "Longoni - Maggiolino",
+    "Nuova Gordiani",
     "Pigneto",
-    "Prenestino-Labicano",
+    "Prampolini",
+    "Prenestino Labicano",
+    "Quadraro Vecchio",
     "Quarticciolo",
+    "Tor De' Schiavi",
     "Tor Pignattara",
     "Tor Sapienza",
     "Tor Tre Teste",
     "Villa De Sanctis",
-    "Villa Gordiani"
+    "Villa Gordiani",
+    "Villini Santa Maria",
+    "Aeroporto Militare Baracca",
+    "Mistica",
+    "Omo",
+    "Parco Di Centocelle",
+    "Torre Di Salone"
   ];
 
+  const normalizeQuartiere = value => {
+    const normalized = normalizeFilterText(value);
+
+    // Compatibilità con denominazioni usate nelle vecchie schede.
+    if (normalized === "prenestino-labicano") {
+      return "prenestino labicano";
+    }
+
+    if (normalized === "gordiani") {
+      return "nuova gordiani";
+    }
+
+    return normalized;
+  };
+
+  const quartieri = String(quartiereValue || "")
+    .split("·")
+    .map(value => normalizeQuartiere(value))
+    .filter(Boolean);
 
   if (
     selectedValue === "Altro"
   ) {
+    const standardSet = new Set(
+      standardQuartieri.map(normalizeQuartiere)
+    );
 
-    return !standardQuartieri
-      .some(
-        quartiere =>
-          quartiereText.includes(
-            normalizeFilterText(
-              quartiere
-            )
-          )
-      );
-
+    return quartieri.some(
+      quartiere => !standardSet.has(quartiere)
+    );
   }
 
+  const selected = normalizeQuartiere(selectedValue);
 
-  return quartiereText.includes(
-    normalizeFilterText(
-      selectedValue
-    )
+  return quartieri.some(
+    quartiere => quartiere === selected
   );
-
 }
 
 
@@ -13704,20 +13740,30 @@ function editQuartiereStandard(value) {
 
   const standard = [
     "Alessandrino",
-    "Casilino 23",
+    "Casale Caletto",
     "Centocelle",
+    "Certosa",
     "Collatino",
-    "Gordiani",
     "La Rustica",
-    "Marranella",
+    "Longoni - Maggiolino",
+    "Nuova Gordiani",
     "Pigneto",
-    "Prenestino-Labicano",
+    "Prampolini",
+    "Prenestino Labicano",
+    "Quadraro Vecchio",
     "Quarticciolo",
+    "Tor De' Schiavi",
     "Tor Pignattara",
     "Tor Sapienza",
     "Tor Tre Teste",
     "Villa De Sanctis",
-    "Villa Gordiani"
+    "Villa Gordiani",
+    "Villini Santa Maria",
+    "Aeroporto Militare Baracca",
+    "Mistica",
+    "Omo",
+    "Parco Di Centocelle",
+    "Torre Di Salone"
   ];
 
   return standard.includes(
@@ -13732,20 +13778,30 @@ function editQuartiereOptions() {
   return `
     <option value="" disabled>Seleziona il quartiere</option>
     <option value="Alessandrino">Alessandrino</option>
-    <option value="Casilino 23">Casilino 23</option>
+    <option value="Casale Caletto">Casale Caletto</option>
     <option value="Centocelle">Centocelle</option>
+    <option value="Certosa">Certosa</option>
     <option value="Collatino">Collatino</option>
-    <option value="Gordiani">Gordiani</option>
     <option value="La Rustica">La Rustica</option>
-    <option value="Marranella">Marranella</option>
+    <option value="Longoni - Maggiolino">Longoni - Maggiolino</option>
+    <option value="Nuova Gordiani">Nuova Gordiani</option>
     <option value="Pigneto">Pigneto</option>
-    <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+    <option value="Prampolini">Prampolini</option>
+    <option value="Prenestino Labicano">Prenestino Labicano</option>
+    <option value="Quadraro Vecchio">Quadraro Vecchio</option>
     <option value="Quarticciolo">Quarticciolo</option>
+    <option value="Tor De' Schiavi">Tor De' Schiavi</option>
     <option value="Tor Pignattara">Tor Pignattara</option>
     <option value="Tor Sapienza">Tor Sapienza</option>
     <option value="Tor Tre Teste">Tor Tre Teste</option>
     <option value="Villa De Sanctis">Villa De Sanctis</option>
     <option value="Villa Gordiani">Villa Gordiani</option>
+    <option value="Villini Santa Maria">Villini Santa Maria</option>
+    <option value="Aeroporto Militare Baracca">Aeroporto Militare Baracca</option>
+    <option value="Mistica">Mistica</option>
+    <option value="Omo">Omo</option>
+    <option value="Parco Di Centocelle">Parco Di Centocelle</option>
+    <option value="Torre Di Salone">Torre Di Salone</option>
     <option value="Altro">Altro quartiere del Municipio V</option>
   `;
 
@@ -15162,20 +15218,30 @@ function asdQuartiereOptions() {
   return `
     <option value="" selected disabled>Seleziona il quartiere</option>
     <option value="Alessandrino">Alessandrino</option>
-    <option value="Casilino 23">Casilino 23</option>
+    <option value="Casale Caletto">Casale Caletto</option>
     <option value="Centocelle">Centocelle</option>
+    <option value="Certosa">Certosa</option>
     <option value="Collatino">Collatino</option>
-    <option value="Gordiani">Gordiani</option>
     <option value="La Rustica">La Rustica</option>
-    <option value="Marranella">Marranella</option>
+    <option value="Longoni - Maggiolino">Longoni - Maggiolino</option>
+    <option value="Nuova Gordiani">Nuova Gordiani</option>
     <option value="Pigneto">Pigneto</option>
-    <option value="Prenestino-Labicano">Prenestino-Labicano</option>
+    <option value="Prampolini">Prampolini</option>
+    <option value="Prenestino Labicano">Prenestino Labicano</option>
+    <option value="Quadraro Vecchio">Quadraro Vecchio</option>
     <option value="Quarticciolo">Quarticciolo</option>
+    <option value="Tor De' Schiavi">Tor De' Schiavi</option>
     <option value="Tor Pignattara">Tor Pignattara</option>
     <option value="Tor Sapienza">Tor Sapienza</option>
     <option value="Tor Tre Teste">Tor Tre Teste</option>
     <option value="Villa De Sanctis">Villa De Sanctis</option>
     <option value="Villa Gordiani">Villa Gordiani</option>
+    <option value="Villini Santa Maria">Villini Santa Maria</option>
+    <option value="Aeroporto Militare Baracca">Aeroporto Militare Baracca</option>
+    <option value="Mistica">Mistica</option>
+    <option value="Omo">Omo</option>
+    <option value="Parco Di Centocelle">Parco Di Centocelle</option>
+    <option value="Torre Di Salone">Torre Di Salone</option>
     <option value="Altro">Altro quartiere del Municipio V</option>
   `;
 
