@@ -717,7 +717,7 @@
       return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
-    function updateNotificationArea(record, show, handledStatus = "") {
+    function updateNotificationArea(record, show, handledStatus = "", notification = null) {
       const box = document.getElementById("notifyBox");
       const button = document.getElementById("notifyButton");
       const text = document.getElementById("notifyText");
@@ -729,8 +729,24 @@
         return;
       }
 
-      title.textContent = type === "modifica" ? "Richiesta gestita" : "Pubblicazione completata";
-      text.textContent = `Puoi avvisare il referente all'indirizzo ${email}.`;
+      if (notification && notification.sent === true) {
+        title.textContent = "Referente avvisato automaticamente";
+        text.textContent = `Email inviata a ${notification.recipient || email}. Non devi fare altro.`;
+        button.classList.add("hidden");
+        box.classList.remove("hidden");
+        return;
+      }
+
+      title.textContent = notification && notification.sent === false
+        ? "Operazione completata, email automatica non inviata"
+        : (type === "modifica" ? "Richiesta gestita" : "Pubblicazione completata");
+
+      text.textContent = notification && notification.sent === false
+        ? `La decisione è stata salvata correttamente, ma l'email a ${email} non è partita. Puoi inviarla manualmente.`
+        : `Puoi avvisare il referente all'indirizzo ${email}.`;
+
+      button.textContent = "✉️ INVIA MANUALMENTE";
+      button.classList.remove("hidden");
       button.onclick = () => {
         const mailto = buildNotificationMailto(record, handledStatus);
         if (mailto) window.location.href = mailto;
@@ -738,7 +754,7 @@
       box.classList.remove("hidden");
     }
 
-    function setModificationHandled(record, status) {
+    function setModificationHandled(record, status, notification = null) {
       const approveButton = document.getElementById("approveButton");
       const rejectButton = document.getElementById("rejectButton");
       const note = document.getElementById("adminNote");
@@ -759,7 +775,7 @@
         setStatus("success", `Richiesta già gestita: ${status}.`);
       }
 
-      updateNotificationArea(record, true, status);
+      updateNotificationArea(record, true, status, notification);
     }
 
     async function loadRequest() {
@@ -886,7 +902,7 @@
 
         currentData = data;
         if (data.record) currentRecord = data.record;
-        setModificationHandled(currentRecord, data.status || (isApprove ? "approvata" : "rifiutata"));
+        setModificationHandled(currentRecord, data.status || (isApprove ? "approvata" : "rifiutata"), data.notification || null);
       } catch (error) {
         console.error(error);
         setStatus("error", error instanceof Error ? error.message : "Operazione non riuscita.");
@@ -929,7 +945,7 @@
         );
         button.textContent = "✓ PUBBLICATO";
         button.disabled = true;
-        if (currentRecord) updateNotificationArea(currentRecord, true);
+        if (currentRecord) updateNotificationArea(currentRecord, true, "approvata", data.notification || null);
       } catch (error) {
         console.error(error);
         setStatus("error", error instanceof Error ? error.message : "Pubblicazione non riuscita.");
